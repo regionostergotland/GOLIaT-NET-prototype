@@ -1,0 +1,14 @@
+#ignore the bin folder
+bin/
+
+#config files
+*.config
+
+
+*.suo
+
+*.vssscc
+*.vspscc
+*.user
+
+*.asax

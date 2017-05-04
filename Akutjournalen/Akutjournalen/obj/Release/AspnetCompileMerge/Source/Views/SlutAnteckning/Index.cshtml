@@ -1,0 +1,46 @@
+﻿@section scripts {
+
+    <script type="text/javascript">
+        var ehrID = '@Session["EHRID"]';
+    </script>
+
+    <script src="http://10.84.221.203:8080/dist/bundle.js"></script>  
+    <script>
+    var akutDoc;
+
+    window.addEventListener('operationChanged', function (e) {
+        //alert('Event')
+        //setREDPushValue(e.detail[0].p[1]);
+        //akutDoc = e;
+    });
+
+    $(document).ready(function () {
+
+        //akutDoc = getDoc()
+
+        try {
+            subscribeToPatientFields(ehrID + "-Triage");
+        }
+        catch (err) {
+
+        }
+    });
+    </script>
+
+}
+     
+
+
+<div class="row">
+    <div class="col-md-12">        
+
+        <input id="pulsrate" maxlength="3" placeholder="Syst.." style="width:40px;display:none" />
+        <input id="systolic" maxlength="3" placeholder="Syst.." style="width:40px;display:none" />
+        <input id="diastolic" maxlength="3" placeholder="Syst.." style="width:40px;display:none" />
+        <input id="oxigen" maxlength="3" placeholder="Syst.." style="width:40px;display:none" />
+        <textarea id="notes" cols="100" rows="20" placeholder="Syst.." value="Sammanfatta det medicinska tillståndet. Hur påverkar patientens hinder och resurser möjligheterna att arbeta? Finns det några "></textarea>
+        
+    </div>
+</div>
+
+

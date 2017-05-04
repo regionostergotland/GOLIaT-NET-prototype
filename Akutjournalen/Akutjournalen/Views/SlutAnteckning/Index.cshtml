@@ -1,0 +1,165 @@
+﻿
+<script type="text/javascript">
+    var ehrID = '@Session["EHRID"]';
+</script>
+
+<script src="~/Scripts/angular.js"></script>
+
+<script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+
+
+<link href="~/Content/Custom/custom.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+
+<script src="~/Scripts/Views/Utredning/utredning.js"></script>
+
+<style>
+    .hoverDiv {
+    }
+
+        .hoverDiv:hover {
+            background: #b0d8f0;
+            color: #000000;
+        }
+
+        .hoverDiv:active {
+            background: #6794dd;
+            color: #ffffff;
+        }
+
+    /*#columnNames {
+        margin-top: 50px;
+    }*/
+
+    #left-top-row-content {
+        float: left;
+        display: inline;
+        width: 49%;
+    }
+
+    #right-top-row-content {
+        float: left;
+        display: inline;
+        width: 49%;
+    }
+
+    #boxelement {
+        float: left;
+        display: inline;
+        width: 25%;
+        text-align: center;
+    }
+
+    .table {
+        margin-bottom: 0px;
+    }
+
+    th {
+        text-align: center;
+        background-color: #0066b3;
+        color: #ffffff;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    .box {
+        margin-bottom: auto;
+    }
+
+    .box-body {
+        color: #000000;
+        background-color: #ffffff;
+    }
+
+    h2 {
+        margin-top: 50px;
+    }
+</style>
+
+
+
+
+<div class="">
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+        <div id="prostatacancer">
+            <div>
+                <h4>Prostatacancer</h4>
+            </div>
+            <table class="table">
+                <tr>
+                    <th><div>Patient</div></th>
+                    <th><div>Behandlings-ID</div></th>
+                    <th><div>Status</div></th>
+                    <th><div>Mottagen</div></th>
+                </tr>
+            </table>
+
+            <div class="" ng-repeat="object in posts">
+                <div class="box">
+                    <div class="box-body hoverDiv" onclick="alert('test')">
+                        <div id="boxelement">
+                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                        </div>
+                        <div id="boxelement">
+                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                        </div>
+                        <div id="boxelement">
+                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                        </div>
+                        <div id="boxelement">
+                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="prostatacancer">
+            <div class="">
+                <div>
+                    <h4>Annan cancer</h4>
+                </div>
+                <div class="">
+                    <table class="table">
+                        <tr>
+                            <th><div>Patient</div></th>
+                            <th><div>Behandlings-ID</div></th>
+                            <th><div>Status</div></th>
+                            <th><div>Mottagen</div></th>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="" ng-repeat="object in posts">
+                <div class=" box">
+                    <div class="box-body hoverDiv" onclick="alert('test')">
+                        <div id="boxelement">
+                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                        </div>
+                        <div id="boxelement">
+                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                        </div>
+                        <div id="boxelement">
+                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                        </div>
+                        <div id="boxelement">
+                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

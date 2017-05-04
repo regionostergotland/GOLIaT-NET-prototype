@@ -1,0 +1,71 @@
+﻿@section scripts{
+    <script>
+    $(document).ready(function () {
+        //$("#myModal").modal('show');
+    });
+
+    function resizeIframe(obj) {
+        obj.style.height = 0;
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+    </script>
+
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h3>User.Identity.Name</h3><br />
+        @User.Identity.Name
+
+        <h3>User Roles</h3>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Role
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var claim in (User.Identity as System.Security.Claims.ClaimsIdentity).Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Role))
+                    {
+                        <tr>
+                            <td>@claim.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <h3>Issued Claims</h3>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Claim Type
+                    </th>
+                    <th>
+                        Claim Value
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var claim in (User.Identity as System.Security.Claims.ClaimsIdentity).Claims)
+                    {
+                        <tr title="Issuer: @claim.Issuer">
+                            <td>@claim.Type</td>
+                            <td>@claim.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

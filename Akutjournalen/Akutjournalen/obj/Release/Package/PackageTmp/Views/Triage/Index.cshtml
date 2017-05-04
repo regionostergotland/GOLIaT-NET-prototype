@@ -1,0 +1,578 @@
+﻿@section scripts{
+
+    <script type="text/javascript">
+        var ehrID = '@Session["EHRID"]';
+    </script>
+    <script src="http://10.84.221.203:8080/dist/bundle.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/ChartJs/Chart.js"></script>
+    <script src="~/Scripts/EHR/Triage.js"></script>
+    <script src="~/Scripts/EHR/Global.js"></script>
+    <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="~/signalr/hubs"></script>           
+    <script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            var text = '{"nodeSender":"","syncing":false,"formfields":{"firstname":{"value":"","time":"","colorClass":""},"lastname":{"value":"","time":"","colorClass":""},"personnummer":{"value":"","time":"","colorClass":""},"pulsrate":{"value":"","time":"","colorClass":""},"oxygen":{"value":"","time":"","colorClass":""},"diastolic":{"value":"","time":"","colorClass":""},"activeRadioButton":"","checklistButtonsId":{"sp02":"","af":"","puls":"","alert":"","temp":""}}}';
+            var ehrID = '28ac8bbc-eb14-4f01-a30d-bcff446e0bd4-Triage';
+
+            console.log(ehrID + text);
+            initCollection(ehrID, text);
+            subscribeToPatientFields(ehrID);
+        });
+
+    </script>*@
+
+    
+
+    <link href="~/Content/Custom/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">   
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>*@
+
+    <style>
+        .table-striped > tbody > tr:nth-child(odd) > td,
+        tr.found {
+            background-color: rgba(151,187,205,0.2);
+        }
+
+        #pulsrate {
+            text-align: center;
+        }
+
+        .vp-red {
+            border-color: red;
+        }
+
+        .vp-yellow {
+            border-color: yellow;
+        }
+
+        .vp-orange {
+            border-color: orange;
+        }
+
+        .vp-green {
+            /*green*/
+            border-color: #4fff30;
+        }
+
+        .vp-white {
+            /*green*/
+            border-color: #4fff30;
+        }
+
+    </style>
+
+
+  <script>
+
+      $(document).ready(function () {
+
+        //var akutDoc;
+
+        //console.log("patient");
+        //subscribeToPatientFields(ehrID + "-Triage");
+
+        //function showDoc() {
+        //    akutDoc = akutDoc;
+        //}
+
+        $.validator.setDefaults({                    
+        submitHandler: function () {
+            alert("submitted!");
+        },
+        showErrors: function (map, list) {
+            // there's probably a way to simplify this
+            alert("submit!");
+
+            $.each(list, function (index, error) {
+                $(error.element).attr("title", error.message).addClass("ui-state-highlight");
+            });
+
+        }
+    });
+
+      (function () {
+
+          
+        // use custom tooltip; disable animations for now to work around lack of refresh method on tooltip
+        $("#commentForm, #signupForm").tooltip({
+            show: false,
+            hide: false
+        });
+        // validate the comment form when it is submitted
+        //$("#commentForm").validate();
+
+        // validate signup form on keyup and submit
+        $("#signupForm").validate(            
+            {
+            rules: {
+
+                firstname: {
+                    required: true,
+                    digits: true,
+                    min: 90,
+                    max: 120
+                }
+            },
+            messages: {
+                firstname: {
+                    required: "Värdet måste vara inom intervallet 90-120",
+                    min: "Värdet måste vara inom intervallet 90-120",
+                    max: "Värdet måste vara inom intervallet 90-120",
+                }
+            }
+        });
+      })
+
+      });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+   
+        $(function () {
+       
+        //screenfull.request(document.getElementById('wrapper'));
+        $('#blodPressureGraf2').toggle(function () {
+            screenfull.request(document.getElementById('blodPressureGrafArea'));
+        });
+
+        $('#blodPressureGraf').on('click', function () {
+
+            if($(this).attr('data-click-state') == 1) {  
+                $(this).attr('data-click-state', 0)
+                    screenfull.exit();
+            } else {
+                $(this).attr('data-click-state', 1)
+                    screenfull.request(document.getElementById('blodPressureGrafArea'));
+            }
+
+        });
+
+    });
+        
+    </script>
+
+
+
+    <script>
+        var akutDoc;
+
+        window.addEventListener('operationChanged', function (e) {
+            //alert('Event')
+            //setREDPushValue(e.detail[0].p[1]);
+            //akutDoc = e;
+        });
+
+        ////Incoming messages from Node-red is set here.
+        //function setREDPushValue(elementId) {
+        //    if (doc.id != null) {
+        //        //console.log(elementId);
+
+        //        if (elementId == "pulsrate") {
+        //            var value = doc.data.formfields.pulsrate.value;
+        //            $('#pulsrate').val(value);
+        //            $('#' + elementId).attr('class', doc.data.formfields.pulsrate.colorClass);
+        //        }
+
+        //        else if (elementId == "oxygen") {
+        //            var value = doc.data.formfields.oxygen.value;
+        //            $('#oxygen').val(value);
+        //            $('#' + elementId).addClass(doc.data.formfields.oxygen.colorClass);
+        //        }
+        //    }
+        //}
+
+        $(document).ready(function () {
+
+            //akutDoc = getDoc()
+            StartAnimation()
+
+            try {
+
+                //var text = '{"nodeSender":"","syncing":false,"formfields":{"firstname":{"value":"","time":"","colorClass":""},"lastname":{"value":"","time":"","colorClass":""},"personnummer":{"value":"","time":"","colorClass":""},"pulsrate":{"value":"","time":"","colorClass":""},"oxygen":{"value":"","time":"","colorClass":""},"diastolic":{"value":"","time":"","colorClass":""},"activeRadioButton":"","checklistButtonsId":{"sp02":"","af":"","puls":"","alert":"","temp":""},"notes":{"value":"","time":"","colorClass":""}}}';
+                
+                //console.log(ehrID + "-Triage" + text);
+                //initCollection(ehrID + "-Triage", text);
+                //subscribeToPatientFields(ehrID + "-Triage");
+                //fn();
+                
+            }
+            catch (err) {
+                
+            }
+
+            
+
+        });
+
+        function showDoc() {
+            akutDoc = akutDoc;
+        }
+
+        function setJournalMetadata(dataObj) {
+            console.log("AkutJournalen : " + dataObj.data.formfields.diastolic.value);
+        }
+
+        function StartAnimation() {
+            $("#pulsrateIcon1").hide()
+            $("#pulsrateIcon2").show()
+
+            $("#systolicIcon1").hide()
+            $("#systolicIcon2").show()
+
+            //window.setTimeout(getValueFromPulseDevice, Math.floor(Math.random() * (max - min + 1) + min));
+        }
+
+        var app = angular.module("myApp", []);
+
+        app.controller('myCtrl', function ($scope, $http) {
+
+
+            $scope.getData = function () {
+
+                $scope.ehrId = ehrID
+
+                var aql = "select bp/data[at0001|history|]/events[at0006|any event|]/Time as Time, " +
+               "bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0004|Systolic|]/value as Systolic, " +
+               "bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0005|Diastolic|]/value as Diastolic, " +
+               "c_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value as Pulse_Rate " +
+
+               " from EHR e " +
+               "contains COMPOSITION c " +
+               //"contains ( OBSERVATION bp[openEHR-EHR-OBSERVATION.blood_pressure.v1]  ) " +
+               "contains (OBSERVATION bp[openEHR-EHR-OBSERVATION.blood_pressure.v1] or OBSERVATION c_a[openEHR-EHR-OBSERVATION.pulse.v1])" +
+               "    where " +
+               "    c/archetype_details/template_id/value = 'triage' AND " +
+               " e/ehr_id/value = '" + $scope.ehrId + "'" +
+               " ORDER BY bp/data[at0001|history|]/events[at0006|any event|]/Time DESC" +
+               " offset 0 limit 4"
+
+                sessionId = getSessionId()
+
+                $http({
+                    url: baseUrl + "/query?" + $.param({ "aql": aql }),
+                    method: "GET",
+                    headers: {
+                        "Ehr-Session": sessionId
+                    }
+                }).error(function (data, status, header, config) {
+
+                })
+                    .success(function (res) {
+
+                        data = res.resultSet;
+                        //data[i].Diastolic.magnitude;
+                        $scope.posts = data;
+                    });
+
+            }
+
+            $scope.getData();
+
+        });
+
+        function reFreshTable() {
+            var scope = angular.element(document.getElementById("MainWrap")).scope();
+
+            scope.$apply(function () {
+                scope.getData();
+            });
+
+        }
+
+
+
+    </script>
+
+}
+
+<!-- Modal -->
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h1 class="box-title"><b>Sökorsak</b></h1>
+
+                    <div class="box-tools pull-right">                       
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div>
+                        Patientens sökorsak.
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h1 class="box-title"><b>Triage</b></h1>
+
+                    <div class="box-tools pull-right">                       
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div>
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+
+                                <div class="row">
+
+                                    <textarea id="JSONQuery" name="JSONQuery" style="display:none"></textarea>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <b>Sp02</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input style="width:40px" id="spo2" class="ro_disabled" disabled />
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <b>AF</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input style="width:40px" id="af" disabled />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <b>Puls/Puls</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 " style="white-space: nowrap;">
+                                        <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="pulsrate" maxlength="3" style="width:40px" />
+                                        &nbsp;<i id="pulsrateIcon1" class="fa fa-pause" style=" cursor: pointer;" onclick="getValues('pulsrate')"></i>
+
+                                        <i id="pulsrateIcon2" onclick="stopValues('pulsrate')" style="display:none" class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <i style="display:none" class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+                                        <b>O2</b>
+                                    </div>
+
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="oxygen" maxlength="3" style="width:40px" disabled />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <b>RLS</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input style="width:40px" id="rls" disabled />
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <b>EKG&nbsp;taget</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input style="width:40px" id="ekgtaget" disabled />
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <b>Temp</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input style="width:40px" id="temp" disabled />
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <b>EKG&nbsp;grans.</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <input style="width:40px" id="ekggrans" disabled />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <b>BT / Systolic</b>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 " style=14:18 2016-11-07"white-space nowrap;">
+                                        <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="systolic" maxlength="3" placeholder="Syst.." style="width:40px" />
+                                        &nbsp;<i id="systolicIcon1" class="fa fa-pause" style="cursor: pointer;" onclick="getValues('bt')"></i>
+                                        <i id="systolicIcon2" style="display:none" class="fa fa-refresh fa-spin fa-1x fa-fw" onclick="stopValues('bt')"></i>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3 ">
+                                        <b>BT / Diastolic</b>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3 " style=14:18 2016-11-07"white-space nowrap;">
+                                        <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="diastolic" maxlength="3" placeholder="Dist.." style="width:40px" />
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-default btn btn-flat" data-dismiss="modal">Rensa</button>
+                                <button type="submit" id="SaveTriage" class="btn btn-sm btn-primary btn btn-flat" data-dismiss="modal"> <i class="glyphicon glyphicon-floppy-disk"></i> Spara</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h1 class="box-title"><b>Patientuppgift</b></h1>
+
+                    <div class="box-tools pull-right">                        
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div>
+                        A: Fri B snabbandad, nedsatt andningsljud vä- ca:na D:na Eina cc-bräda
+                        Förare av bil. bältad, påkörd från höger sida, hastighet 70 km/h stabil transport.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <!-- AREA CHART -->
+            <div class="box box-primary" id="blodPressureGrafArea">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><b>Blodtryck</b></h3>
+                    <div class="box-tools pull-right">
+                        <button id="blodPressureGraf" type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-arrows-alt"></i></button>                        
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="canvas" style="height: 180px;"></canvas>
+                    </div>
+                </div>
+                <div class="box-footer clearfix">
+                </div>
+            </div>
+
+            <div class="box box-primary table-responsive" onclick="getData2()">
+                <div class="box-header with-border">
+                    <h1 class="box-title"><b>Blodtryck/Puls</b></h1>
+
+                    <div class="box-tools pull-right">                        
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="MainWrap" ng-app="myApp" ng-controller="myCtrl" data-ng-init="init('@Session["EHRID"]')">
+                        <div>
+
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <th style="width:65px"></th>
+                                <th ng-repeat="data in posts">
+                                    <div style="width: 80px;"><b>{{ data.Time.value | date:'yyyy-MM-dd'  }}</b></div><div class="RO_TriageTime">{{ data.Time.value | date:'hh:mm'  }}</div>
+                                </th>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <th>Systolic</th>
+                                        <td>{{ posts[3].Systolic.magnitude }}</td>
+                                        <td>{{ posts[2].Systolic.magnitude }}</td>
+                                        <td>{{ posts[1].Systolic.magnitude }}</td>
+                                        <td>{{ posts[0].Systolic.magnitude }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Diastolic</th>
+                                        <td>{{ posts[3].Diastolic.magnitude }}</td>
+                                        <td>{{ posts[2].Diastolic.magnitude }}</td>
+                                        <td>{{ posts[1].Diastolic.magnitude }}</td>
+                                        <td>{{ posts[0].Diastolic.magnitude }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Puls</th>
+                                        <th style="color:{{ posts [3].Pulse_Rate.magnitude<85?'#ff6600':'green'; }}">{{ posts[3].Pulse_Rate.magnitude  }}</th>
+                                        <th style="color:{{ posts [2].Pulse_Rate.magnitude<85?'#ff6600':'green'; }}">{{ posts[2].Pulse_Rate.magnitude }}</th>
+                                        <th style="color:{{ posts [1].Pulse_Rate.magnitude<85?'#ff6600':'green'; }}">{{ posts[1].Pulse_Rate.magnitude }}</th>
+                                        <th style="color:{{ posts [0].Pulse_Rate.magnitude<85?'#ff6600':'green'; }}">{{ posts[0].Pulse_Rate.magnitude }}</th>
+                                    </tr>
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+
+        <div id="result" name="result" />
+
+    </div>
+
+
+
+
+
+<form class="cmxform" id="signupForm">
+    <fieldset class="ui-widget ui-widget-content ui-corner-all" style="display:none">
+        <legend class="ui-widget ui-widget-header ui-corner-all">Validating a complete form</legend>
+        <p>
+            <label for="firstname">Firstname</label>
+            <input id="firstname" name="firstname" type="text">
+        </p>
+
+
+
+        <p>
+            <button class="submit" type="submit">Submit</button>
+        </p>
+    </fieldset>
+</form>
+
+

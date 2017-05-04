@@ -1,0 +1,16 @@
+﻿
+<!-- Sidebar Menu -->
+<ul class="sidebar-menu">
+    <li class="hidden"><input type="number"  /></li>
+    <li class="header">@ViewBag.PageMenuHeader</li>
+    <!-- Optionally, you can add icons to the links -->    
+    <li class="ro_team"><a href="@Url.Action("Index", "Home")"><i class="fa fa-users"></i><span>Din översikt</span></a></li>    
+    <li><a href="@Url.Action("Index", "Triage")"><i class="fa fa-area-chart ro_pat"></i><span>Utredning</span></a></li>    
+    <li><a href="@Url.Action("Index", "Forms")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Beslut</span></a></li>    
+    <li><a href="@Url.Action("Index", "Timeline")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Planering</span></a></li>    
+    <br />
+    <li><a href="@Url.Action("Index", "SlutAnteckning")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Ledning</span></a></li>
+
+</ul>
+<!-- /.sidebar-menu -->
+
