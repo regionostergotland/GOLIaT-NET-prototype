@@ -16,6 +16,7 @@
 <link href="~/Content/Custom/custom.css" rel="stylesheet" />
 <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">   
 <script src="~/Scripts/Views/Beslut/beslut.js"></script>
+<script src="~/Scripts/Views/Patienter/patienter.js"></script>
 
 
 <style>
@@ -105,22 +106,22 @@
                 </table>
 
             <div class="" ng-repeat="object in posts">
-                <div class="box" >
-                    <div class="box-body hoverDiv" onclick="alert('test')">
-                        <div id="boxelement">
-                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
-                        </div>
-                        <div id="boxelement">
-                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
-                        </div>
-                        <div id="boxelement">
-                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
-                        </div>
-                        <div id="boxelement">
-                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                    <div class="box">
+                        <div class="box-body hoverDiv" ng-click="" id="{{object.Diastolic}}">
+                            <div id="boxelement">
+                                {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                            </div>
+                            <div id="boxelement">
+                                {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                            </div>
+                            <div id="boxelement">
+                                {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                            </div>
+                            <div id="boxelement">
+                                {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 

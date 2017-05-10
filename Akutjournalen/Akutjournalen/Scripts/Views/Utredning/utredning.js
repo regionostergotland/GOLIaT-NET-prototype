@@ -9,8 +9,6 @@ var password = 'Cortiz13112015'
 
 function getSessionId() {
 
-    //alert(baseUrl + "/session?username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password))
-
     var response = $.ajax({
         type: "POST",
         url: baseUrl + "/session?username=" + encodeURIComponent(username) +
@@ -21,13 +19,6 @@ function getSessionId() {
     return response.responseJSON.sessionId;
 }
 
-function showDoc() {
-    akutDoc = akutDoc;
-}
-
-function setJournalMetadata(dataObj) {
-    console.log("AkutJournalen : " + dataObj.data.formfields.diastolic.value);
-}
 var app = angular.module("myApp", []);
 
 app.controller('myCtrl', function ($scope, $http) {
@@ -60,10 +51,11 @@ app.controller('myCtrl', function ($scope, $http) {
                 "Ehr-Session": sessionId
             }
         }).error(function (data, status, header, config) {
-            alert("HI");
+            alert("Request failed: " + status);
 
         })
             .success(function (res) {
+                console.log(res)
                 data = res.resultSet;
                 $scope.posts = data;
             });

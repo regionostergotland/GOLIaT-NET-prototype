@@ -63,6 +63,7 @@
         text-align: center;
         background-color: #0066b3;
         color: #ffffff;
+        text-space-collapse:collapse;
     }
 
     td {
@@ -91,19 +92,19 @@
     <div id="top-row">
         <div id="left-top-row-content"><h4>Alla Utredningar</h4></div>
         <div id="right-top-row-content">
-            <button class="btn btn-success pull-right ">
-                Ny utredning
-            </button>
+            <a href="@Url.Action("Index", "Triage/nyutredning")">
+                <button class="btn btn-success pull-right">
+
+                    Ny utredning
+
+                </button>
+            </a>
         </div>
     </div>
     
 
     <div ng-app="myApp" ng-controller="myCtrl">
         <div class="">
-            @*<div class="row">
-                TEST
-            </div>*@
-            
             <table class="table ">
                 <tr>
                     <th><div>Patient</div></th>
@@ -112,23 +113,25 @@
                     <th><div>Mottagen</div></th>
                 </tr>
             </table>
-            <div ng-repeat="object in posts">
-                <div class="box " >
-                    <div class="box-body hoverDiv" onclick="alert('test')">
-                        <div id="boxelement">
-                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
-                        </div>
-                        <div id="boxelement">
-                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
-                        </div>
-                        <div id="boxelement">
-                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
-                        </div>
-                        <div id="boxelement">
-                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+            <div ng-repeat="obj in posts">
+                <a href="@Url.Action("Index", "Triage/redigerautredning", new { patient = "Alison Wilkinson", ehrID = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4" })">
+                    <div class="box " >
+                        <div class="box-body hoverDiv">
+                            <div id="boxelement">
+                                {{ obj.Diastolic.magnitude }} {{ obj.Diastolic.units }}
+                            </div>
+                            <div id="boxelement">
+                                {{ obj.Systolic.magnitude }} {{ obj.Systolic.units }}
+                            </div>
+                            <div id="boxelement">
+                                {{ obj.Diastolic.magnitude }} {{ obj.Diastolic.units }}
+                            </div>
+                            <div id="boxelement">
+                                {{ obj.Systolic.magnitude }} {{ obj.Systolic.units }}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

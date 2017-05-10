@@ -34,39 +34,40 @@ app.controller('myCtrl', function ($scope, $http) {
 
 
     $scope.getData = function () {
-        $scope.ehrId = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4"
         //ehrID
+        //$scope.ehrId = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4"
+        
 
-        var aql = "select bp/data[at0001|history|]/events[at0006|any event|]/Time as Time, " +
-       "bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0004|Systolic|]/value as Systolic, " +
-       "bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0005|Diastolic|]/value as Diastolic, " +
-       "c_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value as Pulse_Rate " +
+       // var aql = "select bp/data[at0001|history|]/events[at0006|any event|]/Time as Time, " +
+       //"bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0004|Systolic|]/value as Systolic, " +
+       //"bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0005|Diastolic|]/value as Diastolic, " +
+       //"c_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value as Pulse_Rate " +
 
-       " from EHR e " +
-       "contains COMPOSITION c " +
-       "contains (OBSERVATION bp[openEHR-EHR-OBSERVATION.blood_pressure.v1] or OBSERVATION c_a[openEHR-EHR-OBSERVATION.pulse.v1])" +
-       "    where " +
-       "    c/archetype_details/template_id/value = 'triage' AND " +
-       " e/ehr_id/value = '" + $scope.ehrId + "'" +
-       " ORDER BY bp/data[at0001|history|]/events[at0006|any event|]/Time DESC" +
-       " offset 0 limit 4"
+       //" from EHR e " +
+       //"contains COMPOSITION c " +
+       //"contains (OBSERVATION bp[openEHR-EHR-OBSERVATION.blood_pressure.v1] or OBSERVATION c_a[openEHR-EHR-OBSERVATION.pulse.v1])" +
+       //"    where " +
+       //"    c/archetype_details/template_id/value = 'triage' AND " +
+       //" e/ehr_id/value = '" + $scope.ehrId + "'" +
+       //" ORDER BY bp/data[at0001|history|]/events[at0006|any event|]/Time DESC" +
+       // " offset 0 limit 4"
 
-        sessionId = getSessionId()
+       // sessionId = getSessionId()
 
-        $http({
-            url: baseUrl + "/query?" + $.param({ "aql": aql }),
-            method: "GET",
-            headers: {
-                "Ehr-Session": sessionId
-            }
-        }).error(function (data, status, header, config) {
-            alert("HI");
+       // $http({
+       //     url: baseUrl + "/query?" + $.param({ "aql": aql }),
+       //     method: "GET",
+       //     headers: {
+       //         "Ehr-Session": sessionId
+       //     }
+       // }).error(function (data, status, header, config) {
+       //     alert("HI");
 
-        })
-            .success(function (res) {
-                data = res.resultSet;
-                $scope.posts = data;
-            });
+       // })
+       //     .success(function (res) {
+       //         data = res.resultSet;
+       //         $scope.posts = data;
+       //     });
 
     }
 

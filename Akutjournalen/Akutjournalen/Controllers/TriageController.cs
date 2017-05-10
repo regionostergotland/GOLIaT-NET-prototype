@@ -25,5 +25,14 @@ namespace Akutjournalen.Controllers
         {
             return View();
         }
+
+        public ActionResult NyUtredning()
+        {
+            return View();
+        }
+        public ActionResult RedigeraUtredning()
+        {
+            return View();
+        }
 	}
 }

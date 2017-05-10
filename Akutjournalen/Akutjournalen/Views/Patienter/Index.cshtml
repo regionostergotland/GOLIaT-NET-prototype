@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Patienter";
+    ViewBag.PageHeader = "Patienter";
+    ViewBag.SubPageHeader = "";
+}
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/Views/Patienter/patienter.js"></script>
+
+
+<style>
+    /*#columnNames {
+        margin-top: 50px;
+    }*/
+
+    #left-top-row-content {
+        float: left;
+        display: inline;
+        width: 49%;
+    }
+     #middle-row {
+         margin-top:50px;
+         margin-bottom:30px;
+     }
+
+    #right-top-row-content {
+        float: left;
+        display: inline;
+        width: 49%;
+    }
+
+    #boxelement {
+        float: left;
+        display: inline;
+        width: 25%;
+        text-align: left;
+    }
+
+    .table {
+        margin-bottom: 0px;
+    }
+
+    th {
+        text-align: left;
+        width: 25%;
+        background-color: #0066b3;
+        color: #ffffff;
+    }
+
+    td {
+        text-align: left;
+    }
+
+    .box {
+        margin-bottom: auto;
+    }
+
+    .box-body {
+        color: #000000;
+        background-color: #ffffff;
+    }
+
+    h2 {
+        margin-top: 50px;
+    }
+</style>
+
+
+<!-- Modal -->
+<div ng-app="myApp2" ng-controller="patientViewCtrl">
+    <div id="top-row">
+        <div id="left-top-row-content"><h4>EHR Adminvy- Patienter</h4></div>
+
+        <div id="right-top-row-content">
+            <a href="@Url.Action("Index", "Patienter/CreatePatient")">
+                <button class="btn btn-success pull-right">
+                    Ny Patient
+                </button>
+            </a>
+        </div>
+    </div>
+    <br />
+    <div id="middle-row" class="form-group">
+        <span><label for="firstname-search-field">Firstname: </label> <input type="text" ng-model="name.firstname" /></span>
+        <span><label for="lastname-search-field">Lastname: </label> <input type="text" ng-model="name.lastname" /></span>
+        <span><button type="submit" class="fa fa-search btn btn-primary" ng-click="FilterPatientsByName(name.firstname,name.lastname)"></button></span>
+    </div>
+
+    <div>
+        <div class=" ">
+            <table class=" table ">
+                <tr>
+                    <th><div>Namn</div></th>
+                    <th><div>EHRID</div></th>
+                    <th><div>Kön</div></th>
+                    <th><div>Födelsedag</div></th>
+                </tr>
+            </table>
+
+            <div class="" ng-repeat="patient in parties">
+                <div class="box">
+                    <div class="box-body ">
+                        <div id="boxelement">
+                            {{ patient.firstNames }} {{ patient.lastNames }}
+                        </div>
+                        <div id="boxelement">
+                            {{ patient.partyAdditionalInfo[0].value}}
+                        </div>
+                        <div id="boxelement">
+                            {{ patient.gender }}
+                        </div>
+                        <div id="boxelement">
+                            {{ patient.partyAdditionalInfo[1].value }}
+                        </div>
+                    </div>
+                </div>
+                <button class="fa fa-times btn btn-danger" id="{{ patient.partyAdditionalInfo[0].value}}" ng-click="DeletePatient(patient.id)"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
