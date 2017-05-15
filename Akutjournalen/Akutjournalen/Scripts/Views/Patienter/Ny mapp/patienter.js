@@ -1,4 +1,4 @@
-﻿
+
 
 var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 //var queryUrl = baseUrl + '/query';
@@ -45,7 +45,6 @@ function GetPatientByEHR(ehrId) {
 var app = angular.module("myApp2", []);
 
 app.controller('patientViewCtrl', function ($scope, $http) {
-
 
     //Initial call from API.
     var searchData = [

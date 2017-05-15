@@ -1,4 +1,5 @@
 ﻿@section scripts{
+    
 
 <script type="text/javascript">
     var ehrID = '@Session["EHRID"]';
@@ -15,8 +16,9 @@
 
 <link href="~/Content/Custom/custom.css" rel="stylesheet" />
 <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">   
-<script src="~/Scripts/Views/Beslut/beslut.js"></script>
-<script src="~/Scripts/Views/Patienter/patienter.js"></script>
+@*<script src="~/Scripts/Views/Beslut/beslut.js"></script>*@
+<script src="~/Scripts/Views/myAngular.js"></script>
+
 
 
 <style>
@@ -48,12 +50,11 @@
         display: inline;
         width: 49%;
     }
-
     #boxelement {
         float: left;
         display: inline;
-        width: 25%;
-        text-align: center;
+        width: 20%;
+        text-align: left;
     }
 
     .table {
@@ -61,13 +62,13 @@
     }
 
     th {
-        text-align: center;
+        text-align: left;
         background-color: #0066b3;
         color: #ffffff;
     }
 
     td {
-        text-align: center;
+        text-align: left;
     }
 
     .box {
@@ -77,6 +78,13 @@
     .box-body {
         color: #000000;
         background-color: #ffffff;
+    }
+    #boxHeader {
+        
+        text-align: left;
+        background-color: #0066b3;
+        color: #ffffff;
+        font-weight: bold;
     }
 
     h2 {
@@ -89,74 +97,111 @@
 }
 
 <div class="">
-        
-    <div ng-app="myApp" ng-controller="myCtrl">
+    
+    <div ng-app="myApp" ng-controller="StartSidaBeslutCtrl">
 
         <div id="prostatacancer">
-                <div>
-                    <h4>Prostatacancer</h4>
+            <div>
+                <h4>Diagnos</h4>
+            </div>
+            <div class="box">
+                <div class="box-body" id="boxHeader">
+                    <div id="boxelement">
+                        Patient
+                    </div>
+                    <div id="boxelement">
+                        Comment
+                    </div>
+                    <div id="boxelement">
+                        Diagnos
+                    </div>
+                    <div id="boxelement">
+                        Patient Information
+                    </div>
+                    <div id="boxelement">
+                        Status
+                    </div>
                 </div>
-                <table class="table">
-                    <tr >
-                        <th><div>Patient</div></th>
-                        <th><div>Behandlings-ID</div></th>
-                        <th><div>Status</div></th>
-                        <th><div>Mottagen</div></th>
-                    </tr>
-                </table>
+            </div>
 
-            <div class="" ng-repeat="object in posts">
+                @*<table class="table">
+                <tr>
+                    <th><div>Patient</div></th>
+                    <th><div>Comment</div></th>
+                    <th><div>Diagnos</div></th>
+                    <th><div>Patient Information</div></th>
+                    <th><div>Status</div></th>
+                </tr>
+            </table>*@
+
+                <div class="" ng-repeat="instruction in instructions">
                     <div class="box">
-                        <div class="box-body hoverDiv" ng-click="" id="{{object.Diastolic}}">
+                        <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
                             <div id="boxelement">
-                                {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                                {{ instruction.EHRID  ||  "-"}}
                             </div>
                             <div id="boxelement">
-                                {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                                {{ instruction["#1"].content["0"].activities["0"].description.items[1].value.value ||  "-"}}
                             </div>
-                            <div id="boxelement">
-                                {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                            <div id="boxelement" >
+                                Diagnos
                             </div>
-                            <div id="boxelement">
-                                {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                            <div id="boxelement" >
+                                {{ instruction["#1"].content["0"].activities["0"].description.items[3].value.value ||  "-"}}
+                            </div>
+                            <div id="boxelement" >
+                                {{ instruction.EHRID  ||  "-"}}
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
+        
 
         <div id="prostatacancer">
             <div class="">
                 <div>
-                    <h4>Annan cancer</h4>
+                    <h4>Annan diagnos</h4>
                 </div>
-                <div class="">
-                    <table class="table">
-                        <tr>
-                            <th><div>Patient</div></th>
-                            <th><div>Behandlings-ID</div></th>
-                            <th><div>Status</div></th>
-                            <th><div>Mottagen</div></th>
-                        </tr>
-                    </table>
-
+                <div class="box">
+                    <div class="box-body" id="boxHeader">
+                        <div id="boxelement">
+                            Patient
+                        </div>
+                        <div id="boxelement">
+                            Comment
+                        </div>
+                        <div id="boxelement">
+                            Diagnos
+                        </div>
+                        <div id="boxelement">
+                            Patient Information
+                        </div>
+                        <div id="boxelement">
+                            Status
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="" ng-repeat="object in posts">
-                <div class=" box">
-                    <div class="box-body hoverDiv" onclick="alert('test')">
+            <div class="" ng-repeat="instruction in instructions">
+                <div class="box">
+                    <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
                         <div id="boxelement">
-                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                            {{ instruction.EHRID}}
                         </div>
                         <div id="boxelement">
-                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                            @*{{instruction["#1"].content["0"].activities["0"].description.items[4].value.value === null ? instruction["#1"].content["0"].activities["0"].description.items[4].value.value : "No Comment"}}*@
+                            {{ instruction["#1"].content["0"].activities["0"].description.items[4].value.value}}
                         </div>
                         <div id="boxelement">
-                            {{ object.Diastolic.magnitude }} {{ object.Diastolic.units }}
+                            Diagnos
                         </div>
                         <div id="boxelement">
-                            {{ object.Systolic.magnitude }} {{ object.Systolic.units }}
+                            {{ instruction["#1"].content["0"].activities["0"].description.items[3].value.value}}
+                        </div>
+                        <div id="boxelement">
+                            {{ instruction.EHRID}}
                         </div>
                     </div>
                 </div>

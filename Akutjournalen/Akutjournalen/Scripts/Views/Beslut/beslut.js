@@ -1,5 +1,4 @@
-
-
+﻿
 var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 var queryUrl = baseUrl + '/query';
 //var username = 'lio.se1'
@@ -23,54 +22,83 @@ function getSessionId() {
 
 function showDoc() {
     akutDoc = akutDoc;
-}
+};
 
 function setJournalMetadata(dataObj) {
     console.log("AkutJournalen : " + dataObj.data.formfields.diastolic.value);
-}
-var app = angular.module("myApp", []);
+};
 
-app.controller('myCtrl', function ($scope, $http) {
+//your object
+//var o = {
+//    foo: "bar",
+//    arr: [1, 2, 3],
+//    subo: {
+//        foo2: "bar2"
+//    }
+//};
+
+//called with every property and its value
+//function process(key, value) {
+
+//    console.log(key + " : ");
+//    console.log( value);
+//}
 
 
-    $scope.getData = function () {
-        //ehrID
-        //$scope.ehrId = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4"
-        
+//function traverseTree(o, func) {
+//    //For every object in the object o (including children "o")
+//    for (var i in o) {
 
-       // var aql = "select bp/data[at0001|history|]/events[at0006|any event|]/Time as Time, " +
-       //"bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0004|Systolic|]/value as Systolic, " +
-       //"bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0005|Diastolic|]/value as Diastolic, " +
-       //"c_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value as Pulse_Rate " +
+//        //console logging
+//        func.apply(this, [i, o[i]]);
 
-       //" from EHR e " +
-       //"contains COMPOSITION c " +
-       //"contains (OBSERVATION bp[openEHR-EHR-OBSERVATION.blood_pressure.v1] or OBSERVATION c_a[openEHR-EHR-OBSERVATION.pulse.v1])" +
-       //"    where " +
-       //"    c/archetype_details/template_id/value = 'triage' AND " +
-       //" e/ehr_id/value = '" + $scope.ehrId + "'" +
-       //" ORDER BY bp/data[at0001|history|]/events[at0006|any event|]/Time DESC" +
-       // " offset 0 limit 4"
+//        //Kollar om ett objekt finns, om object är av typen object
+//        if (o[i] !== null && typeof (o[i]) == "object" ) {
+//            //om det stämmer
+//            //Gå ner ett steg i trädet
+//            traverseTree(o[i], func);
+//        }
+//    }
+//}
 
-       // sessionId = getSessionId()
+//that's all... no magic, no bloated framework
+//traverse(o, process);
 
-       // $http({
-       //     url: baseUrl + "/query?" + $.param({ "aql": aql }),
-       //     method: "GET",
-       //     headers: {
-       //         "Ehr-Session": sessionId
-       //     }
-       // }).error(function (data, status, header, config) {
-       //     alert("HI");
 
-       // })
-       //     .success(function (res) {
-       //         data = res.resultSet;
-       //         $scope.posts = data;
-       //     });
+//var app = angular.module("myApp", []);
 
-    }
+//app.controller('BeslutCtrl', function ($scope, $http) {
 
-    $scope.getData();
+//    //ehrID
+//    //$scope.ehrId = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4"
 
-});
+
+
+
+//    $scope.getData = function () {
+
+//        var query = "select e/ehr_id/value, a from EHR e contains COMPOSITION a contains INSTRUCTION a_a offset 0 limit 100"
+
+//        sessionId = getSessionId()
+
+//        $http({
+//            url: baseUrl + "/query?" + $.param({ "aql": query }),
+//            method: "GET",
+//            headers: {
+//                "Ehr-Session": sessionId
+//            }
+//        }).error(function (data, status, header, config) {
+//            alert("Request failed: " + status);
+
+//        })
+//            .success(function (res) {
+//                console.log(res.resultSet);
+//                $scope.instructions = res.resultSet;
+//            });
+
+
+//    }
+
+//    $scope.getData();
+
+//});
