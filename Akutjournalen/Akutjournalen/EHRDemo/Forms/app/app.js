@@ -204,7 +204,7 @@
 					
                     var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
                     
-					//alert('HERE')					
+					alert('HERE')					
 					
                     cr.$add({ templateId: this.templateId },
                         function (success) {                            
@@ -419,43 +419,45 @@
                                     //console.log(ctrl.valueModel);
 
                                     var obj = {};
+									formDesc.children.forEach(function (child) {
+										if (child.hasOwnProperty("children")) {
+											obj[child.name] = { "formId": child.formId, "children": child.children }
 
-                                    var initationPromise = new Promise(function (resolve, reject) {
-                                        formDesc.children.forEach(function (child) {
-                                            if (child.hasOwnProperty("children")) {
-                                                obj[child.name] = { "formId": child.formId, "children": child.children }
+										}
 
-                                            }
+										else {
+											obj[child.name] = { "formId": child.formId }
+										}
+									});
+									console.log("VM: ");
+									console.log(obj);
+                                    // var initationPromise = new Promise(function (resolve, reject) {
+                                        
 
-                                            else {
-                                                obj[child.name] = { "formId": child.formId }
-                                            }
-                                        });
+                                        
+                                        
+                                        // //console.log(ctrl.valueModel);
 
-                                        console.log("VM: ");
-                                        //console.log(obj);
-                                        console.log(ctrl.valueModel);
-
-                                        if (compositionUid != undefined) {
-                                            initCollection(EHRID + "-Form-" + form.name + "-CompId" + compositionUid, ctrl.valueModel);
-                                        }
-                                        else {
-                                            initCollection(EHRID + "-Form-" + form.name, ctrl.valueModel);
-                                        }
+                                        // // if (compositionUid != undefined) {
+                                            // // initCollection(EHRID + "-Form-" + form.name + "-CompId" + compositionUid, ctrl.valueModel);
+                                        // // }
+                                        // // else {
+                                            // // initCollection(EHRID + "-Form-" + form.name, ctrl.valueModel);
+                                        // // }
 
                                    
-                                        resolve();
-                                    });
+                                        // resolve();
+                                    // });
 
-                                    initationPromise.then(function () {
+                                    // initationPromise.then(function () {
 
-                                        if (compositionUid != undefined) {
-                                            subscribeToPatientFields(EHRID + "-Form-" + form.name + "-CompId" + compositionUid);
-                                        }
-                                        else {
-                                            subscribeToPatientFields(EHRID + "-Form-" + form.name);
-                                        }
-                                    });
+                                        // // if (compositionUid != undefined) {
+                                            // // subscribeToPatientFields(EHRID + "-Form-" + form.name + "-CompId" + compositionUid);
+                                        // // }
+                                        // // else {
+                                            // // subscribeToPatientFields(EHRID + "-Form-" + form.name);
+                                        // // }
+                                    // });
 
  ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -464,6 +466,7 @@
                             ).then(
                                 function (success) {
                                     ctrl.compositions = success.resultSet;
+									console.log(success);
                                 },
 
                                 function (fail) {

@@ -5110,6 +5110,7 @@
     <Content Include="Views\Triage\RedigeraUtredning.cshtml" />
     <Content Include="Views\Patienter\Index.cshtml" />
     <Content Include="Views\Patienter\CreatePatient.cshtml" />
+    <Content Include="Views\Forms\editAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

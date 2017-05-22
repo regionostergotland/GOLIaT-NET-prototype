@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Edit Action";
+    ViewBag.PageHeader = "Edit Action";
+    ViewBag.SubPageHeader = "Urologkliniken";
+}
+
+@*<script type="text/javascript">
+    var ehrID = '@Session["EHRID"]';
+</script>*@
+
+<meta charset="UTF-8">
+<script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+
+<link href="~/Content/Custom/custom.css" rel="stylesheet" />
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/Views/myAngular.js"></script>
+@*<script src="~/Scripts/Views/app.js"></script>*@
+<script>
+
+    $(document).ready(function () {
+        var getHrefPromise = new Promise(function (resolve, reject) {
+            var href = window.location.href;
+            console.log("href", href)
+            resolve(href);
+        });
+
+        getHrefPromise.then(function (href) {
+            //getEHR
+            var str = href.substring(href.indexOf('patientehr=') + 11, href.indexOf('patientehr=') + 13 + 34);
+            console.log("str", str)
+            return str;
+
+        }).then(function (ehr) {
+            //SetIframe
+            var baseurl = "http://localhost:20216/EHRDemo/Forms/index.html?EHRID=";
+            console.log("ehrid", ehr)
+            try {
+                document.getElementById('add-iframe-div').innerHTML =
+                "<iframe name='ehrform' id='ehrform' src='" + baseurl + ehr + "' height='1000px' width='100%' frameborder='0'></iframe>";
+            }
+
+            catch (e) {
+
+            }
+        });
+
+    });
+</script>
+
+<style>
+    #form-container {
+        margin-top: 50px;
+        background-color: #D9D9D9;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    #form-top-row {
+        margin-bottom: 30px;
+        color: #808080;
+    }
+
+    label {
+        display: inline-block;
+        clear: left;
+        width: 100px;
+        text-align: right;
+        padding-right: 150px;
+    }
+
+    input {
+        display: inline-block;
+    }
+
+    #confirm-div {
+        padding-top: 7%;
+    }
+
+    #create-utredning-div {
+        padding-top: 7%;
+        clear: both;
+    }
+</style>
+<body>
+    <div id="add-iframe-div">
+    </div>
+</body>
+

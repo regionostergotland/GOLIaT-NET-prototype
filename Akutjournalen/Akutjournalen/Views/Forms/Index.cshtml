@@ -30,10 +30,10 @@
             color: #000000;
         }
 
-        .hoverDiv:active {
+        /*.hoverDiv:active {
             background: #6794dd;
             color: #ffffff;
-        }
+        }*/
 
     /*#columnNames {
         margin-top: 50px;
@@ -53,7 +53,7 @@
     #boxelement {
         float: left;
         display: inline;
-        width: 20%;
+        width: 33%;
         text-align: left;
     }
 
@@ -70,7 +70,9 @@
     td {
         text-align: left;
     }
-
+    .btn-circle {
+        background-color: #0066b3;
+    }
     .box {
         margin-bottom: auto;
     }
@@ -80,7 +82,7 @@
         background-color: #ffffff;
     }
     #boxHeader {
-        
+        min-height: 0px;
         text-align: left;
         background-color: #0066b3;
         color: #ffffff;
@@ -104,104 +106,39 @@
             <div>
                 <h4>Diagnos</h4>
             </div>
-            <div class="box">
+            <div class="box ">
                 <div class="box-body" id="boxHeader">
                     <div id="boxelement">
                         Patient
                     </div>
                     <div id="boxelement">
-                        Comment
+                        Instruction
                     </div>
                     <div id="boxelement">
-                        Diagnos
+                        Activities
                     </div>
-                    <div id="boxelement">
-                        Patient Information
-                    </div>
-                    <div id="boxelement">
-                        Status
-                    </div>
-                </div>
-            </div>
 
-                @*<table class="table">
-                <tr>
-                    <th><div>Patient</div></th>
-                    <th><div>Comment</div></th>
-                    <th><div>Diagnos</div></th>
-                    <th><div>Patient Information</div></th>
-                    <th><div>Status</div></th>
-                </tr>
-            </table>*@
-
-                <div class="" ng-repeat="instruction in instructions">
-                    <div class="box">
-                        <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
-                            <div id="boxelement">
-                                {{ instruction.EHRID  ||  "-"}}
-                            </div>
-                            <div id="boxelement">
-                                {{ instruction["#1"].content["0"].activities["0"].description.items[1].value.value ||  "-"}}
-                            </div>
-                            <div id="boxelement" >
-                                Diagnos
-                            </div>
-                            <div id="boxelement" >
-                                {{ instruction["#1"].content["0"].activities["0"].description.items[3].value.value ||  "-"}}
-                            </div>
-                            <div id="boxelement" >
-                                {{ instruction.EHRID  ||  "-"}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-
-        <div id="prostatacancer">
-            <div class="">
-                <div>
-                    <h4>Annan diagnos</h4>
-                </div>
-                <div class="box">
-                    <div class="box-body" id="boxHeader">
-                        <div id="boxelement">
-                            Patient
-                        </div>
-                        <div id="boxelement">
-                            Comment
-                        </div>
-                        <div id="boxelement">
-                            Diagnos
-                        </div>
-                        <div id="boxelement">
-                            Patient Information
-                        </div>
-                        <div id="boxelement">
-                            Status
-                        </div>
-                    </div>
                 </div>
             </div>
 
             <div class="" ng-repeat="instruction in instructions">
                 <div class="box">
                     <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
-                        <div id="boxelement">
-                            {{ instruction.EHRID}}
+                        <div id="boxelement" >
+                            {{instruction.patientinfo.firstname || "-"}} {{instruction.patientinfo.lastname || "-"}} {{instruction.patientinfo.personnummer || "-"}}
                         </div>
                         <div id="boxelement">
-                            @*{{instruction["#1"].content["0"].activities["0"].description.items[4].value.value === null ? instruction["#1"].content["0"].activities["0"].description.items[4].value.value : "No Comment"}}*@
-                            {{ instruction["#1"].content["0"].activities["0"].description.items[4].value.value}}
+                            {{ instruction.name.value ||  "-"}}
                         </div>
-                        <div id="boxelement">
-                            Diagnos
-                        </div>
-                        <div id="boxelement">
-                            {{ instruction["#1"].content["0"].activities["0"].description.items[3].value.value}}
-                        </div>
-                        <div id="boxelement">
-                            {{ instruction.EHRID}}
+                                
+                        <div id="boxelement" ng-repeat="activity in instruction.activities">
+                            {{ activity.name.value ||  "-"}}
+                            <span>
+                                <a ng-href="@Url.Action("Index", "Forms/editAction")?patientehr={{instruction.patientinfo.EHRID}}&instructionuid={{instruction.uid.value}}">
+                                    <button class="btn btn-circle" id="{{action.uid}}"></button>
+                                    @*&instructionid={{instruction.uid.value}}&activityid={{instruction.activities[0].uid}}*@
+                                </a>
+                            </span>
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,9 @@ namespace Akutjournalen.Controllers
         {
             return View();
         }
-
+        public ActionResult editAction()
+        {
+            return View();
+        }
 	}
 }

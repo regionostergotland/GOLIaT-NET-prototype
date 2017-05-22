@@ -7,6 +7,28 @@ var queryUrl = baseUrl + '/query';
 var username = 'Carlos.Ortiz@regionostergotland.se'
 var password = 'Cortiz13112015'
 
+Object.size = function (obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+//var string = "http://localhost:20216/Forms/editAction?patientehr=b51f3709-eeb6-49ed-afae-ef1468ec03fb&instructionid=3e7fc4e1-0ac0-455c-8098-bc851ac144ad&activityid=";
+
+
+//function getPatientEHR(string) {
+//    var str = string.substring(string.indexOf('patientehr=') + 11, string.indexOf('patientehr=') + 13 + 34);
+   
+//    return str;
+//}
+
+//function AddiFrame() {
+//    getHref().then
+//    getPatientEHR(getHref());
+//    document.getElementById('add-iframe-div').innerHTML = '<ol><li>html data</li></ol>';
+//}
 
 function getSessionId() {
 
@@ -24,67 +46,118 @@ function getSessionId() {
 
 var app = angular.module("myApp", []);
 
-app.factory('getInstructions', function ($http) {
+app.factory('getForm', function ($http) {
 
-    var obj = [];
-    var newQuery;
-    var query = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a contains INSTRUCTION a_a offset 0 limit 100"
-    //var query = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a#Prescription contains INSTRUCTION a_a offset 0 limit 100"
+});
+
+app.factory('GetInstructions', function ($http) {
+
+    var InstructionsQuery = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a contains INSTRUCTION a_a offset 0 limit 100"
+
+    var searchData = [
+        { key: "firstNames", value: "*" },
+        { key: "lastNames", value: "*" }
+    ];
 
     sessionId = getSessionId()
+    
 
-    //First//
-    var getInstructions = {
-        myFunction: function () {
-            var promise = $http({
-                    url: baseUrl + "/query?" + $.param({ "aql": query }),
-                    method: "GET",
-                    headers: {
-                        "Ehr-Session": sessionId
-                    }
-                }).error(function (data, status, header, config) {
-                    alert("Request failed: " + status);
+    var getInstructions = function () {
+        var object = new Object();
+        object.instructions = [];
 
-                }).success(function (res) {
-                    console.log(res.resultSet);
-                    return res.resultSet;
-                });
+        $http({
+            async :false,
+            url: baseUrl + "/query?" + $.param({ "aql": InstructionsQuery }),
+            method: "GET",
+            headers: {
+                "Ehr-Session": sessionId
+            }
+        }).error(function (data, status, header, config) {
+            alert("Request failed: " + status);
+            //returnerar party insertion
+        }).success(function (res) {
+            for (var k = 0; k < res.resultSet.length; k++) {
 
-            return promise;
+                object.instructions.push(res.resultSet[k]["#1"].content["0"]);
+                object.instructions[k].patientinfo = {};
+                object.instructions[k].patientinfo.EHRID = res.resultSet[k].EHRID;
 
             }
-            
+
+             $.ajaxSetup({
+                headers: {
+                    "Ehr-Session": sessionId
+                }
+            });
+
+            var insertParties =$.ajax({
+                async: false,
+                url: baseUrl + "/demographics/party/query",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(searchData),
+                //Returnerar object
+                success: function (res) {
+                    for (var i = 0; i < res.parties.length; i++) {
+                        for (var t = 0; t < Object.size(object.instructions) ; t++) {
+
+                            try {
+                                if (res.parties[i].partyAdditionalInfo["0"].value == object.instructions[t].patientinfo.EHRID) {
+                                    object.instructions[t].patientinfo.firstname = res.parties[i].firstNames;
+                                    object.instructions[t].patientinfo.lastname = res.parties[i].lastNames;
+                                    //object.instructions[t].patientinfo.personnummer = parties.parties[i].partyAdditionalInfo["1"].value;
+                                }
+
+                                else if (res.parties[i].partyAdditionalInfo["1"].value == object.instructions[t].patientinfo.EHRID) {
+
+                                    object.instructions[t].patientinfo.firstname = res.parties[i].firstNames;
+                                    object.instructions[t].patientinfo.lastname = res.parties[i].lastNames;
+                                    //object.instructions[t].patientinfo.personnummer = parties.parties[i].partyAdditionalInfo["0"].value;
+                                }
+
+                                else {
+                                    console.log(res.parties[i].partyAdditionalInfo["1"].value);
+                                }
+                            }
+                            catch(e) {
+
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        return object;
     }
-    return getInstructions;
+    
+
+    return {
+        getInstruct: getInstructions
+    }
+
+    //return {
+    //    GetInstruct: func.GetInstruct,
+    //    GetPatients: func.GetPatients
+    //}
 
     //END OF FIRST//
 
 });
 
 
-//app.factory('GetPatientByEHR', function () {
+app.controller('StartSidaBeslutCtrl', ['$scope', "GetInstructions", function ($scope, GetInstructions) {
+
+    data = GetInstructions.getInstruct();
+    console.log(data);
+    $scope.instructions = data.instructions;
+    
+}]);
+
+app.controller('EditActionCtrl', ['$scope', "GetInstructions", function ($scope, GetInstructions) {
 
 
-//    sessionId = getSessionId()
-
-//    $http({
-//        url: baseUrl + "/query?" + "demographics/ehr/" + {ehrId} + "/party"),
-//        method: "GET",
-//        headers: {
-//            "Ehr-Session": sessionId
-//        }
-//    }).error(function (data, status, header, config) {
-//        alert("Request failed: " + status);
-
-//    })
-//        .success(function (res) {
-//            console.log(res.resultSet);
-//            //$scope.instructions = res.resultSet;
-//            return res.resultSet;
-//        });
-
-
-//});
+}]);
 
 
 app.controller('StartSidaUtredningCtrl', function ($scope, $http) {
@@ -99,74 +172,7 @@ app.controller('StartSidaUtredningCtrl', function ($scope, $http) {
 
 });
 
-app.controller('StartSidaBeslutCtrl', function ($scope, getInstructions) {
-    //var obj = [];
 
-    var searchData = [
-          { key: "firstNames", value: "H*" },
-          { key: "lastNames", value: "*" }
-    ];
-    sessionId = getSessionId()
-
-    var config = {
-        headers: {
-            "Ehr-Session": getSessionId()
-        }
-    }
-    getInstructions.myFunction().then(function (data) {
-        console.log(data.data.resultSet);
-        $scope.instructions = data.data.resultSet;
-    });
-
-    $scope.instructions = getInstructions.myFunction;
-
-    //$http({
-    //    url: baseUrl + "/demographics/ehr/" + "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4" + "/party",
-    //    method: "GET",
-    //    headers: {
-    //        "Ehr-Session": getSessionId()
-    //    }
-    //}).error(function (data, status, header, config) {
-    //    alert("Request failed: " + status);
-
-    //})
-    //       .success(function (res) {
-    //           console.log("LOL");
-    //           console.log(res);
-    //           obj.push(res)
-    //           //$scope.instructions = res.resultSet;
-    //           console.log(obj);
-    //           return res.resultSet;
-    //       });
-
-    //$http.post(baseUrl + '/demographics/party/query', JSON.stringify(searchData), config)
-    //    .success(function (res) {
-    //        var saveElementArray = [];
-    //        console.log(res);
-
-    //        for (var i = 0; i < res.parties.length; i++) {
-    //            if (res.parties[i].partyAdditionalInfo.length > 1) {
-
-    //                for (var k = 0; k < res.parties[i].partyAdditionalInfo.length; k++) {
-    //                    if (res.parties[i].partyAdditionalInfo[k].key == "Personnummer") {
-    //                        saveElementArray.push(res.parties[i].partyAdditionalInfo[k]);
-    //                        res.parties[i].partyAdditionalInfo.splice(k, 1);
-    //                        res.parties[i].partyAdditionalInfo.push(saveElementArray[0]);
-    //                    }
-    //                    else {
-
-    //                    }
-    //                }
-    //            }
-    //        }
-
-    //        $scope.parties = res.parties;
-    //    }).error(function (error) {
-    //        console.log(error);
-    //    });
-
-
-});
 
 app.controller('StartSidaPlaneringCtrl', function ($scope, $http) {
 
