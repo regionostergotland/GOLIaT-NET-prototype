@@ -1,3 +1,3 @@
-# README #
+#README#
 
-OT implementation for Akutjournalen
+Goliat prototyp

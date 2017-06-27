@@ -17,6 +17,8 @@
     <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">   
 
     <script src="~/Scripts/Views/Utredning/utredning.js"></script>
+    <script src="~/Scripts/EHR/FormPicker.js"></script>
+    <script src="~/Scripts/Views/myAngular.js"></script>
 
 <style>
     .hoverDiv {
@@ -27,10 +29,10 @@
             color: #000000;
         }
 
-        .hoverDiv:active {
+    /*.hoverDiv:active {
             background: #6794dd;
             color: #ffffff;
-        }
+        }*/
 
     /*#columnNames {
         margin-top: 50px;
@@ -51,8 +53,8 @@
     #boxelement {
         float: left;
         display: inline;
-        width: 25%;
-        text-align: center;
+        width: 33%;
+        text-align: left;
     }
 
     .table {
@@ -60,14 +62,17 @@
     }
 
     th {
-        text-align: center;
+        text-align: left;
         background-color: #0066b3;
         color: #ffffff;
-        text-space-collapse:collapse;
     }
 
     td {
-        text-align: center;
+        text-align: left;
+    }
+
+    .btn-circle {
+        background-color: #0066b3;
     }
 
     .box {
@@ -79,63 +84,195 @@
         background-color: #ffffff;
     }
 
+    #boxHeader {
+        min-height: 0px;
+        text-align: left;
+        background-color: #0066b3;
+        color: #ffffff;
+        font-weight: bold;
+    }
+    .instructionBox {
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+
     h2 {
         margin-top: 50px;
     }
+    h4 {
+        margin-right:60%;
+    }
 </style>
-
 
 }
 
 <!-- Modal -->
-<div class="">
-    <div id="top-row">
-        <div id="left-top-row-content"><h4>Alla Utredningar</h4></div>
+<div @*ng-app="myApp" ng-controller="StartSidaUtredningCtrl"*@>
+    <div id=" top-row">
+        <div id="left-top-row-content"><h4>
+            Alla Utredningsunderlag</h4>
+        </div>
         <div id="right-top-row-content">
             <a href="@Url.Action("Index", "Triage/nyutredning")">
                 <button class="btn btn-success pull-right">
-
-                    Ny utredning
-
+                    Nytt Underlag
                 </button>
             </a>
         </div>
     </div>
-    
 
-    <div ng-app="myApp" ng-controller="myCtrl">
-        <div class="">
-            <table class="table ">
-                <tr>
-                    <th><div>Patient</div></th>
-                    <th><div>Behandlings-ID</div></th>
-                    <th><div>Status</div></th>
-                    <th><div>Mottagen</div></th>
-                </tr>
-            </table>
-            <div ng-repeat="obj in posts">
-                <a href="@Url.Action("Index", "Triage/redigerautredning", new { patient = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4", behandlingsid = "I3232asdas-32948273sad213sad123" })">
-                    <div class="box " >
-                        <div class="box-body hoverDiv">
+    <div>
+        <div id="prostatacancer">
+            <div>
+                <h4>Diagnos</h4>
+            </div>
+            <div class="box ">
+                <div class="box-body" id="boxHeader">
+                    <div id="boxelement">
+                        Patient
+                    </div>
+                    <div id="boxelement">
+                        Diagnos
+                    </div>
+                    <div id="boxelement">
+                        Steg
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="instructionBox">
+                <div class="box">
+                    <div class="box-body hoverDiv" id="1">
+                        <div id="boxelement">
+                            Vladimir Dalton</br>
+                            
+                        </div>
+                        <div id="boxelement">
+                            Prostatacancer<br />
+                            (<b>ICD-10: C61</b>)
+                        </div>
+                        <div id="boxelement">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:95%">
+                                    95%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="instructionBox">
+                <div class="box">
+                    <div class="box-body hoverDiv" id="1">
+                        <div id="boxelement">
+                            Hey Sansson <br>19561221-4115<br>
+                            
+                        </div>
+                        <div id="boxelement">
+                            Prostatacancer<br />
+                            (<b>ICD-10: C61</b>)
+                        </div>
+                        <div id="boxelement">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:95%">
+                                    95%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="instructionBox">
+                <div class="box">
+                    <div class="box-body hoverDiv" id="1">
+                        <div id="boxelement">
+                            Henry Stockholm</br>
+                            
+                        </div>
+                        <div id="boxelement">
+                            Prostatacancer<br />
+                            (<b>ICD-10: C61</b>)
+                        </div>
+                        <div id="boxelement">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                    50%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="instructionBox">
+                <div class="box">
+                    <div class="box-body hoverDiv" id="1">
+                        <div id="boxelement">
+                            Hilel Sawyer</br>
+                            
+                        </div>
+                        <div id="boxelement">
+                            Prostatacancer <br>
+                            (<b>ICD-10: C61</b>)
+                        </div>
+                        <div id="boxelement">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:30%">
+                                    30%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="instructionBox">
+                <div class="box">
+                    <div class="box-body hoverDiv" id="1">
+                        <div id="boxelement">
+                            Paul Osborn</br>
+                            
+                        </div>
+                        <div id="boxelement">
+                            Prostatacancer<br>
+                            (<b>ICD-10: C61</b>)
+                        </div>
+                        <div id="boxelement">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                    0%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                 @*<div class="instructionBox" ng-repeat="instruction in instructions">
+                <a ng-href="@Url.Action("Index", "Triage/RedigeraUtredning")?patientehr={{instruction.patientinfo.EHRID}}&underlagID=")>
+                    <div class="box" >
+
+                        <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
                             <div id="boxelement">
-                                {{ obj.Diastolic.magnitude }} {{ obj.Diastolic.units }}
+                                {{instruction.patientinfo.firstname || "-"}} {{instruction.patientinfo.lastname || "-"}} <br />
+                                {{instruction.patientinfo.personnummer || "Inget personnummer"}}
                             </div>
                             <div id="boxelement">
-                                {{ obj.Systolic.magnitude }} {{ obj.Systolic.units }}
+                                {{ instruction.name.value ||  "-"}}
                             </div>
-                            <div id="boxelement">
-                                {{ obj.Diastolic.magnitude }} {{ obj.Diastolic.units }}
-                            </div>
-                            <div id="boxelement">
-                                {{ obj.Systolic.magnitude }} {{ obj.Systolic.units }}
+
+                            <div id="boxelement" ng-repeat="activity in instruction.activities">
+                                {{ activity.name.value ||  "-"}}
+                                <span>
+                                    @*<a ng-href="@Url.Action("Index", "Forms/editAction")?patientehr={{instruction.patientinfo.EHRID}}&instructionuid={{instruction.uid.value}}">
+                                        <button class="btn btn-circle" id="{{action.uid}}"></button>
+                                    </a>*@
+                 @*</span>
                             </div>
                         </div>
                     </div>
                 </a>
-            </div>
+            </div>*@
         </div>
     </div>
-</div>
 
 
 

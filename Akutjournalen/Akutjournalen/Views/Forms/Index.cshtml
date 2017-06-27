@@ -1,6 +1,7 @@
 ﻿@section scripts{
     
-
+@* Beslutsflik *@
+<meta charset="UTF-8">
 <script type="text/javascript">
     var ehrID = '@Session["EHRID"]';
 </script>
@@ -13,18 +14,15 @@
 <script src="~/signalr/hubs"></script>
 <script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
 
-
 <link href="~/Content/Custom/custom.css" rel="stylesheet" />
 <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">   
 @*<script src="~/Scripts/Views/Beslut/beslut.js"></script>*@
 <script src="~/Scripts/Views/myAngular.js"></script>
 
 
-
 <style>
     .hoverDiv {
     }
-
         .hoverDiv:hover {
             background: #b0d8f0;
             color: #000000;
@@ -125,18 +123,18 @@
                 <div class="box">
                     <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
                         <div id="boxelement" >
-                            {{instruction.patientinfo.firstname || "-"}} {{instruction.patientinfo.lastname || "-"}} {{instruction.patientinfo.personnummer || "-"}}
+                            {{instruction.patientinfo.firstname || "-"}} {{instruction.patientinfo.lastname || "-"}} <br />
+                            {{instruction.patientinfo.personnummer || "Inget personnummer"}}
                         </div>
                         <div id="boxelement">
                             {{ instruction.name.value ||  "-"}}
                         </div>
                                 
-                        <div id="boxelement" ng-repeat="activity in instruction.activities">
+                        <div id="boxelement" ng-repeat="activity in instruction.content[0].activities">
                             {{ activity.name.value ||  "-"}}
                             <span>
                                 <a ng-href="@Url.Action("Index", "Forms/editAction")?patientehr={{instruction.patientinfo.EHRID}}&instructionuid={{instruction.uid.value}}">
                                     <button class="btn btn-circle" id="{{action.uid}}"></button>
-                                    @*&instructionid={{instruction.uid.value}}&activityid={{instruction.activities[0].uid}}*@
                                 </a>
                             </span>
                         </div>

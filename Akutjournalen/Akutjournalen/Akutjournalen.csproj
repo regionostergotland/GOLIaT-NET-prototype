@@ -4491,6 +4491,7 @@
     <Content Include="Scripts\ChartJs\Chart.js" />
     <Content Include="Scripts\ClientValidation\jquery.validate.min.js" />
     <Content Include="Scripts\EHR\Global.js" />
+    <Content Include="Scripts\EHR\FormPicker.js" />
     <Content Include="Scripts\EHR\Team.js" />
     <Content Include="Scripts\EHR\Ordinationer.js" />
     <Content Include="Scripts\EHR\Triage.js" />

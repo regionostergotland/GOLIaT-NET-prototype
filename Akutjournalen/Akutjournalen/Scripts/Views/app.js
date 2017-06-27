@@ -106,8 +106,6 @@
                 {}, // Defaults,
                 // Actions
                 {
-
-                    
                     querySaved: {
                         method: "GET",
                         params: {

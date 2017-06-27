@@ -1,5 +1,4 @@
 ﻿
-
 var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 var queryUrl = baseUrl + '/query';
 //var username = 'lio.se1'
@@ -14,9 +13,6 @@ Object.size = function (obj) {
     }
     return size;
 };
-
-//var string = "http://localhost:20216/Forms/editAction?patientehr=b51f3709-eeb6-49ed-afae-ef1468ec03fb&instructionid=3e7fc4e1-0ac0-455c-8098-bc851ac144ad&activityid=";
-
 
 //function getPatientEHR(string) {
 //    var str = string.substring(string.indexOf('patientehr=') + 11, string.indexOf('patientehr=') + 13 + 34);
@@ -46,44 +42,65 @@ function getSessionId() {
 
 var app = angular.module("myApp", []);
 
-app.factory('getForm', function ($http) {
+//app.factory('GetPatients', function ($http) {
+//    //Initial call from API.
+//    var searchData = [
+//          { key: "firstNames", value: "*" },
+//          { key: "lastNames", value: "*" }
+//    ];
 
-});
+//    var config = {
+//        headers: {
+//            "Ehr-Session": getSessionId()
+//        }
+//    }
+
+//    var _getPatients = function () {
+
+//    }
+//    return {
+//        getPatients: _getPatients
+//    }
+//});
 
 app.factory('GetInstructions', function ($http) {
 
-    var InstructionsQuery = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a contains INSTRUCTION a_a offset 0 limit 100"
+    //var InstructionsQuery = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a contains INSTRUCTION a_a offset 0 limit 100"
+    //var ActionsQuery = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a contains ACTION a_b offset 0 limit 100"
 
     var searchData = [
-        { key: "firstNames", value: "*" },
+        { key: "firstNames", value: "*" },  
         { key: "lastNames", value: "*" }
     ];
 
     sessionId = getSessionId()
     
-
-    var getInstructions = function () {
+    var getInstructions = function (Query) {
         var object = new Object();
         object.instructions = [];
 
         $http({
             async :false,
-            url: baseUrl + "/query?" + $.param({ "aql": InstructionsQuery }),
+            url: baseUrl + "/query?" + $.param({ "aql": Query }),
             method: "GET",
             headers: {
                 "Ehr-Session": sessionId
             }
         }).error(function (data, status, header, config) {
             alert("Request failed: " + status);
-            //returnerar party insertion
-        }).success(function (res) {
-            for (var k = 0; k < res.resultSet.length; k++) {
 
-                object.instructions.push(res.resultSet[k]["#1"].content["0"]);
+        //Response (res) ger alla compositions/instructions som man hämtar från EHRscape och går igenom dessa i en for-loop och lägger in viktig data.
+        }).success(function (res) {
+            console.log(res.resultSet);
+            for (var k = 0; k < res.resultSet.length; k++) {
+                object.instructions.push(res.resultSet[k]["#1"]);//.content["0"]);
                 object.instructions[k].patientinfo = {};
                 object.instructions[k].patientinfo.EHRID = res.resultSet[k].EHRID;
+                object.instructions[k].patientinfo.personnummer = "";
 
             }
+
+            //console.log(object.instructions);
 
              $.ajaxSetup({
                 headers: {
@@ -91,37 +108,36 @@ app.factory('GetInstructions', function ($http) {
                 }
             });
 
-            var insertParties =$.ajax({
+            var insertParties = $.ajax({
                 async: false,
                 url: baseUrl + "/demographics/party/query",
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(searchData),
-                //Returnerar object
+                //Returnerar alla parties, dvs alla patienter.
                 success: function (res) {
+                    //console.log("Res: ", res.parties);
+                    //Kollar igenom alla patienter i listan.
                     for (var i = 0; i < res.parties.length; i++) {
+                        
+                        //Kollar igenom alla instructions i listan.
                         for (var t = 0; t < Object.size(object.instructions) ; t++) {
-
                             try {
-                                if (res.parties[i].partyAdditionalInfo["0"].value == object.instructions[t].patientinfo.EHRID) {
+                                if (res.parties[i].partyAdditionalInfo["0"].value === object.instructions[t].patientinfo.EHRID) {
                                     object.instructions[t].patientinfo.firstname = res.parties[i].firstNames;
                                     object.instructions[t].patientinfo.lastname = res.parties[i].lastNames;
-                                    //object.instructions[t].patientinfo.personnummer = parties.parties[i].partyAdditionalInfo["1"].value;
+                                    object.instructions[t].patientinfo.personnummer = res.parties[i].partyAdditionalInfo["1"].value;
                                 }
 
-                                else if (res.parties[i].partyAdditionalInfo["1"].value == object.instructions[t].patientinfo.EHRID) {
+                                else if (res.parties[i].partyAdditionalInfo["1"].value === object.instructions[t].patientinfo.EHRID) {
 
                                     object.instructions[t].patientinfo.firstname = res.parties[i].firstNames;
                                     object.instructions[t].patientinfo.lastname = res.parties[i].lastNames;
-                                    //object.instructions[t].patientinfo.personnummer = parties.parties[i].partyAdditionalInfo["0"].value;
-                                }
-
-                                else {
-                                    console.log(res.parties[i].partyAdditionalInfo["1"].value);
+                                    object.instructions[t].patientinfo.personnummer = res.parties[i].partyAdditionalInfo["0"].value;
                                 }
                             }
                             catch(e) {
-
+                                //console.log("Error: ", e);
                             }
                         }
                     }
@@ -131,24 +147,17 @@ app.factory('GetInstructions', function ($http) {
         return object;
     }
     
-
     return {
         getInstruct: getInstructions
     }
-
-    //return {
-    //    GetInstruct: func.GetInstruct,
-    //    GetPatients: func.GetPatients
-    //}
-
-    //END OF FIRST//
-
 });
 
 
 app.controller('StartSidaBeslutCtrl', ['$scope', "GetInstructions", function ($scope, GetInstructions) {
 
-    data = GetInstructions.getInstruct();
+    var aql = "select e/ehr_id/value as EHRID, a from EHR e contains COMPOSITION a contains INSTRUCTION a_a offset 0 limit 100";
+
+    data = GetInstructions.getInstruct(aql);
     console.log(data);
     $scope.instructions = data.instructions;
     
@@ -156,31 +165,33 @@ app.controller('StartSidaBeslutCtrl', ['$scope', "GetInstructions", function ($s
 
 app.controller('EditActionCtrl', ['$scope', "GetInstructions", function ($scope, GetInstructions) {
 
+}]);
+
+app.controller('StartSidaUtredningCtrl', ['$scope', "GetInstructions", function ($scope, GetInstructions) {
+
+    var aql = "select e/ehr_id/value as EHRID, a_a from EHR e contains COMPOSITION a[openEHR-EHR-COMPOSITION.request.v1] contains INSTRUCTION a_a[openEHR-EHR-INSTRUCTION.request-lab_test.v1] offset 0 limit 100";
+
+    data = GetInstructions.getInstruct(aql);
+    $scope.instructions = data.instructions;
 
 }]);
 
-
-app.controller('StartSidaUtredningCtrl', function ($scope, $http) {
-
-
-    $scope.getData = function () {
-
-
+app.controller('NyUtredningCtrl', ['$scope', function ($scope) {
+    $scope.count = 0;
+    $scope.myFunc = function () {
+        $scope.count++;
     }
 
-    $scope.getData();
+    $scope.GetPatients = function () {
+    }
 
-});
-
-
+}]);
 
 app.controller('StartSidaPlaneringCtrl', function ($scope, $http) {
 
 
     $scope.getData = function () {
-
     }
-
     $scope.getData();
 
 });
