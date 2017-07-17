@@ -90,3 +90,12 @@ C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\Microsoft.AspNet.Identity.EntityFra
 C:\GOLIAT\V2\Akutjournalen\Akutjournalen\obj\Debug\Akutjournalen.csprojResolveAssemblyReference.cache
 C:\GOLIAT\V2\Akutjournalen\Akutjournalen\obj\Debug\Akutjournalen.dll
 C:\GOLIAT\V2\Akutjournalen\Akutjournalen\obj\Debug\Akutjournalen.pdb
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\MongoDB.Bson.dll
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\MongoDB.Driver.Core.dll
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\MongoDB.Driver.dll
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\MongoDB.Bson.xml
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\MongoDB.Driver.xml
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\MongoDB.Driver.Core.xml
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\Json.dll
+C:\GOLIAT\V2\Akutjournalen\Akutjournalen\bin\Json.pdb

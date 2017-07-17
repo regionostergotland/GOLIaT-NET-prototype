@@ -1,11 +1,17 @@
-﻿
-
-var baseUrl = 'https://rest.ehrscape.com/rest/v1';
+﻿var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 var queryUrl = baseUrl + '/query';
 //var username = 'lio.se1'
 //var password = 'lio.se123'
 var username = 'Carlos.Ortiz@regionostergotland.se'
 var password = 'Cortiz13112015'
+
+Object.size = function (obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
 function getSessionId() {
 
@@ -19,49 +25,34 @@ function getSessionId() {
     return response.responseJSON.sessionId;
 }
 
-var app = angular.module("myApp", []);
 
-app.controller('myCtrl', function ($scope, $http) {
+var underlag = angular.module("underlag", ['datatables']);
 
 
-    $scope.getData = function () {
-        $scope.ehrId = "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4"
-        //ehrID
+underlag.controller('StartSidaUnderlagCtrl', ['$scope', '$location', function ($scope, $location) {
 
-        var aql = "select bp/data[at0001|history|]/events[at0006|any event|]/Time as Time, " +
-       "bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0004|Systolic|]/value as Systolic, " +
-       "bp/data[at0001|history|]/events[at0006|any event|]/data[at0003]/items[at0005|Diastolic|]/value as Diastolic, " +
-       "c_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value as Pulse_Rate " +
-
-       " from EHR e " +
-       "contains COMPOSITION c " +
-       "contains (OBSERVATION bp[openEHR-EHR-OBSERVATION.blood_pressure.v1] or OBSERVATION c_a[openEHR-EHR-OBSERVATION.pulse.v1])" +
-       "    where " +
-       "    c/archetype_details/template_id/value = 'triage' AND " +
-       " e/ehr_id/value = '" + $scope.ehrId + "'" +
-       " ORDER BY bp/data[at0001|history|]/events[at0006|any event|]/Time DESC" +
-       " offset 0 limit 4"
-
-        sessionId = getSessionId()
-
-        $http({
-            url: baseUrl + "/query?" + $.param({ "aql": aql }),
-            method: "GET",
-            headers: {
-                "Ehr-Session": sessionId
-            }
-        }).error(function (data, status, header, config) {
-            alert("Request failed: " + status);
-
-        })
-            .success(function (res) {
-                console.log(res)
-                data = res.resultSet;
-                $scope.posts = data;
-            });
-
+    $scope.pickUnderlag = function (path, ehrid, time) {
+        console.log(path);
+        console.log(ehrid);
+        console.log(time);
+        window.location = path + "/" + time +  "-" + ehrid;
     }
 
-    $scope.getData();
+    $.ajax({
+        async: false,
+        type: 'POST',
+        url: 'Inkommande/GetUnderlag',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            var underlag = JSON.parse(response);
+            console.log(underlag);
+            $scope.underlagen = underlag;
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}]);
 
-});
+

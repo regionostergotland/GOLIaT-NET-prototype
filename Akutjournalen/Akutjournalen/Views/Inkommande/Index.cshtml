@@ -1,0 +1,133 @@
+﻿@section scripts{
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        var ehrID = '@Session["EHRID"]';
+    </script>
+
+    <script src="~/Scripts/angular.js"></script>
+
+    <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+
+    <link href="~/Content/Custom/custom.css" rel="stylesheet" />
+    <link href="~/Content/Custom/listView.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+    <link href="~/Content/Datatables/datatables.css" rel="stylesheet" />
+    <script src="~/Scripts/FileSaver.js"></script>
+    @*<script src="~/Scripts/EHR/FormPicker.js"></script>*@
+    <script src="~/Scripts/Views/myAngular.js"></script>
+    @*<script src="~/Scripts/Views/Inkommande/inkommande.js"></script>*@
+    
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.js"></script>
+    <script src="~/Scripts/angular-datatables.min.js"></script>
+}
+
+<!-- Modal -->
+<div ng-app="myApp">
+    <div id=" top-row">
+        <div id="left-top-row-content">
+            <div>
+                <h4>
+                    Inkommande Remisser
+                </h4>
+            </div>
+        </div>
+        <div id="right-top-row-content">
+            <div><h4></h4></div>
+
+        </div>
+    </div>
+
+    <div ng-controller="InkommandeRemissCtrl">
+        <table datatable="ng" class="table table-hover" id="show-remisser">
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>Personnummer</th>
+                    <th>ICD-10</th>
+                    <th>Remitterande Enhet</th>
+                    <th>SVF</th>
+                    <th>Inkommet datum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="instruction in instructions" ng-click="toogleButtons(instruction.patientinfo.EHRID, instruction.uid.value)">
+                    <td>{{instruction.patientinfo.firstname}} {{instruction.patientinfo.lastname}}</td>
+                    <td>{{instruction.patientinfo.personnummer || "-"}}</td>
+                    <td>{{instruction.content[0].activities["0"].description.items[2].value.value}}</td>
+                    <td>{{instruction.content[0].protocol.items["0"].value.value}}</td>
+                    <td>
+                        {{instruction.content[0].activities["0"].description.items["1"].value.value}}
+                        <div ng-show="checkIfClicked(instruction.patientinfo.EHRID, instruction.uid.value)">
+                            <input type="button" id="AvvisaButton" class="btn btn-default" ng-click="UpdateState(instruction, $event);AvvisaRemiss(instruction)" value="Avvisa Remiss" />
+                            <label id="lblData"></label>
+                        </div>
+                    </td>
+                    <td>
+                        {{instruction.content[0].activities["0"].timing.value || "-"}}
+                        <div ng-show="checkIfClicked(instruction.patientinfo.EHRID, instruction.uid.value)">
+                            <input type="button" id="UnderlagButton" class="btn btn-default" ng-click="UpdateState(instruction, $event); CreateUnderlag(instruction)" value="Skapa Underlag" />
+                            <label id="lblData"></label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="top-row">
+        <div id="left-top-row-content">
+            <h4>
+                Skickats för Beslut
+            </h4>
+        </div>
+        <div id="right-top-row-content">
+            <div><h4></h4></div>
+        </div>
+    </div>
+
+    <div ng-controller="DoneRemissCtrl">
+        <table datatable="ng" class="table table-hover" id="show-remisser">
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>Personnummer</th>
+                    <th>ICD-10</th>
+                    <th>Remitterande Enhet</th>
+                    <th>SVF</th>
+                    <th>Inkommet datum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="remiss in doneRemisser">
+                    <td>{{remiss.patientinfo.firstname}} {{remiss.patientinfo.lastname}}</td>
+                    <td>{{remiss.patientinfo.personnummer || "-"}}</td>
+                    <td>{{remiss.content[0].activities["0"].description.items[2].value.value}}</td>
+                    <td>{{remiss.content[0].protocol.items["0"].value.value}}</td>
+                    <td>
+                        {{remiss.content[0].activities["0"].description.items["1"].value.value}}
+                    </td>
+                    <td>
+                        {{remiss.content[0].activities["0"].timing.value || "-"}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @*<div class="confirm" ng-show="windowIsShowing" ng-hide="!windowIsShowing">
+            <h1>Confirm your action</h1>
+            <p>Are you really <em>really</em> <strong>really</strong> sure that you want to exit this awesome application?</p>
+            <button>Cancel</button>
+            <button autofocus>Confirm</button>
+        </div>*@
+</div>
+
+
+
+

@@ -1,0 +1,127 @@
+﻿@model Akutjournalen.Models.UnderlagModel
+
+
+<script type="text/javascript">
+    var ehrID = '@Session["EHRID"]';
+</script>
+
+<script src="~/Scripts/angular.js"></script>
+
+<script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+<script src="~/Scripts/Views/Utredning/specifikutredning.js"></script>
+
+<link href="~/Content/Custom/listView.css" rel="stylesheet" />
+<link href="~/Content/Custom/custom.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+
+
+<style>
+    .row {
+        padding: 1% 1% 0% 1%;
+    }
+</style>
+
+<div ng-app="specifik" ng-controller="SpecifikUnderlagCtrl">
+    @*<div class="row">
+            <div id=" top-row">
+                <div id="left-top-row-content">
+                    <h3><p>Beslutsunderlag</p></h3>
+                    <p><h4>ICD-10: </h4> - <i>Malign tumör i Prostata</i></p>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="row">
+        <div class="col-xs-6 cell" id="status">
+            <div class="box-header">Prover</div>
+            <div ng-repeat="prov in prover">
+                <div class="panel ">
+                    <p><b>Typ av prov: </b> <span ng-bind="prov.data.events[0].data.items[0].value.value || '-' "></span></p>
+                    <p><b><span ng-bind="prov.data.events[0].data.items[3].items[0].items[0].name.value || 'Värde'"></span>:</b> <span ng-bind="prov.data.events[0].data.items[3].items[0].items[0].value.value || 'Inget värde har angetts'"></span></p>
+                    <p><b>Beställningsdatum: </b><span ng-bind="prov.action_info.orderDate || '-'"></span></p>
+                    <p><b>Datum för Provtagning: </b> <span ng-bind="prov.action_info.testDate || '-'"></span></p>
+                </div>
+            </div>
+            <div ng-show="!prover.length"><div class="panel NoResultDiv">Inga prover att visa...</div></div>
+        </div>
+        <div class="col-xs-6 cell" id="icd-10">
+            <div class="box-header">Diagnos som föranleder kirurgisk åtgärd</div>
+            <div class="panel ">
+                <p><b>ICD-10:</b> <span ng-bind="icdcode || '-'"></span></p>
+            </div>
+        </div>
+    </div>
+
+
+
+        <div class="row">
+            @*<div class="col-xs-6 cell" id="status">
+                <div class="box-header">Prover</div>
+                <div ng-repeat="prov in prover">
+                    <div class="panel ">
+                        <p><b>Typ av prov: </b> <span ng-bind="prov.data.events[0].data.items[0].value.value || '-' "></span></p>
+                        <p><b>Resultat: </b> <span ng-bind="prov.data.events[0].data.items[3].items[0].items[0].value.value || '-'"></span> <span ng-bind="prov.data.events[0].data.items[3].items[0].items[0].name.value || '-'"></span></p>
+                        <p><b>Beställningsdatum: </b><span ng-bind="prov.action_info.orderDate || '-'"></span></p>
+                        <p><b>Datum för Provtagning: </b> <span ng-bind="prov.action_info.testDate || '-'"></span></p>
+                    </div>
+                </div>
+                <div ng-show="!prover.length"><div class="panel NoResultDiv">Inga prover att visa...</div></div>
+            </div>*@
+            
+
+
+        </div>
+
+        <div class="row ">
+            <div class="col-xs-6 cell">
+                <div class="box-header"> Kliniska Undersökningsresultat</div>
+                <div class="panel">
+                    <p><b>Fynd vid palpation av prostata: </b> <span ng-bind="fynd-palpation || '-'"></span></p>
+                    <p><b>Tarmfunktion: </b> <span ng-bind="tarmfunktion || '-'"></span></p>
+                    <p><b>Blodtryck: </b> <span ng-bind="blodtryck || '-'"></span></p>
+                    <p><b>Erektionsfunktion: </b> <span ng-bind="erektionsfunktion || '-'"></span></p>
+                    <p><b>Residualurin: </b> <span ng-bind="residualurin || '-'"></span></p>
+                    <p><b>PSA-densitet beräknat med TRUL: </b> <span ng-bind="psa-densitet || '-'"></span></p>
+                    <p><b>Prostatavolym enligt TRUL: </b> <span ng-bind="prostatavolym-trul || '-'"></span></p>
+                    <p><b>EKG: </b> <span ng-bind="ekg || '-'"></span></p>
+                    <p><b>I-PSS prostate score: </b> <span ng-bind="prostate-score-pss || '-'"></span></p>
+                </div>
+            </div>
+            @*<div class="sub-panel">
+                    <div class="box-header box-header-sub"><p>I-PSS prostate score:</p></div>
+                    <p><b>test </b> <span ng-bind="i || '-'"></span></p>
+                </div>*@
+            <div class="col-xs-6 cell" id="icd-10">
+                <div class="box-header">Status</div>
+                <div class="panel ">
+
+                    <p><b>Kroppsvikt:</b> <span ng-bind="kroppsvikt || '-'"></span></p>
+                    <p><b>BMI:</b> <span ng-bind="bmi || '-'"></span></p>
+                    <p><b>Performancestatus enligt ECOG/WHO:</b> <span ng-bind="performancestatus || '-'"></span></p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 cell" id="status">
+                <div class="box-header">Patientinformation och samtycke </div>
+                <div class="panel ">
+                    <p><b>Namn:</b> <span ng-bind="name || '-'"></span></p>
+                    <p><b>Patient-ID:</b> <span ng-bind="ehrid || '-'"></span></p>
+                    <p><b>Personnummer:</b> <span ng-bind="personnummer || '-'"></span></p>
+                    <p><b>Kön:</b> <span ng-bind="gender || '-'"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row " id="beslut-form">
+            <div class="">
+
+            </div>
+        </div>
+    </div>
