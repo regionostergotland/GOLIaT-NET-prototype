@@ -474,7 +474,7 @@
                             ).then(
                                 function (success) {
                                     ctrl.compositions = success.resultSet;
-									console.log(success);
+									console.log("WAU");
                                 },
 
                                 function (fail) {

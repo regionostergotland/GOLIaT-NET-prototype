@@ -34,47 +34,57 @@ function getSessionId() {
 }
 
 
-
 var specifik = angular.module("specifik", []);
 
-specifik.controller('SpecifikUnderlagCtrl', ['$scope','$filter', '$http', 'GetProverFact', function ($scope, $filter, $http, GetProverFact) {
+
+specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetProverFact', function ($scope, $filter, $http, GetProverFact) {
 
     console.log(time)
     console.log(ehrid);
 
     GetProverFact.aqlprover().then(function (data) {
-        //console.log('Data1', data);
+        console.log('Data1', data.data.resultSet);
 
         if (data.data.resultSet) {
             $scope.prover = data.data.resultSet[0].Composition.content;
-        }
-    });
-
-    GetProverFact.bestallingprovAQL().then(function (data) {
-
-        //console.log('Data2', data);
-
-        if (data.data.resultSet) {
-
-            var _actions = new Object();
-            _actions.actions = [];
 
             data.data.resultSet.forEach(function (element, index) {
-                $scope.prover[index].action_info = {};
-                
-                var date_for_order = element.Composition.content[1].time.value;
-                var date_for_test = element.Composition.content[1].protocol.items[0].value.value;
-                
-                var date_for_orderNew = $filter('date')(date_for_order, 'yyyy-MM-dd: HH:mm:ss');
+
+                $scope.prover[index].time_info = {};
+                var date_for_test = element.Composition.content[1].data.events[0].time.value;
                 var date_for_testNew = $filter('date')(date_for_test, 'yyyy-MM-dd: HH:mm:ss');
 
-                $scope.prover[index].action_info.orderDate = date_for_orderNew;
-                $scope.prover[index].action_info.testDate = date_for_testNew;
-
+                $scope.prover[index].time_info.date_for_test = date_for_testNew;
             });
-            
-            console.log($scope.prover)
         }
+
+
+        //GetProverFact.bestallingprovAQL().then(function (data) {
+
+        //    //console.log('Data2', data);
+
+        //    if (data.data.resultSet) {
+
+        //        var _actions = new Object();
+        //        _actions.actions = [];
+
+        //        data.data.resultSet.forEach(function (element, index) {
+        //            $scope.prover[index].action_info = {};
+
+        //            var date_for_order = element.Composition.content[1].time.value;
+        //            var date_for_test = element.Composition.content[1].protocol.items[0].value.value;
+
+        //            var date_for_orderNew = $filter('date')(date_for_order, 'yyyy-MM-dd: HH:mm:ss');
+        //            var date_for_testNew = $filter('date')(date_for_test, 'yyyy-MM-dd: HH:mm:ss');
+
+        //            $scope.prover[index].action_info.orderDate = date_for_orderNew;
+        //            $scope.prover[index].action_info.testDate = date_for_testNew;
+
+        //        });
+
+        //        console.log($scope.prover)
+        //    }
+        //});
     });
 
 }]);
@@ -83,12 +93,12 @@ specifik.controller('SpecifikUnderlagCtrl', ['$scope','$filter', '$http', 'GetPr
 specifik.factory('GetProverFact', ['$http', function ($http) {
 
     var aqlProver = "select a as Composition, e/ehr_id/value as EHRID from EHR e contains COMPOSITION a[openEHR-EHR-COMPOSITION.report-result.v1]" +
-    " where a/name/value='Provsvar prostatacancer' and (e/ehr_id/value='"+ ehrid +"')" + "order by a/context/start_time/value desc offset 0 limit 100";
+    " where a/name/value='Provsvar prostatacancer' and (e/ehr_id/value='" + ehrid + "')" + "order by a/context/start_time/value desc offset 0 limit 100";
 
     var bestallingprovAQL = "select a as Composition, e/ehr_id/value as EHRID from EHR e contains COMPOSITION a[openEHR-EHR-COMPOSITION.request.v1]" +
-    "contains ACTION a_a[openEHR-EHR-ACTION.pathology_test.v1] where a/name/value='Beställning av labprover prostatacancer' and (e/ehr_id/value='"+ ehrid +"')" +
+    "contains ACTION a_a[openEHR-EHR-ACTION.pathology_test.v1] where a/name/value='Beställning av labprover prostatacancer' and (e/ehr_id/value='" + ehrid + "')" +
     "order by a_a/time/value desc offset 0 limit 100";
-    
+
 
     var myService = {
         aqlprover: function () {
@@ -105,10 +115,10 @@ specifik.factory('GetProverFact', ['$http', function ($http) {
                 try {
                     //console.log('Res1:', res);
                 }
-                catch(e) {
+                catch (e) {
 
                 }
-                
+
             });
             return promise;
         },
@@ -137,8 +147,11 @@ specifik.factory('GetProverFact', ['$http', function ($http) {
     };
 
     return myService;
-   
+
 }]);
+
+
+
 
 specifik.factory('GetICDtenFact', ['$http', function ($http) {
 

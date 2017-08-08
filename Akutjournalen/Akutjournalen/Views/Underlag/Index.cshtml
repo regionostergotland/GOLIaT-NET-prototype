@@ -140,9 +140,10 @@
             <thead>
                 <tr>
                     <th>Namn</th>
-                    <th>Personnummer</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Personnummer</th>
                     <th>Skapat</th>
                     <th>Dagar kvar</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Ansvarig enhet</th>
                     <th>Utrednings-ID</th>
                     <th>Status</th>
                 </tr>
@@ -150,9 +151,11 @@
             <tbody>
                 <tr ng-repeat="underlag in underlagen" id="underlag.ehrid" ng-click="pickUnderlag('@Url.Action("Index","Underlag/SpecificUnderlag")', underlag.ehrid, underlag._id.Timestamp)">
                     <td>{{underlag.firstname || "-"}} {{underlag.lastname || "-"}} </td>
-                    <td>{{underlag.personnummer || "-"}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{underlag.patientinfo.personnummer || "-"}}</td>
+                    
                     <td><b>{{underlag.time_created || "-"}}</b></td>
                     <td><b>{{underlag.start_date_countdown || "-"}}</b></td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{underlag.Composition.content[0].protocol.items[1].value.value || "-"}}</td>
                     <td>{{underlag.utredning_id || "-"}}</td>
                     <td> - </td>
                 </tr>

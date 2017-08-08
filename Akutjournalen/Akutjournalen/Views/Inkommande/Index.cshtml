@@ -47,9 +47,10 @@
             <thead>
                 <tr>
                     <th>Namn</th>
-                    <th>Personnummer</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Personnummer</th>
                     <th>ICD-10</th>
                     <th>Remitterande Enhet</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Ansvarig enhet</th>
                     <th>SVF</th>
                     <th>Inkommet datum</th>
                 </tr>
@@ -57,13 +58,14 @@
             <tbody>
                 <tr ng-repeat="instruction in instructions" ng-click="toogleButtons(instruction.patientinfo.EHRID, instruction.uid.value)">
                     <td>{{instruction.patientinfo.firstname}} {{instruction.patientinfo.lastname}}</td>
-                    <td>{{instruction.patientinfo.personnummer || "-"}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{instruction.patientinfo.personnummer || "-"}}</td>
                     <td>{{instruction.content[0].activities["0"].description.items[2].value.value}}</td>
                     <td>{{instruction.content[0].protocol.items["0"].value.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{instruction.content[0].protocol.items[1].value.value || "-"}}</td>
                     <td>
                         {{instruction.content[0].activities["0"].description.items["1"].value.value}}
                         <div ng-show="checkIfClicked(instruction.patientinfo.EHRID, instruction.uid.value)">
-                            <input type="button" id="AvvisaButton" class="btn btn-default" ng-click="UpdateState(instruction, $event);AvvisaRemiss(instruction)" value="Avvisa Remiss" />
+                            <input type="button" id="AvvisaButton" class="btn btn-default" ng-click="UpdateState(instruction, $event); AvvisaRemiss(instruction)" value="Avvisa Remiss" />
                             <label id="lblData"></label>
                         </div>
                     </td>
@@ -96,19 +98,21 @@
             <thead>
                 <tr>
                     <th>Namn</th>
-                    <th>Personnummer</th>
+                    <th ng-if ="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Personnummer</th>
                     <th>ICD-10</th>
                     <th>Remitterande Enhet</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Ansvarig enhet</th>
                     <th>SVF</th>
                     <th>Inkommet datum</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="remiss in doneRemisser">
-                    <td>{{remiss.patientinfo.firstname}} {{remiss.patientinfo.lastname}}</td>
-                    <td>{{remiss.patientinfo.personnummer || "-"}}</td>
+                    <td>{{remiss.patientinfo.firstname}} {{remiss.patientinfo.lastname}} </td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{remiss.patientinfo.personnummer || "-"}}</td>
                     <td>{{remiss.content[0].activities["0"].description.items[2].value.value}}</td>
                     <td>{{remiss.content[0].protocol.items["0"].value.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{remiss.content["0"].protocol.items[1].value.value || "-"}}</td>
                     <td>
                         {{remiss.content[0].activities["0"].description.items["1"].value.value}}
                     </td>

@@ -24,6 +24,50 @@ namespace RO.Common.Filters
 
             viewBag.PageUserName = filterContext.HttpContext.User.Identity.Name;
             viewBag.PageUserSign = GetWindowsAccountName(filterContext.HttpContext.User);
+            //viewBag.PageUserRole = HttpContext.Current.Request.QueryString["Role"];
+
+            //if (HttpContext.Current.Session["Role"] == null)
+            //{
+            //    HttpContext.Current.Session["Role"] = "Ledning";
+            //}
+            //else
+            //{
+            //    string roleString = HttpContext.Current.Request.QueryString["Role"];
+            //    if (HttpContext.Current.Session["Role"] == roleString)
+            //    {
+            //        viewBag.PageUserRole = HttpContext.Current.Session["Role"];
+
+            //    }
+            //    else
+            //    {
+            //       HttpContext.Current.Session["Role"] = HttpContext.Current.Request.QueryString["Role"];
+            //    }
+            //}
+            
+            
+            //if (viewBag.PageUserRole == null || string.IsNullOrEmpty(viewBag.PageUserRole))
+            //{
+            //    viewBag.PageUserRole = "Ledning";
+            //}
+
+            if(HttpContext.Current.Session["ROLE"] == null )
+            {
+                HttpContext.Current.Session["ROLE"] = "Ledning";
+               // HttpContext.Current.Request.QueryString["Role"] = "Ledning";
+            }
+            else
+            {
+                if (HttpContext.Current.Request.QueryString["Role"] == null)
+                {
+                    //HttpContext.Current.Session["ROLE"] = "";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ROLE"] = HttpContext.Current.Request.QueryString["Role"];
+                }
+            }
+
+
 
             viewBag.PageMenuHeader = Setting("RO.PageMenuHeader");
            
@@ -86,7 +130,7 @@ namespace RO.Common.Filters
             }
             else
             {
-                windowsAccountName = "Lisa Eva Jönsson.";
+                windowsAccountName = "Anonym användare";
             }
 
             return windowsAccountName;

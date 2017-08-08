@@ -328,34 +328,37 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
 
     GetInstructions.getInstruct(aql).then(function (data) {
         var instructions = data.data.resultSet;
-        console.log('instructions', instructions)
-        var instructionObject = {};
-        var objectArray = [];
-
         if (instructions) {
-            instructions.forEach(function (item) {
-                if (item) {
-                    if (item.Composition.content[1].ism_transition.current_state.value == 'planned') {
-                        objectArray.push(item.Composition);
+            var temp_promise = new Promise(function (resolve, reject) {
+                var objectArray = [];
+                instructions.forEach(function (instruction) {
+                    if (instruction) {
+                        if (instruction.Composition.content[1].ism_transition.current_state.value == 'planned') {
+                            objectArray.push(instruction.Composition);
+                        }
+                        else {
+                            console.log("Not state: Planned")
+                        }
                     }
-                    else {
-                        console.log("Not state: Planned")
-                    }
-                }
 
-            });
+                });
+
+                resolve(objectArray);
+            })
         }
         else {
             console.log("No added instructions, response was empty...")
         }
-        $scope.instructions = objectArray;
+
+        temp_promise.then(function (instructions) {
+            console.log('instructions', instructions);
+            $scope.instructions = instructions;
+        });
 
     });
    
     
-
     $scope.UpdateState = function (instruction, event) {
-        console.log('currenttargetID', event.currentTarget.id);
         if (event.currentTarget.id) {
             if(event.currentTarget.id == "AvvisaButton") {
                 SendComposition("cancelled","528",instruction.uid.value, instruction.archetype_details.template_id.value, instruction.patientinfo.EHRID);
@@ -367,14 +370,10 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
                 console.log("Did nothing...")
             }
         }
-
-        console.log('currenttargetID', event.currentTarget.id);
-
     }
       
   
     $scope.AvvisaRemiss = function (instruction) {
-        
         console.log('AvvisaRemiss, Instruction', instruction);
     };
 

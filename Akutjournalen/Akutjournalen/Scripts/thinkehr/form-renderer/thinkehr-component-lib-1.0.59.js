@@ -785,6 +785,6 @@ ehrAngularModule.directive("ehrCompoundFieldInputExtension", function (compoundF
     }
 );
 
-module.exports = {
-    ehrComponentsLib: window.ehrComponentsLib
-};
+// module.exports = {
+    // ehrComponentsLib: window.ehrComponentsLib
+// };

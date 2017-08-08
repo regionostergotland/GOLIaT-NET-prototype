@@ -2850,7 +2850,7 @@ thinkehr.f4.DateTimeFieldModel = thinkehr.f4.DirectValueModel._extendM({
 
 // A map of rmType string to class mappings
 
-thinkehr.f4._rmTypeToClassMap = {
+thinkehr.f4.ds = {
     "FORM_DEFINITION": thinkehr.f4.FormRootModel,
     "GENERIC_FIELDSET": thinkehr.f4.GenericFieldsetModel,
     "DV_QUANTITY": thinkehr.f4.QuantityFieldModel,

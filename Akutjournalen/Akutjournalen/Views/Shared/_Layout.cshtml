@@ -52,6 +52,16 @@ This is a starter template page for creating web Desktop/Mobile applications at 
           apply the skin class to the body tag so the changes take effect.
     -->
 
+    <script>
+    function toggleRole() {
+        if ('@HttpContext.Current.Session["ROLE"]' == "Ledning") {
+            window.location = "?Role=Kirurg";
+        }
+        else if ('@HttpContext.Current.Session["ROLE"]' == "Kirurg") {
+            window.location = "?Role=Ledning";
+        }
+    }
+</script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -116,20 +126,17 @@ desired effect
                             <i class="fa fa-user fa-3x"></i>
                         </div>
                         <div class="pull-left info">
-                            <p>@ViewBag.PageUserName</p>
                             <small>
-                                <span>@ViewBag.PageUserSign</span>
-                                @if (!string.IsNullOrEmpty(ViewBag.PageUserRole))
-                                {
-                                    <span>, </span>
-                                    <span>@ViewBag.PageUserRole</span>
-                                }
+                                @*<p>@ViewBag.PageUserName</p>*@
+                                <p>@ViewBag.PageUserSign</p>
+                                <span><b>Roll: </b><button onclick="toggleRole()" class="btn btn-success"> @HttpContext.Current.Session["ROLE"] </button> </span>
                             </small>
                         </div>
                     </div>
                 }
                 @RenderPage("~/Views/Shared/SideMenuPartial.cshtml")
             </section>
+
             <!-- /.sidebar -->
         </aside>
         <!-- Content Wrapper. Contains page content -->
@@ -140,8 +147,13 @@ desired effect
                 <section class="content-header">
                     <h1>
                         @ViewBag.PageHeader
-                        <small>@ViewBag.SubPageHeader</small>
+                        @if (@HttpContext.Current.Session["ROLE"].ToString() == "Kirurg")
+                        {
+                            <small>@ViewBag.SubPageHeader</small>
+                        }
                     </h1>
+
+                    
 
                     @if (ViewBag.PageLevel != null)
                     {
