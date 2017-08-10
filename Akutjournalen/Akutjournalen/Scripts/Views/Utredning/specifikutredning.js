@@ -34,7 +34,7 @@ function getSessionId() {
 }
 
 
-var specifik = angular.module("specifik", []);
+var specifik = angular.module("specifik", ["formsApp"]);
 
 
 specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetProverFact', function ($scope, $filter, $http, GetProverFact) {

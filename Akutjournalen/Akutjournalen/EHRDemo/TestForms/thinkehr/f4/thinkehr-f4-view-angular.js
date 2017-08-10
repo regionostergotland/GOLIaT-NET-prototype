@@ -101,6 +101,7 @@ if (!thinkehr.f4.ng) {
             return {
                 prepareValueModel: function (valueModel) {
                     var clonedModel = angular.copy(valueModel);
+                    console.log("clonedModel", clonedModel);
 
                     this.createSaveContext(EhrContext, clonedModel);
 
@@ -258,7 +259,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrForm", ["$log", "EhrContext", "EhrLayoutHelper", function ($log, EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-form.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-form.html",
                 scope: {
                     model: "=",
                     ehrContext: "=",
@@ -281,7 +282,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrContainer", ["EhrRecursionHelper", function (EhrRecursionHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-container.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-container.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -350,14 +351,14 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrRecursiveElement", function () {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-recursive-element.html"
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-recursive-element.html"
             };
         });
 
         module.directive("ehrUnknown", function () {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-unknown.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-unknown.html",
                 controller: function ($scope) {
                 }
             };
@@ -366,7 +367,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrLabel", function () {
             return {
                 restrict: "E",
-                templateUrl: "thinkehr/f4/templates/ehr-label.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-label.html",
                 transclude: true,
                 scope: true,
                 controller: function ($scope, $element, $attrs) {
@@ -416,7 +417,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrCodedText", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-coded-text.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text.html",
                 scope: true,
                 controller: function ($scope) {
                     _ehrCodedTextController($scope, EhrContext, EhrLayoutHelper);
@@ -427,7 +428,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrOrdinal", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-coded-text.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text.html",
                 scope: true,
                 controller: function ($scope) {
                     _ehrCodedTextController($scope, EhrContext, EhrLayoutHelper);
@@ -446,7 +447,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrCodedTextCombo", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-coded-text-combo.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text-combo.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -463,7 +464,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrCodedTextRadio", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-coded-text-radio.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text-radio.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -515,7 +516,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrQuantity", ["$timeout", "EhrContext", function ($timeout, EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-quantity.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-quantity.html",
                 scope: true,
                 controller: function ($scope) {
 
@@ -650,7 +651,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrText", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-text.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-text.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -678,7 +679,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrTextField", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-text-field.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-text-field.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.textValue = function (value) {
@@ -693,7 +694,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrTextArea", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-text-area.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-text-area.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.rowsDefault = 4;
@@ -719,7 +720,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrProportion", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-proportion.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-proportion.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -836,7 +837,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrBoolean", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-boolean.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-boolean.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -919,7 +920,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrDate", ["dateFilter", "EhrContext", function (dateFilter, EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-date.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-date.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -979,7 +980,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrTime", ["dateFilter", "EhrContext", function (dateFilter, EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-time.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-time.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -1059,7 +1060,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrDateTime", ["dateFilter", "EhrContext", function (dateFilter, EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-date-time.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-date-time.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -1126,10 +1127,9 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrComboboxText", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-combobox-text.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-combobox-text.html",
                 scope: true,
                 controller: function ($scope) {
-                    console.log("model", $scope.model);
                     $scope.suppressLabel = false;
                     $scope.textValue = function (value) {
                         var textValue = $scope.model.textValue(value, EhrContext.language);
@@ -1142,13 +1142,22 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrParsable", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-parsable.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-parsable.html",
                 scope: true,
                 controller: function ($scope) {
-                    
+
                     $scope.suppressLabel = false;
-                    $scope.textValue = function (value) {
-                        return $scope.model.textValue(value);
+                   
+
+                    $scope.parsableValue = function (value) {
+                        
+                        return $scope.model.parsableValue(value);
+                    };
+
+
+                    $scope.formalismValue = function (value) {
+                        value = "text/html";
+                        return $scope.model.formalismValue(value);
                     };
 
                 }
@@ -1158,7 +1167,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrMultiMedia", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-multimedia.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-multimedia.html",
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
@@ -1173,7 +1182,7 @@ if (!thinkehr.f4.ng) {
         module.directive("ehrUri", ["EhrContext", function (EhrContext) {
             return {
                 restrict: "EA",
-                templateUrl: "thinkehr/f4/templates/ehr-uri.html",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-uri.html",
                 scope: true,
                 controller: function ($scope) {
                     console.log("URI", $scope.model);
@@ -1203,10 +1212,10 @@ if (!thinkehr.f4.ng) {
 
     function getAngularDirective(model) {
         if (model.isContainer()) {
-            return "thinkehr/f4/templates/ehr-container.html";
+            return "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-container.html";
         }
 
-        return "thinkehr/f4/templates/ehr-unknown.html";
+        return "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-unknown.html";
     }
 
     // Exports

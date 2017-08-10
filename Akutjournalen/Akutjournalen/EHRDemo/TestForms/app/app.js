@@ -89,7 +89,7 @@
                 {
                     add: {
                         method: "POST",
-                        params: {ehrId: AppConfig.ehrId, format: "STRUCTURED"},
+                        params: { ehrId: AppConfig, format: "STRUCTURED" },
                         //params: { format: "STRUCTURED" },
                         headers: {
                             "Ehr-Session": function () {
@@ -217,13 +217,12 @@
 					// EhrContext.language = "se";
 					// EhrContext.territory = "se";
                     // EhrContext.locale = "sv-se";
-                    //console.log("valuemodel", valueModel);
+                    
                     var temp_valuemodel = this.valueModel;
-
-                    //temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"][0].request[0].timing.push({ "|value": "Now" });
-                    console.log("Sent Composition: ",temp_valuemodel);
+                    console.log("valueModel", this.valueModel);
+                    //var citatValue = temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0];
+                    //temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0] = { "|value": citatValue ,"|formalism":"text/html"};
                     var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(temp_valuemodel));
-
                     //var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
 
                     //cr["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"]["0"].request["0"].timing.value = "Now";

@@ -509,7 +509,7 @@ if (!thinkehr.f4.util) {
                 _markModelForDeletion(model);
             } else {
                 values[segment] = values === rootValues ? {} : [];
-                console.info("Creating empty value for ", segmentPath, ":", values[segment]);
+                //console.info("Creating empty value for ", segmentPath, ":", values[segment]);
                 addedSegment = true;
             }
         }
@@ -1478,6 +1478,7 @@ thinkehr.f4.Model = thinkehr.f4.Object._extendM({
     },
 
     addChildModel: function (model) {
+        
         model.setParentModel(this);
         this.childModels.push(model);
     },
@@ -2060,6 +2061,7 @@ thinkehr.f4.NodeModel = thinkehr.f4.FormRepeatableElementModel._extendM({
                 return null;
             }
         }
+        console.log("value", this.value);
 
         return this.value;
     },
@@ -3011,41 +3013,110 @@ thinkehr.f4.DateTimeFieldModel = thinkehr.f4.DirectValueModel._extendM({
 
 
 
-thinkehr.f4.ParsableModel = thinkehr.f4.NodeModel._extendM({
+thinkehr.f4.ParsableModel = thinkehr.f4.DirectValueModel._extendM({
     init: function (properties) {
         this._super(properties);
     },
 
-    textValue: function (value) {
+    parsableValue: function (value) {
+        var val = this.value;
+
         if (value !== undefined) {
-
-            this.value = value;
-            var parentRef = this.getValueNodeParentRef();
-            if (parentRef.length > 0) {
-                if (value != null) {
-                    parentRef[0] = this.value;
-                } else {
-                    parentRef.shift();
+            if (value === null || value === "") {
+                this.clearParsableValue();
+                return null;
+            } else {
+                if (val === null) {
+                    val = {};
+                    this.getValueNodeParentRef().push(val);
+                    this.setValueNodeRef(val);
+                    this.setValue(val);
                 }
-            } else if (value !== null) {
-                parentRef.push(this.value);
+
+                val["|value"] = value;
             }
-        }
-        else if (this.value == null && this.getDefaultValue()) {
-            var dv = this.getDefaultValue();
-            if (thinkehr.f4.util.isString(dv.value) && dv.value.length > 0) {
-                return this.textValue(dv.value);
+        } else if (val == null) {
+            if (this.getDefaultValue()) {
+                var dv = this.getDefaultValue();
+                if (!thinkehr.f4.util.isString(dv.magnitude) || dv.magnitude.length > 0) {
+                    this.magnitudeValue(dv.magnitude)
+                }
+
+                if (thinkehr.f4.util.isString(dv.unit) && dv.unit.length > 0) {
+                    return this.unitValue(dv.unit)
+                }
             }
+
+            return null;
         }
 
-        return this.value;
+        return val["|value"];
     },
+
+    formalismValue: function (value) {
+        var val = this.value;
+
+        if (value !== undefined) {
+            if (value === null || value === "") {
+                this.clearFormalismValue();
+                return null;
+            } else {
+                if (val === null) {
+                    val = {};
+                    this.getValueNodeParentRef().push(val);
+                    this.setValueNodeRef(val);
+                    this.setValue(val);
+                }
+
+                val["|formalism"] = value;
+            }
+        }
+        else if (val == null) {
+            if (this.getDefaultValue()) {
+                var dv = this.getDefaultValue();
+                if (!thinkehr.f4.util.isString(dv.magnitude) || dv.magnitude.length > 0) {
+                    this.magnitudeValue(dv.magnitude)
+                }
+
+                if (thinkehr.f4.util.isString(dv.unit) && dv.unit.length > 0) {
+                    return this.unitValue(dv.unit)
+                }
+            }
+
+            return null;
+        }
+
+        return val["|formalism"];
+    },
+    clearValue: function () {
+        var val = this.value;
+        if (val) {
+            val["|value"] = null;
+            val["|formalism"] = null;
+        }
+    },
+
+    clearParsableValue: function () {
+        var val = this.value;
+        if (val) {
+            val["|value"] = null;
+        }
+    },
+
+    clearFormalismValue: function () {
+        var val = this.value;
+        if (val) {
+            val["|formalism"] = null;
+        }
+    },
+
     /*
      * @Override
      */
     getRmType: function () {
-        return thinkehr.f4.RmType.DV_TEXT;
+        return thinkehr.f4.RmType.DV_PARSABLE;
     },
+
 
     /*
      * @Override

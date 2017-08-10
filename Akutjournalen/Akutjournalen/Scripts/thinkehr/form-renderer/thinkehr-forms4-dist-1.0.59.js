@@ -10863,7 +10863,6 @@ angular.module("thinkehr/f4/templates/ehr-validation-msg.html", []).run(["$templ
             return {
                 prepareValueModel: function (valueModel, ehrContext, rootModel) {
                     this.runVisitors(valueModel, ehrContext, rootModel);
-
                     var clonedModel = angular.copy(valueModel);
                     this.createSaveContext(ehrContext, clonedModel);
 
