@@ -2,19 +2,6 @@
 
     console.log("Here we are");
 	
-	// var getEhrId = function () {
-        // var temparray = window.location.pathname.split('/SpecificUnderlag/', 2);
-        // var getEHRandTime = temparray[1].split('-');
-        // var time = getEHRandTime.splice(0, 1);
-        // var ehrid;
-
-        // time = time[0];
-        // ehrid = getEHRandTime.join("-");
-
-        // return ehrid;
-    // };
-   
-
     var app = angular.module("formsApp", ["ngResource", "tmh.dynamicLocale", "thinkehrForms4", "ui.bootstrap", "ui.bootstrap.datetimepicker"])
         .config(['$httpProvider', "tmhDynamicLocaleProvider", function ($httpProvider, tmhDynamicLocaleProvider) {
             //Enable cross domain calls
@@ -30,7 +17,7 @@
                 url: "https://rest.ehrscape.com/rest/v1",
                 username: "lio.se2",
                 password: "ehr4lio.se2",
-                ehrId: "b51f3709-eeb6-49ed-afae-ef1468ec03fb",
+                ehrId: EHRID,
                 locales: ["sv-SE"]
             };					
         })
@@ -89,7 +76,7 @@
                 {
                     add: {
                         method: "POST",
-                        params: { ehrId: AppConfig, format: "STRUCTURED" },
+                        params: { ehrId: AppConfig.ehrId, format: "STRUCTURED" },
                         //params: { format: "STRUCTURED" },
                         headers: {
                             "Ehr-Session": function () {
@@ -167,6 +154,8 @@
 
                 $scope.$on('selectPretty', function (scope, element, attrs) {
                     $(element).selecter();
+
+
                 });
 
 				
@@ -212,25 +201,82 @@
                     );
                 };
 
-                this.saveValues = function () {
-                    	
-					// EhrContext.language = "se";
-					// EhrContext.territory = "se";
-                    // EhrContext.locale = "sv-se";
-                    
+                //temporary save changes in form for later evalutation (sends to ehrscape but state is not changed)
+                this.tempSaveValues = function () {
+
                     var temp_valuemodel = this.valueModel;
-                    console.log("valueModel", this.valueModel);
-                    //var citatValue = temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0];
-                    //temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0] = { "|value": citatValue ,"|formalism":"text/html"};
+
+                    if ($scope.markedForCitationList) {
+                        var citation = {};
+
+                        if ($scope.markedForCitationList.length >= 1) {
+
+                            for (elementNumber in $scope.markedForCitationList) {
+
+                                if (elementNumber == 0) {
+                                    console.log("citation 1.0", citation);
+                                    citation["citat_länk"] = [];
+                                    citation["citat_länk"]["0"] = {};
+                                    citation["citat_länk"]["0"].citat = [];
+                                    citation["citat_länk"]["0"].comment = [];
+                                    citation["citat_länk"]["0"].description = [];
+                                    citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                                    citation["citat_länk"]["0"].citat.push({
+                                        "|formalism": "application/json",
+                                        "|value": $scope.markedForCitationList[elementNumber]//JSON.stringify(
+                                    });
+
+                                    citation["citat_länk"]["0"].comment.push("");
+                                    citation["citat_länk"]["0"].description.push("");
+                                    citation["citat_länk"]["0"].länk_uri_till_källdata.push("");
+                                }
+                                else if (elementNumber >= 1) {
+
+                                    citation["citat_länk:" + elementNumber] = [];
+                                    citation["citat_länk:" + elementNumber]["0"] = {};
+                                    citation["citat_länk:" + elementNumber]["0"].citat = [];
+                                    citation["citat_länk:" + elementNumber]["0"].comment = [];
+                                    citation["citat_länk:" + elementNumber]["0"].description = [];
+                                    citation["citat_länk:" + elementNumber]["0"].länk_uri_till_källdata = [];
+
+                                    citation["citat_länk:" + elementNumber]["0"].citat.push({
+                                        "|formalism": "application/json",
+                                        "|value": $scope.markedForCitationList[elementNumber] //JSON.stringify(
+                                    });
+                                    citation["citat_länk:" + elementNumber]["0"].comment.push("");
+                                    citation["citat_länk:" + elementNumber]["0"].description.push("");
+                                    citation["citat_länk:" + elementNumber]["0"].länk_uri_till_källdata.push("");
+                                }
+                                console.log("citation 2", citation);
+                                console.log("markedForCitationList@number...", $scope.markedForCitationList[elementNumber]);
+                            }
+                        }
+
+                        else {
+                            citation["citat_länk"] = [];
+                            citation["citat_länk"]["0"] = {};
+                            citation["citat_länk"]["0"].citat = [];
+                            citation["citat_länk"]["0"].comment = [];
+                            citation["citat_länk"]["0"].description = [];
+                            citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                            citation["citat_länk"]["0"].citat.push({ "|formalism": "", "|value": "" });
+                            citation["citat_länk"]["0"].comment.push("");
+                            citation["citat_länk"]["0"].description.push("");
+                            citation["citat_länk"]["0"].länk_uri_till_källdata.push("");
+                        }
+
+                        temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"][0] = citation;
+                        temp_valuemodel["beslut_om_kirurgisk_åtgärd"].status_beslut["0"].ism_transition["0"].current_state = ""
+                    }
+
                     var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(temp_valuemodel));
-                    //var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
-
-                    //cr["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"]["0"].request["0"].timing.value = "Now";
-
-                    
 
                     cr.$add({ templateId: this.templateId },
-                        function (success) {                            
+                        function (success) {
+
+                            console.log("Success", success)
                             var h = success.meta.href;
                             var parsedHref = h.split("/");
                             ctrl.lastSaved = parsedHref[parsedHref.length - 1];
@@ -238,7 +284,220 @@
                             var opts = {
                                 icon: "check",
                                 title: "Success!",
-                                message: "Composition has been saved.",
+                                message: "Formulär har sparats!",
+                                type: "success"
+                            };
+
+                            ctrl.createGrowl(opts);
+
+                            if (!ctrl.compositions) {
+                                ctrl.compositions = [];
+                            }
+
+                            var newComp = {
+                                startTime: new Date(),
+                                uid: ctrl.lastSaved,
+                                templateId: ctrl.templateId
+                            };
+
+                            if (ctrl.compositions.length > 9) {
+                                ctrl.compositions.pop();
+                            }
+                            ctrl.compositions.unshift(newComp);
+
+                        },
+                        function (error) {
+                            ctrl.saveError = error;
+                            console.error("err", error);
+
+                            var opts = {
+                                icon: "warning",
+                                title: "Error!",
+                                message: "Kunde inte spara formulär, formuläret är inkorrekt ifyllt",
+                                type: "danger"
+                            };
+
+                            ctrl.createGrowl(opts);
+                        }
+                    );
+                }
+
+                //Send form to EHRscape 
+                this.saveValues = function () {
+                    	
+                    console.log("TESTING SCOPE SHARING:", $scope.markedForCitationList);
+                    var citation = {};
+
+                    if ($scope.markedForCitationList) {
+                        //if ($scope.markedForCitationList.length >= 1) {
+
+                        //    for (elementNumber in $scope.markedForCitationList) {
+
+                        //        if (elementNumber == 0) {
+                        //            console.log("citation 1.0", citation);
+                        //            citation["citat_länk"] = [];
+                        //            citation["citat_länk"]["0"] = {};
+                        //            citation["citat_länk"]["0"].citat = [];
+                        //            citation["citat_länk"]["0"].comment = [];
+                        //            citation["citat_länk"]["0"].description = [];
+                        //            citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                        //            citation["citat_länk"]["0"].citat.push({
+                        //                "|formalism": "application/json",
+                        //                "|value": $scope.markedForCitationList[elementNumber]//JSON.stringify(
+                        //            });
+
+                        //            citation["citat_länk"]["0"].comment.push("");
+                        //            citation["citat_länk"]["0"].description.push("");
+                        //            citation["citat_länk"]["0"].länk_uri_till_källdata.push("");
+                        //        }
+                        //        else if (elementNumber >= 1) {
+                        //            console.log("citation 1.5", citation);
+
+                        //            //citation["citat_länk"]["0"]["citat:" + elementNumber] = [];
+                        //            //citation["citat_länk"]["0"]["comment:" + elementNumber] = [];
+                        //            //citation["citat_länk"]["0"]["description:" + elementNumber] = [];
+                        //            //citation["citat_länk"]["0"]["länk_uri_till_källdata:" + elementNumber] = [];
+
+                        //            //citation["citat_länk"]["0"]["citat:" + elementNumber].push({
+                        //            //    "|formalism": "application/json",
+                        //            //    "|value": $scope.markedForCitationList[elementNumber] //JSON.stringify(
+                        //            //});
+                        //            //citation["citat_länk"]["0"]["comment:" + elementNumber].push("");
+                        //            //citation["citat_länk"]["0"]["description:" + elementNumber].push("");
+                        //            //citation["citat_länk"]["0"]["länk_uri_till_källdata:" + elementNumber].push("");
+
+
+                        //            citation["citat_länk:" + elementNumber] = [];
+                        //            citation["citat_länk:" + elementNumber]["0"] = {};
+                        //            citation["citat_länk:" + elementNumber]["0"].citat = [];
+                        //            citation["citat_länk:" + elementNumber]["0"].comment = [];
+                        //            citation["citat_länk:" + elementNumber]["0"].description = [];
+                        //            citation["citat_länk:" + elementNumber]["0"].länk_uri_till_källdata = [];
+
+                        //            citation["citat_länk:" + elementNumber]["0"].citat.push({
+                        //                //"|formalism": "application/json",
+                        //                //"|value": $scope.markedForCitationList[elementNumber] //JSON.stringify(
+                        //            });
+                        //            citation["citat_länk:" + elementNumber]["0"].comment.push("");
+                        //            citation["citat_länk:" + elementNumber]["0"].description.push("");
+                        //            citation["citat_länk:" + elementNumber]["0"].länk_uri_till_källdata.push("");
+                        //        }
+                        //        console.log("citation 2", citation);
+                        //        console.log("markedForCitationList@number...", $scope.markedForCitationList[elementNumber]);
+                        //    }
+                        //}
+
+                        //else {
+                        //    citation["citat_länk"] = [];
+                        //    citation["citat_länk"]["0"] = {};
+                        //    citation["citat_länk"]["0"].citat = [];
+                        //    citation["citat_länk"]["0"].comment = [];
+                        //    citation["citat_länk"]["0"].description = [];
+                        //    citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                        //    citation["citat_länk"]["0"].citat.push({ "|formalism": "", "|value": ""});
+                        //    citation["citat_länk"]["0"].comment.push("");
+                        //    citation["citat_länk"]["0"].description.push("");
+                        //    citation["citat_länk"]["0"].länk_uri_till_källdata.push("");
+                        //}
+
+                        if ($scope.markedForCitationList.length >= 1) {
+
+                            for (elementNumber in $scope.markedForCitationList) {
+
+                                if (elementNumber == 0) {
+                                    console.log("citation 1.0", citation);
+                                    citation["citat_länk"] = [];
+                                    citation["citat_länk"]["0"] = {};
+                                    citation["citat_länk"]["0"]["citat"] = [];
+                                    citation["citat_länk"]["0"]["citat"]["0"] = {};
+                                    citation["citat_länk"]["0"]["citat"]["0"]["value"] = [];
+                                    citation["citat_länk"]["0"]["citat"]["0"]["value"]["0"] = {};
+
+                                    citation["citat_länk"]["0"].comment = [];
+                                    citation["citat_länk"]["0"].description = [];
+                                    citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                                    citation["citat_länk"]["0"]["citat"]["0"]["value"]["0"] = {
+                                        "|formalism": "application/json",
+                                        "|value": $scope.markedForCitationList[elementNumber].Value
+                                    };
+
+                                    citation["citat_länk"]["0"].comment.push("Test");
+                                    citation["citat_länk"]["0"].description.push("Hej");
+                                    citation["citat_länk"]["0"].länk_uri_till_källdata.push("https://www.google.com/nacon");
+                                }
+                                //else if (elementNumber >= 1) {
+                                //    console.log("citation 1.5", citation);
+
+                                //    citation["citat_länk"] = [];
+                                //    citation["citat_länk"]["0"] = {};
+                                //    citation["citat_länk"]["0"]["citat:" + elementNumber] = [];
+                                //    citation["citat_länk"]["0"]["citat:" + elementNumber]["0"] = {};
+                                //    citation["citat_länk"]["0"].comment = [];
+                                //    citation["citat_länk"]["0"].description = [];
+                                //    citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                                //    citation["citat_länk"]["0"]["citat:" + elementNumber]["0"] = {
+                                //        "|formalism": "application/json",
+                                //        "|value": $scope.markedForCitationList[elementNumber].Value
+                                //    };
+                                //    citation["citat_länk"]["0"].comment.push("");
+                                //    citation["citat_länk"]["0"].description.push("");
+                                //    citation["citat_länk"]["0"].länk_uri_till_källdata.push("");
+                                //}
+                                console.log("citation 2", citation);
+                                console.log("markedForCitationList@number...", $scope.markedForCitationList[elementNumber]);
+                            }
+                        }
+
+                        else {
+                            citation["citat_länk"] = [];
+                            citation["citat_länk"]["0"] = {};
+                            citation["citat_länk"]["0"].citat = [];
+                            citation["citat_länk"]["0"].comment = [];
+                            citation["citat_länk"]["0"].description = [];
+                            citation["citat_länk"]["0"].länk_uri_till_källdata = [];
+
+                            citation["citat_länk"]["0"].citat.push({ "|formalism": "", "|value": "" });
+                            citation["citat_länk"]["0"].comment.push("");
+                            citation["citat_länk"]["0"].description.push("");
+                            citation["citat_länk"]["0"].länk_uri_till_källdata.push("");
+                        }
+                    }
+
+
+					// EhrContext.language = "se";
+					// EhrContext.territory = "se";
+                    // EhrContext.locale = "sv-se";
+                    
+                    //var temp_valuemodel = this.valueModel;
+                    //if ($scope.markedForCitationList) {
+                    //    console.log("citation", citation)
+                    //    temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"][0] = citation;
+                    //}
+                    
+
+                    //console.log("temp_valuemodel", temp_valuemodel);
+
+                    //var citatValue = temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0];
+                    //temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0] = { "|value": citatValue ,"|formalism":"text/html"};
+
+                    var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
+
+                    cr.$add({ templateId: this.templateId },
+                        function (success) {
+
+                            console.log("Success", success)
+                            var h = success.meta.href;
+                            var parsedHref = h.split("/");
+                            ctrl.lastSaved = parsedHref[parsedHref.length - 1];
+
+                            var opts = {
+                                icon: "check",
+                                title: "Success!",
+                                message: "Beslut har skickats och sparats!",
                                 type: "success"
                             };
 
@@ -267,7 +526,7 @@
                             var opts = {
                                 icon: "warning",
                                 title: "Error!",
-                                message: "Saving compositions is not possible in this demo.",
+                                message: "Kunde inte spara och skicka beslut, formuläret är inkorrekt ifyllt",
                                 type: "danger"
                             };
 
@@ -337,10 +596,19 @@
                             if (!done[form.name]) {
                                 //alert("hi");
                                 form.xid = id++;
+                                var formName = getParameterByName("formName");
+                                var formVersion = getParameterByName("formVersion");
                                 form.nameWithVersion = form.name + " " + form.version;
                                 
+
+                                //var nameWithVersionToParse = getParameterByName("formName") + " " + getParameterByName("formVersion")
+                                //var temp = nameWithVersionToParse.replace(/"/g, "");
                                 
-								if(form.nameWithVersion == "Beslut, kirurgisk åtgärd med citat 3 1.0.24") {
+                                //Get query string and put results in below
+                                //console.log(formName + formVersion);
+                                //console.log(temp);
+                                
+                                if (form.nameWithVersion == formName + " " + formVersion) {
 									console.log(form);
 									displayForms.push(form);
 									done[form.name] = 1;
@@ -446,7 +714,6 @@
                 $scope.$watch("currentFormIndex", function (newVal, oldVal) {
 
                     if (newVal != oldVal) {
-						console.log('newVal', newVal);
                         var cfi = parseInt(newVal.xid);
                         var form = $scope.formsDataSource[cfi];
 
@@ -479,58 +746,6 @@
                                         ctrl.valueModel = {};
                                         ctrl.formModel = thinkehr.f4.parseFormDescription(ctrl.ehrContext, formDesc, ctrl.valueModel);
                                     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                    //var x = $("#form-attach");
-
-                                    //console.log(ctrl.formModel);
-                                    //console.log("testilitest");
-                                    //console.log(ctrl.formModel);
-                                    //console.log(ctrl.valueModel);
-
-                                    // var obj = {};
-									// formDesc.children.forEach(function (child) {
-										// if (child.hasOwnProperty("children")) {
-											// obj[child.name] = { "formId": child.formId, "children": child.children }
-
-										// }
-
-										// else {
-											// obj[child.name] = { "formId": child.formId }
-										// }
-									// });
-									// console.log("VM: ");
-									// console.log(obj);
-                                    // var initationPromise = new Promise(function (resolve, reject) {
-                                        
-
-                                        
-                                        
-                                        // //console.log(ctrl.valueModel);
-
-                                        // // if (compositionUid != undefined) {
-                                            // // initCollection(EHRID + "-Form-" + form.name + "-CompId" + compositionUid, ctrl.valueModel);
-                                        // // }
-                                        // // else {
-                                            // // initCollection(EHRID + "-Form-" + form.name, ctrl.valueModel);
-                                        // // }
-
-                                   
-                                        // resolve();
-                                    // });
-
-                                    // initationPromise.then(function () {
-
-                                        // // if (compositionUid != undefined) {
-                                            // // subscribeToPatientFields(EHRID + "-Form-" + form.name + "-CompId" + compositionUid);
-                                        // // }
-                                        // // else {
-                                            // // subscribeToPatientFields(EHRID + "-Form-" + form.name);
-                                        // // }
-                                    // });
-
- ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
                                     return QueryResource.querySaved().$promise;
                                 }
                             ).then(
@@ -549,6 +764,8 @@
             }])
         .controller("demographicsController", ["$scope", "$http", "$interval", "AppConfig", "FormResource", "SessionResource",
             function ($scope, $http, $interval, AppConfig, FormResource, SessionResource) {
+
+
 
                 /* cache */
                 

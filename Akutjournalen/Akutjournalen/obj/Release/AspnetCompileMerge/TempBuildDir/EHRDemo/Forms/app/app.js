@@ -3,7 +3,6 @@
     console.log("Here we are");
 
    
-    $
 
     var app = angular.module("formsApp", ["ngResource", "tmh.dynamicLocale", "thinkehrForms4", "ui.bootstrap", "ui.bootstrap.datetimepicker"])
         .config(['$httpProvider', "tmhDynamicLocaleProvider", function ($httpProvider, tmhDynamicLocaleProvider) {
@@ -115,6 +114,15 @@
                         method: "GET",
                         params: {
                             aql: function () {
+								// return "select a" + 
+									// "from EHR [ehr_id/value='" +
+                                    // AppConfig.ehrId +
+                                    // "'] " 
+									// "contains COMPOSITION a[openEHR-EHR-COMPOSITION.request.v1]" +
+									// "contains INSTRUCTION a_a[openEHR-EHR-INSTRUCTION.request-lab_test.v1]" +
+									// "where a/name/value='Request for service'" + 
+									// "offset 0 limit 100";
+									
                                 return "select " +
                                     "c/uid/value as uid, " +
                                     "c/context/start_time/value as startTime, " +
@@ -198,13 +206,13 @@
 
                 this.saveValues = function () {
                     	
-					//EhrContext.language = "se";
-					//EhrContext.territory = "se";
-					//EhrContext.locale = "sv-se";
+					// EhrContext.language = "se";
+					// EhrContext.territory = "se";
+					// EhrContext.locale = "sv-se";
 					
                     var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
                     
-					//alert('HERE')					
+					alert('HERE')					
 					
                     cr.$add({ templateId: this.templateId },
                         function (success) {                            
@@ -418,44 +426,46 @@
                                     //console.log(ctrl.formModel);
                                     //console.log(ctrl.valueModel);
 
-                                    var obj = {};
+                                    // var obj = {};
+									// formDesc.children.forEach(function (child) {
+										// if (child.hasOwnProperty("children")) {
+											// obj[child.name] = { "formId": child.formId, "children": child.children }
 
-                                    var initationPromise = new Promise(function (resolve, reject) {
-                                        formDesc.children.forEach(function (child) {
-                                            if (child.hasOwnProperty("children")) {
-                                                obj[child.name] = { "formId": child.formId, "children": child.children }
+										// }
 
-                                            }
+										// else {
+											// obj[child.name] = { "formId": child.formId }
+										// }
+									// });
+									// console.log("VM: ");
+									// console.log(obj);
+                                    // var initationPromise = new Promise(function (resolve, reject) {
+                                        
 
-                                            else {
-                                                obj[child.name] = { "formId": child.formId }
-                                            }
-                                        });
+                                        
+                                        
+                                        // //console.log(ctrl.valueModel);
 
-                                        console.log("VM: ");
-                                        //console.log(obj);
-                                        console.log(ctrl.valueModel);
-
-                                        if (compositionUid != undefined) {
-                                            initCollection(EHRID + "-Form-" + form.name + "-CompId" + compositionUid, ctrl.valueModel);
-                                        }
-                                        else {
-                                            initCollection(EHRID + "-Form-" + form.name, ctrl.valueModel);
-                                        }
+                                        // // if (compositionUid != undefined) {
+                                            // // initCollection(EHRID + "-Form-" + form.name + "-CompId" + compositionUid, ctrl.valueModel);
+                                        // // }
+                                        // // else {
+                                            // // initCollection(EHRID + "-Form-" + form.name, ctrl.valueModel);
+                                        // // }
 
                                    
-                                        resolve();
-                                    });
+                                        // resolve();
+                                    // });
 
-                                    initationPromise.then(function () {
+                                    // initationPromise.then(function () {
 
-                                        if (compositionUid != undefined) {
-                                            subscribeToPatientFields(EHRID + "-Form-" + form.name + "-CompId" + compositionUid);
-                                        }
-                                        else {
-                                            subscribeToPatientFields(EHRID + "-Form-" + form.name);
-                                        }
-                                    });
+                                        // // if (compositionUid != undefined) {
+                                            // // subscribeToPatientFields(EHRID + "-Form-" + form.name + "-CompId" + compositionUid);
+                                        // // }
+                                        // // else {
+                                            // // subscribeToPatientFields(EHRID + "-Form-" + form.name);
+                                        // // }
+                                    // });
 
  ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -464,6 +474,7 @@
                             ).then(
                                 function (success) {
                                     ctrl.compositions = success.resultSet;
+									console.log("WAU");
                                 },
 
                                 function (fail) {

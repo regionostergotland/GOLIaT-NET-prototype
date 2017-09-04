@@ -2,24 +2,26 @@
 	<ehr-label ng-if="!suppressLabel" class="ehr-label-content" ng-class="::EhrLayoutHelper.computeEhrLabelContentClass(model)">
 			{{::model.labelFor(EhrContext.language)}}:
 		</ehr-label>
-	<input class="field form-control col-sm-3"
-        
-        ng-readonly="model.getViewConfig().isReadOnly()"
-        ng-hide="model.getViewConfig().isHidden()"
-        ng-model="parsableValue" ng-model-options="{ getterSetter: true }"
-        ng-class="::EhrLayoutHelper.computeFieldClass(model)"
-        />
 		
-	<input class="field form-control col-sm-3"
-        
-        ng-readonly="model.getViewConfig().isReadOnly()"
-        ng-hide="true"
-        ng-model="formalismValue" ng-model-options="{ getterSetter: true }"
-        ng-class="::EhrLayoutHelper.computeFieldClass(model)"
-        />
-		
-    </div>
+	<div class="ehr-field-content">	
+		<input class="ehr-text-input field form-control"
+			
+			ng-readonly="model.getViewConfig().isReadOnly()"
+			ng-hide="model.getViewConfig().isHidden()"
+			ng-model="parsableValue" ng-model-options="{ getterSetter: true }"
+			ng-class="::EhrLayoutHelper.computeFieldClass(model)"
+			/>
+			
+		<input class="field form-control"
+			
+			ng-readonly="model.getViewConfig().isReadOnly()"
+			ng-hide="true"
+			ng-model="formalismValue" ng-model-options="{ getterSetter: true }"
+			ng-class="::EhrLayoutHelper.computeFieldClass(model)"
+			/>
+			
+	</div>
 </div>
-<!-- sends only text/html as formalism right now -->
 
-<!-- model.getViewConfig().isHidden()-->
+<!-- sends only text/html as formalism right now -->
+<!-- model.getViewConfig().isHidden() missing from formalism's ng-hide right now-->

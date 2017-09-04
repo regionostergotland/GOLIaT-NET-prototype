@@ -33,5 +33,10 @@ namespace Akutjournalen.Controllers
 
             return View();
         }
+        public ActionResult ViewForm()
+        {
+            @ViewBag.PageHeader = "Forms";
+            return View();
+        }
     }
 }

@@ -4,13 +4,15 @@
     <li class="hidden"><input type="number"  /></li>
     <li class="header">@ViewBag.PageMenuHeader</li>
     <!-- Optionally, you can add icons to the links -->    
-    <li class="ro_team"><a href="@Url.Action("Index", "Home")"><i class="fa fa-users"></i><span>Team & Patienter</span></a></li>    
-    <li><a href="@Url.Action("Index", "Triage")"><i class="fa fa-area-chart ro_pat"></i><span>Översikt</span></a></li>    
-    <li><a href="@Url.Action("Index", "Forms")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>EHR Formulär</span></a></li>    
-    <li><a href="@Url.Action("Index", "Timeline")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Tidslinje</span></a></li>    
-    <li><a href="@Url.Action("Index", "SlutAnteckning")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Anteckning (OT)</span></a></li>
-    <li><a href="@Url.Action("Index", "IDPInfo")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>IDP</span></a></li>
-    <li><a href="@Url.Action("Index", "Prototyp")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Om Akutjournal</span></a></li>
+    <li class="ro_team"><a href="@Url.Action("Index", "Home")"><i class="fa fa-users"></i><span>Min översikt</span></a></li>    
+    <li><a href="@Url.Action("Index", "Inkommande")"><i class="fa fa-area-chart ro_pat"></i><span>Inkommande</span></a></li>
+    <li><a href="@Url.Action("Index", "Underlag")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Beslutsunderlag</span></a></li>    
+    <li><a href="@Url.Action("Index", "OplaneradeOp")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Oplanerade operationer</span></a></li>    
+    <li><a href="@Url.Action("Index", "Planering")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Aktuell Planering</span></a></li>    
+    <li><a href="@Url.Action("Index", "")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Operation</span></a></li>    
+    <br />
+    <li><a href="@Url.Action("Index", "SlutAnteckning")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Ledning</span></a></li>
+    <li><a href="@Url.Action("Index", "Patienter")"><i class="fa fa-users"></i><span>Patienter</span></a></li>
 
 </ul>
 <!-- /.sidebar-menu -->

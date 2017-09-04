@@ -2418,7 +2418,7 @@ thinkehr.f4.OrdinalFieldModel = thinkehr.f4.CodeValueBasedFieldModel._extendM({
      */
     _updateOtherFields: function (val, item) {
         val["|ordinal"] = item["ordinal"];
-    },
+    },  
 
     /*
      * @Override

@@ -28,7 +28,6 @@
     <script src="thinkehr/f4/thinkehr-f4-view-angular.js"></script>
 
     <script src="app/demographics.js"></script>
-    <script src="http://10.84.221.203:8080/dist/bundle.js"></script>
     <script src="app/app.js"></script>
 
 
@@ -44,14 +43,11 @@
 
     $(document).ready(function () {       	
         EHRID = getParameterByName('EHRID');
-        //console.log("påväg till fn()...");
-        fn();
 		//$("#locale-select").val("sv-SE");
 		//$("#EHRID").val(EHRID);				
         //alert(EHRID);
     });
 
-  
 </script>
 
 
@@ -151,20 +147,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="well">
-
-                            <!--      HERE IT IS      -->
-
-
-
                             <div id="form-attach">
                                 <ehr-form model="appCtrl.formModel" ehr-context="appCtrl.EhrContext"
                                           form-id="{{appCtrl.AppConfig.formName}}_{{appCtrl.AppConfig.formVersion}}"></ehr-form>
                             </div>
-
-
-
-
-                            <!--      HERE IT IS      -->
 
                     <div id="save-controls" data-ng-show="appCtrl.currentForm">
                         <button id="save-btn" class="btn btn-primary" data-ng-click="appCtrl.saveValues()">Add Composition</button>

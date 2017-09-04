@@ -38,6 +38,7 @@ This is a starter template page for creating web Desktop/Mobile applications at 
     @Scripts.Render("~/bundles/bootstrap")
 
     <!-- AdminLTE App -->
+   
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/Scripts/AdminLTE/app.js")
 
@@ -51,18 +52,26 @@ This is a starter template page for creating web Desktop/Mobile applications at 
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
+    
 
     <script>
-    function toggleRole() {
-        if ('@HttpContext.Current.Session["ROLE"]' == "Ledning") {
-            window.location = "?Role=Kirurg";
+        function toggleRole() {
+            if ('@HttpContext.Current.Session["ROLE"]' == "Ledning") {
+                window.location = "?Role=Kirurg";
+                
+            }
+            else if ('@HttpContext.Current.Session["ROLE"]' == "Kirurg") {
+                window.location = "?Role=Ledning";
+            }
         }
-        else if ('@HttpContext.Current.Session["ROLE"]' == "Kirurg") {
-            window.location = "?Role=Ledning";
+    </script>
+    <style>
+        .user-panel {
+            height: 100px;
         }
-    }
-</script>
+    </style>
 </head>
+
 <!--
 BODY TAG OPTIONS:
 =================
@@ -90,6 +99,7 @@ desired effect
                     <a href="" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
 
                     <div class="logoROPhone">
+
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         <span class="logo-mini"><i class="@ViewBag.PageApplicationIcon"></i></span>
                         <!-- logo for regular state and mobile devices -->
@@ -102,9 +112,12 @@ desired effect
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-custom-menu-left">
                     <a href="" class="logoROTabDesc">
+
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         <!-- logo for regular state and mobile devices -->
+
                         <i class="@ViewBag.PageApplicationIcon"></i>&nbsp;<b2>&nbsp;@ViewBag.PageApplicationName</b2>
+                        <span> <i class="@ViewBag.PageApplicationIcon"></i> <i id="name_of_clinic"></i> </span>
                     </a>
                 </div>
                 <!-- Navbar Right Menu -->
@@ -152,8 +165,6 @@ desired effect
                             <small>@ViewBag.SubPageHeader</small>
                         }
                     </h1>
-
-                    
 
                     @if (ViewBag.PageLevel != null)
                     {

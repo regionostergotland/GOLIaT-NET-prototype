@@ -3,7 +3,7 @@
         data-ehr-path="{{::model.getPath()}}"
         data-ehr-name="{{::model.getName()}}"
         ng-hide="model.getViewConfig().isHidden()"
-        ng-class="::computeLineClass()">
+        ng-class="::EhrLayoutHelper.computeLineClass()">
 
     <ehr-label ng-if="!suppressLabel" class="ehr-label-content" ng-class="::EhrLayoutHelper.computeEhrLabelContentClass(model)">
         {{::model.labelFor(EhrContext.language)}}:

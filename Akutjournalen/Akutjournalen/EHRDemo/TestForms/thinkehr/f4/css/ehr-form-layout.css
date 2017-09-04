@@ -1,13 +1,14 @@
 .ehr-line {
     display: flex;
+    flex: 1;
     flex-direction: row;
     /*flex-wrap: nowrap;*/
     justify-content: flex-start;
     /*align-content: flex-start;*/
     align-items: center;
     align-content: flex-start;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1px;
+    margin-bottom: 1px;
 
     /*border: 1px solid green;*/
 }
@@ -69,10 +70,10 @@
 
 .ehr-label-content {
     display: flex;
-    flex: 1;
+    flex: 3;
     justify-content: flex-end;
     text-align: right;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .ehr-field-content {
@@ -95,7 +96,7 @@
     justify-content: flex-end;
 }
 
-.ehr-label-content.label-horizontal-align-left {
+/*.ehr-label-content.label-horizontal-align-left {
     justify-content: flex-start;
 }
 
@@ -113,5 +114,122 @@
 
 .ehr-label-content.label-vertical-align-bottom {
     align-self: flex-end;
+}*/
+
+
+.ehr-line.body {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #434a54;
+  background-color: white;
 }
 
+.ehr-line.a {
+  color: #3bafda;
+  text-decoration: none;
+}
+.ehr-line.a:hover, .ehr-line.a:focus {
+  color: #4fc1e9;
+  text-decoration: none;
+}
+.ehr-line.a:focus {
+  outline: none;
+}
+
+.ehr-line.h1,
+.ehr-line.h2,
+.ehr-line.h3,
+.ehr-line.h4,
+.ehr-line.h5,
+.ehr-line.h6,
+.ehr-line.h1,
+.ehr-line.h2,
+.ehr-line.h3,
+.ehr-line.h4,
+.ehr-line.h5,
+.ehr-line.h6 {
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.ehr-line.h1 small,
+.ehr-line.h2 small,
+.ehr-line.h3 small,
+.ehr-line.h4 small,
+.ehr-line.h5 small,
+.ehr-line.h6 small,
+.ehr-line.h1 small,
+.ehr-line.h2 small,
+.ehr-line.h3 small,
+.ehr-line.h4 small,
+.ehr-line.h5 small,
+.ehr-line.h6 small {
+  color: #e7e9ec;
+}
+
+.ehr-line.h1,
+.ehr-line.h2,
+.ehr-line.h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.ehr-line.h4,
+.ehr-line.h5,
+.ehr-line.h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.ehr-line.h6 {
+  font-weight: normal;
+}
+
+.ehr-line.h1,
+h1 {
+  font-size: 51px;
+}
+
+.ehr-line.h2,
+.h2 {
+  font-size: 43px;
+}
+
+.ehr-line.h3,
+.h3 {
+  font-size: 30px;
+}
+
+.ehr-line.h4,
+.h4 {
+  font-size: 19px;
+}
+
+.ehr-line.h5,
+.h5 {
+  font-size: 18px;
+}
+
+.ehr-line.h6,
+.h6 {
+  font-size: 14px;
+}
+
+.ehr-line.blockquote {
+  border-left: 3px solid #ccd1d9;
+}
+
+.ehr-line.img-rounded {
+          border-radius: 4px;
+
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+}
+
+.ehr-line.img-comment {
+  margin: 24px 0;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.2;
+}

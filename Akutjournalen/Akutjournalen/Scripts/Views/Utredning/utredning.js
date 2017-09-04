@@ -31,12 +31,13 @@ var underlag = angular.module("underlag", ['datatables']);
 
 underlag.controller('StartSidaUnderlagCtrl', ['$scope', '$location', function ($scope, $location) {
 
-    $scope.pickUnderlag = function (path, ehrid, time) {
+    $scope.pickUnderlag = function (path, formName, formVersion , ehrid, time) {
         console.log(path);
         console.log(ehrid);
         console.log(time);
-        window.location = path + "/" + time +  "-" + ehrid;
+        window.location = path + "?id=" + time + "&EHRID=" + ehrid + "&formName=" + formName + "&formVersion=" + formVersion;
     }
+    $scope.underlagen = {};
 
     $.ajax({
         async: false,
@@ -46,8 +47,16 @@ underlag.controller('StartSidaUnderlagCtrl', ['$scope', '$location', function ($
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             var underlag = JSON.parse(response);
-            console.log(underlag);
-            $scope.underlagen = underlag;
+            console.log("Underlag", underlag);
+
+            $scope.underlagen = underlag
+
+            $scope.underlagen.forEach(function (underlag) {
+                underlag.status = "Ej Påbörjad";
+            });
+            //$scope.underlagen = underlag;
+
+            
         },
         error: function (error) {
             console.log(error);

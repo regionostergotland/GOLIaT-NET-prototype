@@ -2,7 +2,7 @@
 }
 
 .hoverDiv:hover {
-    background: #b0d8f0;
+    background: red;
     color: #000000;
 }
 
@@ -27,6 +27,7 @@ margin-top: 50px;
     width: 49%;
 }*/
 
+
 #boxelement {
     float: left;
     display: inline;
@@ -44,15 +45,10 @@ th {
     color: #ffffff;
 }
 
-tr {
+tbody tr {
     background-color: #dce8f1;
     color: #000000;
     cursor:pointer;
-}
-
-.dataTables_empty td {
-    content: "Ingen data tillänglig";
-    color:red;
 }
             
 
@@ -64,6 +60,26 @@ table td {
     background-color: #0066b3;
 }
 
+.btn-outline {
+    margin-left:10px;
+    margin-right:10px;
+    float:right;
+    border-color: #EFEFEF;
+}
+.btn-outline:hover{
+    border-color: #EFEFEF;
+}
+.btn-outline:focus{
+    color: #FFFFFF;
+}
+.btn-outline:active {
+    color: #FFFFFF;
+}
+
+
+.row.panel.cell {
+    background-color:red;
+}
 
 
 .box-body {
@@ -82,8 +98,9 @@ table td {
 
 
 .panel.cell {
-    padding:1% 1% 1% 1%;
     background-color: #EFEFEF;
+    padding: 5px 1px 1px 1px;
+
 }
 .col-xs-6.cell {
     padding: 0.2% 0.2% 0.2% 0.2% 
@@ -95,20 +112,54 @@ table td {
 }
 
 .panel {
-    padding: 1% 1% 1% 1%;
+    margin-bottom:0px;
+    padding-bottom:4px;
+    padding-left:4px;
+    padding-top: 5px;
 }
+/*.panel h4{
+    padding-left: 1%;
+    padding-top: 1%;
+    margin-bottom:5px;
+    font-weight: bold;
+}*/
+
+.fa-exclamation-triangle {
+    background-color:yellow;
+    color:yellow;
+    border: solid #828282 1px;
+    margin-right:5px;
+}
+
+.content-label {
+    font-weight:500;
+    color: #606060;
+}
+
+.panel span{
+    /*padding-left: 1%;
+    padding-top: 1%;*/
+}
+
 .panel p {
-    padding: 1% 1% 1% 1%;
-    /*margin-top: 5%;
-    margin-left: 4%;*/
+    margin-bottom:1%;
+    margin-top: 1%;
+    margin-left: 1%;
+    font-size:13px;
+}
+.panel p b{
+    font-size:15px;
 }
 
 .box  {
-    
     padding:  2% 2% 5% 2%;
 }
 
-.sub-panel p {
+/*.sub-panel p {
+    padding-left: 3%;
+}*/
+
+.sub-panel {
     padding-left: 3%;
 }
 

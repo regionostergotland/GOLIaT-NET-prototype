@@ -13,6 +13,7 @@
 
 .row
 {
+    padding-left:15px;
     margin-top:2px;
 
 }
@@ -21,6 +22,18 @@
     background: rgb(60, 141, 188);
     height:50px;
     color:white;
+}
+.date_for_meet::before {
+    content: "Dokumenterat den: ";
+}
+.date_for_meet {
+    margin-left:10px;
+    margin-right:10px;
+    float:right;
+    color: #849cae;
+}
+.date_for_meet a {
+    color: #0066b3;
 }
 
 .RO_TriageTime
@@ -90,4 +103,10 @@ RO_TriageTimeTh3
 
 .yellow {
   background: yellow;
+}
+.panel label {
+    margin-bottom:1%;
+    margin-top: 1%;
+    margin-left: 1%;
+    font-size:15px;
 }

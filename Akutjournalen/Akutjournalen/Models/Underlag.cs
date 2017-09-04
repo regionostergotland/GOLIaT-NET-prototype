@@ -23,9 +23,12 @@ namespace Akutjournalen.Models
         public string lastname { get; set; }
         public string gender { get; set; }
         public string personnummer { get; set; }
+        public string ansvarig_enhet { get; set; }
         public string time_created { get; set; }
         public string start_date_countdown { get; set; }
         public string utredning_id { get; set; }
+        public string instruction_id { get; set; }
+        public string activity_id { get; set; }
         public string filled_form_status { get; set; }
     }
 

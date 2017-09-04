@@ -198,7 +198,7 @@
 					
                     var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
                     
-					//alert('HERE')					
+					alert('HERE')					
 					
                     cr.$add({ templateId: this.templateId },
                         function (success) {                            

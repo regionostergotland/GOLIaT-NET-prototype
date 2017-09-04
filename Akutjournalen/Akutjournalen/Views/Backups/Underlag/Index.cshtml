@@ -1,0 +1,165 @@
+﻿@section scripts{
+
+    <script type="text/javascript">
+        var ehrID = '@Session["EHRID"]';
+    </script>
+
+    <script src="~/Scripts/angular.js"></script>
+
+    <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+<link href="~/Content/Custom/listView.css" rel="stylesheet" />
+
+    <link href="~/Content/Custom/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+    <link href="~/Content/Datatables/datatables.css" rel="stylesheet" />
+    <script src="~/Scripts/Views/Utredning/utredning.js"></script>
+    @*<script src="~/Scripts/EHR/FormPicker.js"></script>*@
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.js"></script>
+<script src="~/Scripts/angular-datatables.min.js"></script>
+
+
+    @*<script>
+        var myApp = underlag || {};
+        myApp.Settings = myApp.Settings || {};
+        myApp.Settings.Url= "@Url.Action("Index", "Underlag/SpecificUnderlag" )";
+        angular.module("underlag").value("appSettings", myApp);
+    </script>*@
+    
+
+}
+<style>
+    .hoverDiv {
+    }
+
+        .hoverDiv:hover {
+            background: #b0d8f0;
+            color: #000000;
+        }
+
+    /*.hoverDiv:active {
+                background: #6794dd;
+                color: #ffffff;
+            }*/
+
+    /*#columnNames {
+            margin-top: 50px;
+        }*/
+
+    #left-top-row-content {
+        float: left;
+        display: inline;
+        width: 49%;
+    }
+
+    #right-top-row-content {
+        float: left;
+        display: inline;
+        width: 49%;
+    }
+
+    #boxelement {
+        float: left;
+        display: inline;
+        width: 33%;
+        text-align: left;
+    }
+
+    .table {
+        margin-bottom: 0px;
+    }
+
+    th {
+        text-align: left;
+        background-color: #0066b3;
+        color: #ffffff;
+    }
+
+    td {
+        text-align: left;
+    }
+
+    .btn-circle {
+        background-color: #0066b3;
+    }
+
+    .box {
+        margin-bottom: auto;
+    }
+
+    .box-body {
+        color: #000000;
+        background-color: #ffffff;
+    }
+
+    /*#boxHeader {
+        min-height: 0px;
+        text-align: left;
+        background-color: #0066b3;
+        color: #ffffff;
+        font-weight: bold;
+    }*/
+
+    .instructionBox {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    h2 {
+        margin-top: 50px;
+    }
+
+    h4 {
+        margin-right: 60%;
+    }
+</style>
+
+
+
+<div ng-app="underlag">
+    <div id=" top-row">
+        <div id="left-top-row-content">
+            <div>
+                <h4>
+                    Listade Beslutsunderlag
+                </h4>
+            </div>
+        </div>
+        <div id="right-top-row-content">
+            <div><h4></h4></div>
+
+        </div>
+    </div>
+
+    <div ng-controller="StartSidaUnderlagCtrl">
+        <table datatable="ng" class="table table-hover" id="show-remisser">
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Personnummer</th>
+                    <th>Skapat</th>
+                    <th>Dagar kvar</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Ansvarig enhet</th>
+                    <th>Utrednings-ID</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="underlag in underlagen" id="underlag.ehrid" ng-click="pickUnderlag('@Url.Action("Index","Underlag/SpecificUnderlag")', underlag.ehrid, underlag._id.Timestamp)">
+                    <td>{{underlag.firstname || "-"}} {{underlag.lastname || "-"}} </td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{underlag.patientinfo.personnummer || "-"}}</td>
+                    
+                    <td><b>{{underlag.time_created || "-"}}</b></td>
+                    <td><b>{{underlag.start_date_countdown || "-"}}</b></td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{underlag.Composition.content[0].protocol.items[1].value.value || "-"}}</td>
+                    <td>{{underlag.utredning_id || "-"}}</td>
+                    <td> - </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

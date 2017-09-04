@@ -5,7 +5,7 @@
     <script type="text/javascript">
     var ehrID = '@Session["EHRID"]';
     </script>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
     <script src="~/Scripts/angular.js"></script>
 
     <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
@@ -103,7 +103,7 @@
 
 <div class="">
 
-    <div ng-app="myApp" ng-controller="StartSidaBeslutCtrl">
+    @*<div ng-app="myApp" ng-controller="StartSidaBeslutCtrl">
 
         <div id="prostatacancer">
             <div>
@@ -137,15 +137,15 @@
 
                         <div id="boxelement" ng-repeat="activity in instruction.content[0].activities">
                             {{ activity.name.value ||  "-"}}
-                            <span>
-                                <a ng-href="@Url.Action("Index", "Forms/editAction")?patientehr={{instruction.patientinfo.EHRID}}&instructionuid={{instruction.uid.value}}">
+                            <span>*@
+                                @*<a ng-href="@Url.Action("Index", "Forms/editAction")?patientehr={{instruction.patientinfo.EHRID}}&instructionuid={{instruction.uid.value}}">
                                     <button class="btn btn-circle" id="{{action.uid}}"></button>
-                                </a>
-                            </span>
+                                </a>*@
+                            @*</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>

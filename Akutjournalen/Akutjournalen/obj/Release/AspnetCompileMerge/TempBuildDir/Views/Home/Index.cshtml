@@ -4,184 +4,20 @@
     var ehrID = '@Session["EHRID"]';
 </script>
 
-<script src="~/Scripts/EHR/Team.js"></script>
-<script src="~/Scripts/EHR/Global.js"></script>
 <link href="~/Content/Custom/custom.css" rel="stylesheet" />
 
 }
 
 
 <div class="row">
-    <div class="col-lg-12 col-xs-12">
+    <div class="col-lg-12 col-xs-12"> 
+        @* Add timeline here *@
+
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Antal patienter</span>
-                        <span class="info-box-number">6</span>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 70%"></div>
-                        </div>
-                        <span class="progress-description">
-                            2 patienter på väg till sjukhuset
-                        </span>
-                    </div><!-- /.info-box-content -->
-                </div><!-- /.info-box -->
-            </div><!-- /.col -->
-
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box bg-red">
-                    <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Viktigt för alla</span>
-                        <span class="info-box-number">2</span>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 70%"></div>
-                        </div>
-                        <span class="progress-description">
-                            ...
-                        </span>
-                    </div><!-- /.info-box-content -->
-                </div><!-- /.info-box -->
-            </div><!-- /.col -->
+            <div class="col-md-12">
+                <iframe name="ehrform" id="ehrform" src="/EHRDemo/PatientTimeLine/index.html?EHRID=28ac8bbc-eb14-4f01-a30d-bcff446e0bd4" height="800px" width="100%" frameborder="0"></iframe>
+            </div>
         </div>
-    </div>
-
-</div>
-
-<div class="row">
-
-    <div class="col-lg-12 col-xs-12">
-        <div class="box box-default table-responsive">
-
-            <div class="box-header with-border">
-                <i class="glyphicon glyphicon-th"></i>
-                <h5 class="box-title"><b>Team A</b></h5>
-                <div class="box-tools pull-right">
-                    <span class="label label-danger">Martin J</span>
-                    <span class="label label-info">Mia J</span>
-                    @*<span class="label label-info">Pia G</span>*@
-                    <span class="label label-success">Peter J</span>
-                    <span class="label label-success">Kalle A</span>
-                </div><!-- /.box-tools -->
-            </div><!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:20px"></th>
-                            <th style="width:70px"></th>
-                            <th style="width:100px">Förnamn</th>
-                            <th style="width:100px">Efternamn</th>
-                            <th style="width:100px">Meddelanden</th>
-                            <th style="width:100px">Ålder</th>
-                            <th style="width:120px">Personnummer</th>       
-                            <th>Kön</th>                                                  
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr onclick="SetEhrID('28ac8bbc-eb14-4f01-a30d-bcff446e0bd4')">
-                            <td class="foo green"></td>
-                            <td><a onclick="SetEhrID('28ac8bbc-eb14-4f01-a30d-bcff446e0bd4')" class="btn btn-sm btn-primary btn btn-flat pull-left"> Välj</a></td>
-                            <td>Alison</td>
-                            <td>Wilkinson</td>
-                            <td></td>
-                            <td>12 år</td>
-                            <td>XXXXXX-XXXX</td>
-                            <td><i class='fa fa-female'></i></td>
-                        </tr>
-
-                        <tr onclick="SetEhrID('b3b2aaad-8a79-4441-a499-8895a531da29')">
-                            <td class="foo orange"></td>
-                            <td><a onclick="SetEhrID('b3b2aaad-8a79-4441-a499-8895a531da29')" class="btn btn-sm btn-primary btn btn-flat pull-left"> Välj</a></td>
-                            <td>Carlos</td>
-                            <td>Test</td>
-                            <td><span class="label label-danger">1</span> <span class="label label-info">1</span></td>
-                            <td>42 år</td>
-                            <td>XXXXXX-XXXX</td>
-                            <td><i class='fa fa-male'></i></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-12 col-xs-12">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <i class="glyphicon glyphicon-th"></i>
-                <h5 class="box-title"><b>Team B</b></h5>
-                <div class="box-tools pull-right">
-                    <span class="label label-danger">Mia Z</span>
-                    <span class="label label-info">Niklas A</span>
-                    <span class="label label-info">Jenny O</span>
-                    <span class="label label-success">Mikael H</span>
-                    @*<span class="label label-success">Lisa N</span>*@
-                </div><!-- /.box-tools -->
-            </div><!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:20px"></th>
-                            <th style="width:70px"></th>
-                            <th style="width:100px">Förnamn</th>
-                            <th style="width:100px">Efternamn</th>
-                            <th style="width:100px">Meddelanden</th>
-                            <th style="width:100px">Ålder</th>
-                            <th style="width:120px">Personnummer</th> 
-                            <th>Kön</th>                                     
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr onclick="SetEhrID('12990aaf-5c74-44d4-b406-407fd347033e')">
-                            <td class="foo red"></td>
-                            <td><a onclick="SetEhrID('12990aaf-5c74-44d4-b406-407fd347033e')" class="btn btn-sm btn-primary btn btn-flat pull-left"> Välj</a></td>
-                            <td>Calhoun</td>
-                            <td>Quail</td>
-                            <td><span class="label label-success">1</span></td>
-                            <td>67 år</td>
-                            <td>XXXXXX-XXXX</td>
-                            <td><i class='fa fa-female'></i></td>
-                        </tr>
-                        <tr onclick="SetEhrID('b51f3709-eeb6-49ed-afae-ef1468ec03fb')">
-                            <td class="foo yellow"></td>
-                            <td><a onclick="SetEhrID('b51f3709-eeb6-49ed-afae-ef1468ec03fb')" class="btn btn-sm btn-primary btn btn-flat pull-left"> Välj</a></td>
-                            <td>Vladimir</td>
-                            <td>Dalton</td>
-                            <td><span class="label label-danger">2</span> <span class="label label-success">1</span></td>
-                            <td>28 år</td>
-                            <td>XXXXXX-XXXX</td>
-                            <td><i class='fa fa-male'></i></td>
-                        </tr>
-                        <tr onclick="SetEhrID('ff320498-8254-4f35-9345-9bb7a2e59cf4')">
-                            <td class="foo orange"></td>
-                            <td><a onclick="SetEhrID('ff320498-8254-4f35-9345-9bb7a2e59cf4')" class="btn btn-sm btn-primary btn btn-flat pull-left"> Välj</a></td>
-                            <td>Ori</td>
-                            <td>French</td>
-                            <td><span class="label label-info">1</span></td>
-                            <td>44 år</td>
-                            <td>XXXXXX-XXXX</td>
-                            <td><i class='fa fa-male'></i></td>
-                        </tr>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-
-
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
     </div>
 </div>
 

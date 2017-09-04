@@ -18,7 +18,7 @@ This is a starter template page for creating web Desktop/Mobile applications at 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Akut Journalen">
+    <meta name="apple-mobile-web-app-title" content="Operationsplanerare - GOLIAT">
 
     <!-- Bootstrap 3.3.5 -->
     @Styles.Render("~/Content/bootstrap")
@@ -38,6 +38,7 @@ This is a starter template page for creating web Desktop/Mobile applications at 
     @Scripts.Render("~/bundles/bootstrap")
 
     <!-- AdminLTE App -->
+   
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/Scripts/AdminLTE/app.js")
 
@@ -51,7 +52,18 @@ This is a starter template page for creating web Desktop/Mobile applications at 
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
+    
 
+    <script>
+    function toggleRole() {
+        if ('@HttpContext.Current.Session["ROLE"]' == "Ledning") {
+            window.location = "?Role=Kirurg";
+        }
+        else if ('@HttpContext.Current.Session["ROLE"]' == "Kirurg") {
+            window.location = "?Role=Ledning";
+        }
+    }
+</script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -80,6 +92,7 @@ desired effect
                     <a href="" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
 
                     <div class="logoROPhone">
+
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         <span class="logo-mini"><i class="@ViewBag.PageApplicationIcon"></i></span>
                         <!-- logo for regular state and mobile devices -->
@@ -92,9 +105,12 @@ desired effect
             <nav class="navbar navbar-static-top" role="navigation">
                 <div class="navbar-custom-menu-left">
                     <a href="" class="logoROTabDesc">
+
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         <!-- logo for regular state and mobile devices -->
+
                         <i class="@ViewBag.PageApplicationIcon"></i>&nbsp;<b2>&nbsp;@ViewBag.PageApplicationName</b2>
+                        <span> <i class="@ViewBag.PageApplicationIcon"></i> <i id="name_of_clinic"></i> </span>
                     </a>
                 </div>
                 <!-- Navbar Right Menu -->
@@ -116,20 +132,17 @@ desired effect
                             <i class="fa fa-user fa-3x"></i>
                         </div>
                         <div class="pull-left info">
-                            <p>@ViewBag.PageUserName</p>
                             <small>
-                                <span>@ViewBag.PageUserSign</span>
-                                @if (!string.IsNullOrEmpty(ViewBag.PageUserRole))
-                                {
-                                    <span>, </span>
-                                    <span>@ViewBag.PageUserRole</span>
-                                }
+                                @*<p>@ViewBag.PageUserName</p>*@
+                                <p>@ViewBag.PageUserSign</p>
+                                <span><b>Roll: </b><button onclick="toggleRole()" class="btn btn-success"> @HttpContext.Current.Session["ROLE"] </button> </span>
                             </small>
                         </div>
                     </div>
                 }
                 @RenderPage("~/Views/Shared/SideMenuPartial.cshtml")
             </section>
+
             <!-- /.sidebar -->
         </aside>
         <!-- Content Wrapper. Contains page content -->
@@ -140,7 +153,10 @@ desired effect
                 <section class="content-header">
                     <h1>
                         @ViewBag.PageHeader
-                        <small>@ViewBag.SubPageHeader</small>
+                        @if (@HttpContext.Current.Session["ROLE"].ToString() == "Kirurg")
+                        {
+                            <small>@ViewBag.SubPageHeader</small>
+                        }
                     </h1>
 
                     @if (ViewBag.PageLevel != null)
@@ -154,7 +170,7 @@ desired effect
             }
             <!-- Main content -->
             <section class="content">
-                <!-- Your Page Content Here -->
+                <!-- Page Content Here -->
                 @RenderBody()
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->

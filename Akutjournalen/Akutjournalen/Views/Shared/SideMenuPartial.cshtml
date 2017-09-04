@@ -1,4 +1,21 @@
 ﻿
+<style>
+    .sidebar-menu-sub {
+        list-style-type:none;
+    }
+    .sidebar-menu-sub a {
+        padding: 12px 5px 12px 18px;
+        width: 150px;
+    }
+    .sidebar-menu-sub li {
+        margin-bottom:6px;
+        margin-left:20px;
+    }
+    .sidebar-menu-sub li:hover {
+        background-color:red;
+    }
+</style>
+
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu">
     <li class="hidden"><input type="number"  /></li>
@@ -6,13 +23,20 @@
     <!-- Optionally, you can add icons to the links -->    
     <li class="ro_team"><a href="@Url.Action("Index", "Home")"><i class="fa fa-users"></i><span>Min översikt</span></a></li>    
     <li><a href="@Url.Action("Index", "Inkommande")"><i class="fa fa-area-chart ro_pat"></i><span>Inkommande</span></a></li>
-    <li><a href="@Url.Action("Index", "Underlag")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Beslutsunderlag</span></a></li>    
+    <li><a href="@Url.Action("Index", "Underlag")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Utredning och beslut</span></a>
+        <ul class="sidebar-menu-sub">
+            <li><a href="@Url.Action("Index", "Inkommande")"><i class="fa fa-area-chart ro_pat"></i><span>Test</span></a></li>
+        </ul>
+    </li>   
+     
     <li><a href="@Url.Action("Index", "OplaneradeOp")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Oplanerade operationer</span></a></li>    
     <li><a href="@Url.Action("Index", "Planering")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Aktuell Planering</span></a></li>    
-    <li><a href="@Url.Action("Index", "")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Operation</span></a></li>    
-    <br />
+    <li><a href="@Url.Action("Index", "")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Operation</span></a>
+        
+    </li>    
+    @*<br />
     <li><a href="@Url.Action("Index", "SlutAnteckning")"><i class="glyphicon glyphicon-list-alt ro_pat"></i><span>Ledning</span></a></li>
-    <li><a href="@Url.Action("Index", "Patienter")"><i class="fa fa-users"></i><span>Patienter</span></a></li>
+    <li><a href="@Url.Action("Index", "Patienter")"><i class="fa fa-users"></i><span>Patienter</span></a></li>*@
 
 </ul>
 <!-- /.sidebar-menu -->

@@ -72,6 +72,12 @@ namespace RO.Common.Filters
             viewBag.PageMenuHeader = Setting("RO.PageMenuHeader");
            
             viewBag.PageApplicationName = "GOLIAT"; //Setting("RO.PageApplicationName");
+
+            if (HttpContext.Current.Request.QueryString["EHRID"] != null)
+            {
+                viewBag.CurrentEhrID = HttpContext.Current.Request.QueryString["EHRID"];
+            }
+            viewBag.CurrentPatient = ""; //Setting("RO.PageApplicationName");
             viewBag.PageApplicationIcon = ""; //Setting("RO.PageApplicationIcon");
 
             viewBag.PageLayoutSkin = Setting("RO.PageLayoutSkin");

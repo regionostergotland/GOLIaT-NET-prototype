@@ -206,7 +206,7 @@ function getParameterByName(name) {
                     "Ehr-Session": sessionId
                 },
                 success: function (docs) {
-
+					console.log("Docs", docs);
                     self.renderDocs(docs);
 
                     self._closeSession(sessionId);

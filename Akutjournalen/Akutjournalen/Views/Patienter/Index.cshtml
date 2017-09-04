@@ -3,7 +3,7 @@
     ViewBag.PageHeader = "Patienter";
     ViewBag.SubPageHeader = "";
 }
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
 <script src="~/Scripts/angular.js"></script>
 <script src="~/Scripts/Views/Patienter/patienter.js"></script>
 
@@ -71,13 +71,13 @@
     <div id="top-row">
         <div id="left-top-row-content"><h4>EHR Adminvy- Patienter</h4></div>
 
-        <div id="right-top-row-content">
+        @*<div id="right-top-row-content">
             <a href="@Url.Action("Index", "Patienter/CreatePatient")">
                 <button class="btn btn-success pull-right">
                     Ny Patient
                 </button>
             </a>
-        </div>
+        </div>*@
     </div>
     <br />
     <div id="middle-row" class="form-group">

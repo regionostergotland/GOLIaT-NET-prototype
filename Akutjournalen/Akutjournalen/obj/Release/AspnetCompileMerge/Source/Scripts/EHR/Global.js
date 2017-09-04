@@ -1,4 +1,9 @@
-﻿
+﻿var baseUrl = 'https://rest.ehrscape.com/rest/v1';
+var queryUrl = baseUrl + '/query';
+//var username = 'lio.se1'
+//var password = 'lio.se123'
+var username = 'Carlos.Ortiz@regionostergotland.se'
+var password = 'Cortiz13112015'
 
 function getSessionId() {
 

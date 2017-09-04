@@ -5,7 +5,7 @@
     </script>
 
     <script src="~/Scripts/angular.js"></script>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
     <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
 
     <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
@@ -17,7 +17,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
     <link href="~/Content/Datatables/datatables.css" rel="stylesheet" />
-    <script src="~/Scripts/FileSaver.js"></script>
+    @*<script src="~/Scripts/FileSaver.js"></script>*@
     @*<script src="~/Scripts/EHR/FormPicker.js"></script>*@
     <script src="~/Scripts/Views/myAngular.js"></script>
     @*<script src="~/Scripts/Views/Inkommande/inkommande.js"></script>*@
@@ -56,23 +56,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="instruction in instructions" ng-click="toogleButtons(instruction.patientinfo.EHRID, instruction.uid.value)">
-                    <td>{{instruction.patientinfo.firstname}} {{instruction.patientinfo.lastname}}</td>
-                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{instruction.patientinfo.personnummer || "-"}}</td>
-                    <td>{{instruction.content[0].activities["0"].description.items[2].value.value}}</td>
-                    <td>{{instruction.content[0].protocol.items["0"].value.value}}</td>
-                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{instruction.content[0].protocol.items[1].value.value || "-"}}</td>
+                <tr ng-repeat="instruction in instructions" ng-click="toogleButtons(instruction.Composition.patientinfo.EHRID, instruction.Composition.uid.value)">
+                    <td>{{instruction.Composition.patientinfo.firstname}} {{instruction.Composition.patientinfo.lastname}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{instruction.Composition.patientinfo.personnummer || "-"}}</td>
+                    <td>{{instruction.Composition.content[0].activities["0"].description.items[2].value.value}}</td>
+                    <td>{{instruction.Composition.content[0].protocol.items["0"].value.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{instruction.Composition.content[0].protocol.items[1].value.value || "-"}}</td>
                     <td>
-                        {{instruction.content[0].activities["0"].description.items["1"].value.value}}
-                        <div ng-show="checkIfClicked(instruction.patientinfo.EHRID, instruction.uid.value)">
-                            <input type="button" id="AvvisaButton" class="btn btn-default" ng-click="UpdateState(instruction, $event); AvvisaRemiss(instruction)" value="Avvisa Remiss" />
+                        {{instruction.Composition.content[0].activities["0"].description.items["1"].value.value}}
+                        <div ng-show="checkIfClicked(instruction.Composition.patientinfo.EHRID, instruction.Composition.uid.value)">
+                            <input type="button" id="AvvisaButton" class="btn btn-default" ng-click="UpdateState(instruction.Composition, $event); AvvisaRemiss(instruction.Composition)" value="Avvisa Remiss" />
                             <label id="lblData"></label>
                         </div>
                     </td>
                     <td>
-                        {{instruction.content[0].activities["0"].timing.value || "-"}}
-                        <div ng-show="checkIfClicked(instruction.patientinfo.EHRID, instruction.uid.value)">
-                            <input type="button" id="UnderlagButton" class="btn btn-default" ng-click="UpdateState(instruction, $event); CreateUnderlag(instruction)" value="Skapa Underlag" />
+                        {{instruction.time || "-"}}
+                        <div ng-show="checkIfClicked(instruction.Composition.patientinfo.EHRID, instruction.Composition.uid.value)">
+                            <input type="button" id="UnderlagButton" class="btn btn-default" ng-click="UpdateState(instruction.Composition, $event); CreateUnderlag(instruction.Composition)" value="Skapa Underlag" />
                             <label id="lblData"></label>
                         </div>
                     </td>
@@ -82,7 +82,7 @@
 
     </div>
 
-    <div class="top-row">
+    @*<div class="top-row">
         <div id="left-top-row-content">
             <h4>
                 Skickats för Beslut
@@ -108,21 +108,21 @@
             </thead>
             <tbody>
                 <tr ng-repeat="remiss in doneRemisser">
-                    <td>{{remiss.patientinfo.firstname}} {{remiss.patientinfo.lastname}} </td>
-                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{remiss.patientinfo.personnummer || "-"}}</td>
-                    <td>{{remiss.content[0].activities["0"].description.items[2].value.value}}</td>
-                    <td>{{remiss.content[0].protocol.items["0"].value.value}}</td>
-                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{remiss.content["0"].protocol.items[1].value.value || "-"}}</td>
+                    <td>{{remiss.Composition.patientinfo.firstname}} {{remiss.Composition.patientinfo.lastname}} </td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{remiss.Composition.patientinfo.personnummer || "-"}}</td>
+                    <td>{{remiss.Composition.content[0].activities["0"].description.items[2].value.value}}</td>
+                    <td>{{remiss.Composition.content[0].protocol.items["0"].value.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{remiss.Composition.content["0"].protocol.items[1].value.value || "-"}}</td>
                     <td>
-                        {{remiss.content[0].activities["0"].description.items["1"].value.value}}
+                        {{remiss.Composition.content[0].activities["0"].description.items["1"].value.value}}
                     </td>
                     <td>
-                        {{remiss.content[0].activities["0"].timing.value || "-"}}
+                        {{remiss.time || "-"}}
                     </td>
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div>*@
 
     @*<div class="confirm" ng-show="windowIsShowing" ng-hide="!windowIsShowing">
             <h1>Confirm your action</h1>

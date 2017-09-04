@@ -26,7 +26,7 @@ function getSessionId() {
     return response.responseJSON.sessionId;
 }
 
-var app = angular.module("myApp", ['datatables']);
+var app = angular.module("myApp", ["datatables"]);
 
 app.factory('GetInstructions', function ($http) {
 
@@ -43,7 +43,7 @@ app.factory('GetInstructions', function ($http) {
             object.instructions = [];
 
             var promise = $http({
-                async :false,
+                async: false,
                 url: baseUrl + "/query?" + $.param({ "aql": Query }),
                 method: "GET",
                 headers: {
@@ -113,7 +113,9 @@ app.factory('GetInstructions', function ($http) {
                         }
                     });
                 }
-               
+
+            }).error(function (error) {
+                console.log(error);
             });
 
             return promise;
@@ -318,7 +320,7 @@ function SendComposition(actionString, code, uid, templateid, ehrId) {
 
 ////////////---///// Todo:  Merge controllers into one  controller so that you can later just do one AQL-query and sort after that's done.
 
-app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($scope, GetInstructions) {
+app.controller('InkommandeRemissCtrl', ['$scope', '$filter', "GetInstructions", function ($scope, $filter, GetInstructions) {
     
 
     var aql = "select a_b/ism_transition[at0002]/current_state/value as Service_planned_current_state"+
@@ -326,34 +328,95 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
         "request.v1] contains ( INSTRUCTION a_a[openEHR-EHR-INSTRUCTION.request-procedure.v0] and ACTION a_b[openEHR-EHR-"+
         "ACTION.service.v0]) where a/name/value='Remiss' order by a_b/time/value desc offset 0 limit 100";
 
+
+    //DoneRemissFact.doneRemisser(aql).then(function (data) {
+    //    var instructions = data.data.resultSet;
+    //    console.log('instructions', instructions)
+    //    var instructionObject = {};
+    //    var objectArray = [];
+
+
+    //    if (instructions) {
+    //        instructions.forEach(function (item) {
+    //            if (item) {
+    //                if (item.Composition.content[1].ism_transition.current_state.value == 'active') {
+    //                    console.log("oldtime", item.Composition.content[1].time.value);
+
+    //                    var date_to_filter = item.Composition.content[1].time.value;
+    //                    var data_filtered = $filter('date')(date_to_filter, 'yyyy-MM-dd: HH:mm');
+
+    //                    item.time = data_filtered;
+    //                    console.log("NewTime", item.time);
+
+    //                    objectArray.push(item);
+
+    //                }
+    //                else {
+    //                    console.log("Not state: active")
+    //                }
+    //            }
+
+    //        });
+    //    }
+    //    else {
+    //        console.log("No added instructions, response was empty...")
+    //    }
+
+    //    console.log('objectArray', objectArray);
+    //    $scope.doneRemisser = objectArray;
+
+
+    //});
+
+
     GetInstructions.getInstruct(aql).then(function (data) {
         var instructions = data.data.resultSet;
+        var temparray = [];
+
         if (instructions) {
-            var temp_promise = new Promise(function (resolve, reject) {
-                var objectArray = [];
-                instructions.forEach(function (instruction) {
-                    if (instruction) {
-                        if (instruction.Composition.content[1].ism_transition.current_state.value == 'planned') {
-                            objectArray.push(instruction.Composition);
-                        }
-                        else {
-                            console.log("Not state: Planned")
-                        }
+            
+            instructions.forEach(function (instruction) {
+                if (instruction) {
+                    if (instruction.Composition.content[1].ism_transition.current_state.value == 'planned') {
+
+                        console.log("oldtime", instruction.Composition.content[1].time.value);
+
+                        var date_to_filter = instruction.Composition.content[1].time.value;
+                        var data_filtered = $filter('date')(date_to_filter, 'yyyy-MM-dd: HH:mm');
+
+                        instruction.time = data_filtered;
+                        console.log("NewTime", instruction.time);
+
+
+                        temparray.push(instruction);
                     }
+                    else {
+                        console.log("Not state: Planned")
+                    }
+                }
+            });
+               
+            //}
+            //var temp_promise = new Promise(function (resolve, reject) {
+            //    var objectArray = [];
 
-                });
+            //    
 
-                resolve(objectArray);
-            })
+            //    //resolve(objectArray);
+            //})
         }
         else {
             console.log("No added instructions, response was empty...")
         }
 
-        temp_promise.then(function (instructions) {
-            console.log('instructions', instructions);
-            $scope.instructions = instructions;
-        });
+        console.log('instructions', temparray);
+        $scope.instructions = temparray;
+        //temp_promise.then(function (instructions) {
+            
+            
+
+
+        //});
 
     });
    
@@ -365,6 +428,7 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
             }
             else if (event.currentTarget.id == "UnderlagButton") {
                 SendComposition("active", "245", instruction.uid.value, instruction.archetype_details.template_id.value, instruction.patientinfo.EHRID);
+
             }
             else {
                 console.log("Did nothing...")
@@ -379,20 +443,13 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
 
     $scope.CreateUnderlag = function (instruction) {
         var currentdate = new Date();
-        var datetime = currentdate.getFullYear() + "-"
-                        + (currentdate.getMonth() + 1) + "-"
-                        + currentdate.getDate() + " @ "
-                        + currentdate.getHours() + ":"
-                        + currentdate.getMinutes() + ":"
-                        + currentdate.getSeconds();
-
-
+        currentdate = $filter('date')(currentdate, "y-MM-dd, HH:mm");
         var json = '{"ehrid":"' + instruction.patientinfo.EHRID + '","current_state":"active",' +
         '"firstname":"' + instruction.patientinfo.firstname + '","lastname":"' + instruction.patientinfo.lastname + '","gender":"' + instruction.patientinfo.gender + '"' +
-        ',"personnummer":"' + instruction.patientinfo.personnummer + '","time_created":"' + datetime + '"' +
-        ',"start_date_countdown":"","utredning_id":"' + instruction.uid.value + '","filled_form_status":""}';
+        ',"personnummer":"' + instruction.patientinfo.personnummer + '","time_created":"' + currentdate + '"' +
+        ',"start_date_countdown":"","utredning_id":"' + instruction.uid.value + '","filled_form_status":"","instruction_id" : "' + instruction.content["0"].uid.value + '"' +
+        ',"activity_id" : "' + instruction.content["0"].uid.value + '", "ansvarig_enhet":"' + instruction.content[0].protocol.items[1].value.value + '" }';
 
-        //' + instruction.uid.value + '
 
         $.ajax({
             async: false,
@@ -405,7 +462,8 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
                 console.log("Successfully added remiss to underlag", response)
             },
             error: function (error) {
-                console.log("Error in creating underlag", error);
+                alert("Error in creating underlag");
+                console.log("Error in creating underlag", error.responseText);
             }
         });
     };
@@ -435,7 +493,7 @@ app.controller('InkommandeRemissCtrl', ['$scope', "GetInstructions", function ($
 
 ////////////---///// Todo:  Merge controllers into one  controller so that you can later just do one AQL-query and sort after that's done.
 
-app.controller('DoneRemissCtrl', ['$scope', 'DoneRemissFact', function ($scope, DoneRemissFact) {
+app.controller('DoneRemissCtrl', ['$scope', '$filter', 'DoneRemissFact', function ($scope, $filter, DoneRemissFact) {
 
 
     var aql = "select a_b/ism_transition[at0002]/current_state/value as Service_planned_current_state" +
@@ -455,7 +513,16 @@ app.controller('DoneRemissCtrl', ['$scope', 'DoneRemissFact', function ($scope, 
             instructions.forEach(function (item) {
                 if (item) {
                     if (item.Composition.content[1].ism_transition.current_state.value == 'active') {
-                        objectArray.push(item.Composition);
+                        console.log("oldtime", item.Composition.content[1].time.value);
+
+                        var date_to_filter = item.Composition.content[1].time.value;
+                        var data_filtered = $filter('date')(date_to_filter, 'yyyy-MM-dd: HH:mm');
+
+                        item.time = data_filtered;
+                        console.log("NewTime", item.time);
+
+                        objectArray.push(item);
+
                     }
                     else {
                         console.log("Not state: active")
