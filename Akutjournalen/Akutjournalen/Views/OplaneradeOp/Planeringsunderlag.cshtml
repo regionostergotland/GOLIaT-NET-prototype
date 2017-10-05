@@ -1,0 +1,558 @@
+﻿
+@section scripts{
+
+    <script type="text/javascript">
+        var ehrID = '@Session["EHRID"]';
+    </script>
+
+    <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+    <link href="~/Monthly/css/monthly.css" rel="stylesheet" />
+    <link href="~/Content/Custom/listView.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
+    <link href="~/Content/Custom/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+    <script src="~/Scripts/ehrscapelogin.js"></script>
+    <script src="~/Scripts/Views/Planering/planeringunderlag.js"></script>
+    <script type="text/javascript" src="~/Monthly/js/monthly.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#mycalendar').monthly({ weekStart: 'Mon', stylePast: 'true', locale: 'se' });
+        });
+    </script>
+}
+
+
+
+<div ng-app="specificPlaneringApp">
+    <div class="row">
+        <div class="cell cell-planning">
+            <div class="box-header">
+                
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Beslutade åtgärder</b>
+                </div>
+                <div class="booking-select btn-header-div" style="border:none;">
+                    <button class="btn btn-outline btn-flat btn-header hide-panel-button"  onclick="tooglePanel('main-objective-panel', this)">Dölj</button>
+                </div>
+            </div>
+            <div class="panel" ng-controller="specificPlaneringCtrl" id="main-objective-panel">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div>
+                            <h4 style="margin-top:10px;">Huvudåtgärd:</h4> <p class="main-objective-span"></p>
+                            <br />
+                        </div>
+                        <div>
+                            <p><h4 style="margin-top:10px; margin-right:0px;">Övriga åtgärder:</h4></p>
+                            <p class="sub-objective">JAF10 Öppen operation av navelbråck med suturplastik, </p>
+                            <p class="sub-objective">KBV05 Cystoskopisk reposition av uretärstent</p>
+                        </div>
+                        <br />
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div>
+                            <b>Dagar kvar till behandling:</b>
+                            12
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div>
+                            <b>Brådskandegrad:</b>
+                            Inom 2 veckor
+                        </div>
+                        <div>
+                            <b>Estimerad operationstid:</b>
+                            2t 30 min
+                        </div>
+                        <div class="show-things-buttons">
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn btn-primary" style="margin-right:4px; " onclick="openWindow('http', 'goliatdemoutvtest.lio.se/Utredning/SpecificUnderlag?id=1505915617&EHRID=d6438b34-a1d8-4ea9-9191-8ee0161c7bf1&formName=Beslut%20v2%20om%20kirurgi%20m%20citations%203&formVersion=1.0.3&diagnos=ICD10%20C61%20%20%20%20Malign%20tum%C3%B6r%20i%20prostata')">Visa Beslutsunderlaget</button><button class="btn btn-primary" >Visa Läkemedel</button><br />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="cell cell-planning">
+            <div class="box-header">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Samoperation</b>
+                </div>
+                <div class="booking-select btn-header-div" style="border:none;">
+                    <button class="btn btn-outline btn-flat btn-header hide-panel-button" onclick="tooglePanel('samoperation-panel', this)">Dölj</button>
+                </div>
+               
+            </div>
+            <div class="panel" ng-controller="specificPlaneringCtrl" id="samoperation-panel">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <p>Ska det ske en samoperation?</p>
+                        <form class="inline" action="">
+                            <p> <input type="radio" name="radio-samoperation" value="ja" id="planning-yes-radio"> Ja <input type="radio" name="radio-samoperation" value="nej" id="planning-no-radio" checked> Nej </p>
+                        </form>
+                        <div class="form-group" id="add-more-operations">
+                            <label for="sel1">Välj:</label>
+                            <select multiple class="form-control" id="sel1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <p>Övrig samverkan</p>
+                        <div>
+                            <input type="text" placeholder="t.ex. Fryssnitt" />
+                        </div>
+                        <div>
+                            <input type="text" /> <button style="border:hidden; background-color:none" class="fa fa-plus-square"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell cell-planning">
+            <div class="box-header">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Boka operation</b>
+                </div>
+                <div class="booking-select btn-header-div" style="border:none;">
+                    <button class="btn btn-outline btn-flat btn-header hide-panel-button" onclick="tooglePanel('boka-operation-panel', this)">Dölj </button>
+                </div>
+               
+            </div>
+            <div class="panel" id="boka-operation-panel">
+
+
+                <div class="row">
+                    <div class="sub-panel">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="schema-tidsbokning" onclick="showGant()">
+                            <h4>Välj dag att boka:</h4>
+                            <img src="~/Content/Img/Schema planeringsvy2.png" alt="Mountain View" style="width:100%;height:100%;">
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="gant-schema-tidsbokning" hidden>
+                            <h4>Välj tid:</h4>
+                            <img src="~/Content/Img/Gantt planering.png" alt="Mountain View" style="width:100%;height:100%; ">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="sub-panel" id="booking-filter-div">
+
+                        <div class="row">
+                            @*<div>
+                            <hr />
+                            <h4>Filtrering och översikt av resurser</h4>
+                        </div>*@
+                            <div class="sub-panel col-md-6 col-xs-12">
+                                <hr />
+
+                                <div class="form-group booking-content">
+                                    <b>Estimerad operationstid:</b>
+                                    <span class="booking-select" style="border:hidden;">2t 30 min</span>
+                                    <hr />
+                                </div>
+                                <div class="form-group booking-content">
+                                    <label for="sel1">Kirurg:</label>
+                                    <select class="booking-select">
+                                        <option value="" selected hidden disabled>Alla</option>
+                                        <option>Börje Ivarsson</option>
+                                        <option>Saga Netalia</option>
+                                        <option>Anders Trivs</option>
+                                        <option>Salem Andersson</option>
+                                        <option>Fredrik Frid</option>
+                                    </select>
+                                </div>
+                                <hr />
+                                <div class="form-group booking-content">
+                                    <label for="sel1">Operationssal:</label>
+                                    <select class="booking-select">
+                                        <option value="" selected hidden disabled>Alla</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                    </select>
+                                </div>
+                                <hr />
+                            </div>
+
+                            <div class="sub-panel col-md-6 col-xs-12">
+                                <hr />
+                                <div class="form-group booking-content">
+                                    <b>Postoperativ plats:</b>
+                                    <select class="booking-select">
+                                        <option value="" selected hidden disabled>Alla</option>
+                                        <option>Postoperativ avdelning</option>
+                                        <option>Intensivvård</option>
+                                        <option>Vårdavdelning</option>
+                                    </select>
+                                </div>
+                                <hr />
+                                <div class="form-group booking-content">
+                                    <b>Vårdplats:</b>
+                                    <div class="booking-select" style="border:hidden;">
+                                        Ja <input type="radio" value="ja" name="radio-healtcarepos" id="radio-healtcarepos-yes">
+                                        Nej <input type="radio" value="nej" name="radio-healtcarepos" id="radio-healtcarepos-no">
+                                    </div>
+
+                                </div>
+                                <hr />
+                                <div class="form-group booking-content">
+                                    <b>Peroperativa undersökningar:</b>
+                                    <div class="booking-select" style="border:hidden;">
+                                        <select multiple class="form-control" id="sel2">
+                                            <option>Ultraljud</option>
+                                            <option>Röntgen</option>
+                                            <option>Fryssnitt</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    @*</div>*@
+
+    <div class="row">
+        <div class="cell cell-planning">
+            <div class="box-header">
+                <span class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Anestesi</b>
+                </span>
+                <span class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <button class="btn btn-outline btn-flat btn-header hide-panel-button" onclick="tooglePanel('anetesi-panel', this)"> Dölj </button>
+                    <button class="btn btn-outline btn-flat btn-header" ng-click="openForm"><i>Boka anetesibedömning</i></button>
+                </span>
+            </div>
+            <div class="panel" id="anetesi-panel">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <p>Respiration/Pulmonellt</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary" />
+                        <p>Cirkulation/EKG</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Lever/Njure</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Mag/Tarm/Reflux</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p> Vätska/Elektrolyter</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Neurologi</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <p>Rörelseapparat</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Endokrinologi</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Hematologi</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Gapfunktion/Tänder</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <p>Nackrörlighet</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Tidigare anestesi</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary"/>
+                        <p>Val av anestesimetod:</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary" />
+                        <p>ASA-klassifikation (1-5):</p>
+                        <input type="number" class="prep-input prep-input-number" />
+                        <p>Anestesibedömning gjord av:</p>
+                        <input type="text" class="prep-input prep-input-text prep-input-commentary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell cell-planning">
+            <div class="box-header">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Material, utrustning och förberedelser</b>
+                </div>
+                <div class="booking-select btn-header-div" style="border:none;">
+                    <button class="btn btn-outline btn-flat btn-header hide-panel-button" onclick="tooglePanel('material-panel', this)">Dölj </button>
+                </div>
+            </div>
+            <div class="panel" id="material-panel">
+                <div class="row">
+                    <iframe src="http://opguideqa.lio.se/Klinik/1/Operationsforberedelse/Details/13284" width="100%" height="800px" frameborder="0"></iframe>
+                    @**@
+                    @*<button class="btn btn-primary" style="float:right; width:100px;" onclick="openWindow('https','opguideqa.lio.se:890/Klinik/1/Operationsforberedelse/Details/2553')"*@ @*ng-click="openWindow('opguideqa.lio.se:890/Klinik/1/Operationsforberedelse/Details/2553')">*@@*OpGuide</button>*@
+                </div>
+
+                @*<div class="row">
+                    <div class="sub-panel col-lg-6 col-lg-6 col-sm-6 col-xs-12">
+                        <h4>Utrustning</h4>
+                        <table class="table table-hover booking-table" style="width:100%">
+                            <tr>
+                                <th>Antal</th>
+                                <th>Artikel</th>
+                                <th>Klinik</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>C-båge (röntgen)</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Röntgenförkläden</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Röntgenskärm</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                        </table>
+                        <h4>Container</h4>
+                        <table class="table table-hover booking-table" style="width:100%">
+                            <tr>
+                                <th>Antal</th>
+                                <th>Artikel</th>
+                                <th>Klinik</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Grund 1</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                        </table>
+                        <h4>Extrainstrument</h4>
+                        <table class="table table-hover booking-table" style="width:100%">
+                            <tr>
+                                <th>Antal</th>
+                                <th>Artikel</th>
+                                <th>Klinik</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Grund 1</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Hake Perman Självhållande 2 del</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Magnetmatta</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Tång Cremaliere</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Tång Hultén</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Kanyl Cholangiografi 1,8 15G</td>
+                                <td>Operation Kirurgen US</td>
+                            </tr>
+                        </table>
+
+                        <hr />
+                    </div>
+
+                    <div class="sub-panel col-lg-6 col-lg-6 col-sm-6 col-xs-12">
+
+                        <div class="form-group booking-content ">
+
+
+                            <h4>Förbrukningsmaterial</h4>
+                            <table class="table table-hover booking-table" style="width:100%">
+                                <tr>
+                                    <th>Antal</th>
+                                    <th>Artikel</th>
+                                    <th>Klinik</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Avancerat diatermihandtag Triad</td>
+                                    <td>Operation Kirurgen US</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Förlängnings kon Triad</td>
+                                    <td>Operation Kirurgen US</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Förlängnings spets Triad</td>
+                                    <td>Operation Kirurgen US</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Sugkateter Rak Nr 12 40Cm Steril</td>
+                                    <td>Operation Kirurgen US</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Ureteral Catheter 5F</td>
+                                    <td>Operation Kirurgen US</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Dränage Kateter Ch 10 Silicon</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Hudstapler Appose Wide</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Dränage Kateter Ch 10 Silicon</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Hudstapler Appose Wide </td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Rökutsugtillsats Triad</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Spruta 20 ml Luer</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Kundanpassat set till KIR</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Op Assistansbordspåse 80X145Cm (S)</td>
+                                    <td>GEM op/ane mtrl NORD</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Rökutsugslang Triad</td>
+                                    <td>Operation Kirurgen US</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>*@
+
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row">
+        
+        <div class="cell cell-planning">
+            <div class="box-header">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <b>Förberedelser</b>
+                </div>
+                <div class="booking-select btn-header-div" style="border:none;">
+                    <button class="btn btn-outline btn-flat btn-header hide-panel-button"  onclick="tooglePanel('preperations-panel', this)">Dölj </button>
+                </div>
+               
+            </div>
+            <div class="panel" id="preperations-panel">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <div class="prep-title">
+                            <h3><small>Ingreppsspecifika</small></h3>
+                        </div>
+                        <form>
+                            <div class="prep-content">
+                                <div>
+                                    Fasta <input type="checkbox" id="fastingcheck" class="booking-select" />
+                                    <div style="white-space:nowrap" id="fastingcontent" hidden>
+                                        <label for="fasta-input">Från och med: </label>
+                                        <input type="date" class="prep-input" />
+                                    </div>
+                                </div>
+                                <div>
+                                    Perifer venkateter, vänster arm <input type="checkbox" id="perifer-venkateter-left-arm" class="booking-select" />
+                                </div>
+                                <div>
+                                    <span> Preoperativ dusch genomförd </span>
+                                    <span class="prep-input prep-input-radio booking-select" style="border:none;">
+                                        Ja <input type="radio" name="pre-dusch-radio" value="ja" />
+                                        Nej <input type="radio" name="pre-dusch-radio" value="nej" />
+                                    </span>
+                                </div>
+
+                                <br />
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <div class="prep-title"><h3><small>Patientspecifika</small></h3> </div>
+                        <form>
+                            <div class="prep-content">
+                                <input type="checkbox" /> <input type="text" class="prep-input prep-input-text" /><br />
+                                <input type="checkbox" /> <input type="text" class="prep-input prep-input-text" /><br />
+                                <input type="checkbox" /> <input type="text" class="prep-input prep-input-text" /><br />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>

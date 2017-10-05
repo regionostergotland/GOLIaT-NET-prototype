@@ -657,7 +657,6 @@ if (!thinkehr.f4.ng) {
                     $scope.suppressLabel = false;
 
 
-
                     //if ($scope.model.inputs["0"].list.length >= 1) {
                        
                     //    console.log("HAS INPUTS", $scope);
@@ -1146,8 +1145,20 @@ if (!thinkehr.f4.ng) {
                 scope: true,
                 controller: function ($scope) {
 
-                    $scope.suppressLabel = false;
+                    $scope.suppressLabel = true;
                    
+
+                    //console.log("element", angular.element('ehr-field-content'));
+                    //console.log("children", angular.element('ehr-field-content').context.children);
+                    //console.log("children length", document.getElementsByClassName("ehr-field-content"));
+
+                    //if (document.getElementsByClassName("ehr-field-content")) {
+                    //    if (!document.getElementsByClassName("ehr-field-content") > 0) {
+                    //        $scope.suppressLabel = true;
+                    //        // It has at least one
+                    //    }
+                    //}
+
 
                     $scope.parsableValue = function (value) {
                         

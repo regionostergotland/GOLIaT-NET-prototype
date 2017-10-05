@@ -1,0 +1,332 @@
+﻿
+
+@model Goliat.Models.UnderlagModel
+
+
+<script type="text/javascript">
+    var ehrID = '@Session["EHRID"]';
+</script>
+
+<meta charset="UTF-8">
+@*<script src="~/Scripts/angular.js"></script>*@
+
+<script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
+<script src="~/Scripts/Views/AQL_Service.js"></script>
+<script src="~/Scripts/ehrscapelogin.js"></script>
+<script src="~/Scripts/Views/Utredning/specifikutredning.js"></script>
+
+<link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+
+<link rel="stylesheet" href="~/EHRDemo/TestForms/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/EHRDemo/TestForms/bootflat/css/bootflat.css">
+<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="~/EHRDemo/TestForms/thinkehr/f4/css/ehr-form.css">
+<link rel="stylesheet" type="text/css" href="~/EHRDemo/TestForms/thinkehr/f4/css/ehr-form-layout.css">
+<link rel="stylesheet" type="text/css" href="~/EHRDemo/TestForms/thinkehr/f4/css/ehr-form-default.css">
+<link rel="stylesheet" href="~/EHRDemo/TestForms/css/style.css">
+<link rel="stylesheet" href="~/EHRDemo/TestForms/css/animate.css">
+
+@*<script src="js/jquery-2.1.1.min.js"></script>*@
+
+<script src="~/EHRDemo/TestForms/js/bootstrap.min.js"></script>
+<script src="~/EHRDemo/TestForms/bootflat/js/jquery.fs.selecter.js"></script>
+<script src="~/EHRDemo/TestForms/bootflat/js/icheck.min.js"></script>
+<script src="~/EHRDemo/TestForms/angular/1.3.2/angular-resource.js"></script>
+<script src="~/EHRDemo/TestForms/js/tmhDynamicLocale.js"></script>
+<script src="~/EHRDemo/TestForms/angular/1.3.2/i18n/angular-locale_en-us.js"></script>
+<script src="~/EHRDemo/TestForms/js/ui-bootstrap-custom-tpls-0.10.0.js"></script>
+<script src="~/EHRDemo/TestForms/js/datetimepicker-tpls-0.11.js"></script>
+<script src="~/EHRDemo/TestForms/js/bootstrap-growl.min.js"></script>
+
+
+<script src="~/EHRDemo/TestForms/thinkehr/f4/thinkehr-f4-model.js"></script>
+<script src="~/EHRDemo/TestForms/thinkehr/f4/thinkehr-f4-view-angular.js"></script>
+
+<script src="~/EHRDemo/TestForms/app/demographics.js"></script>
+<script src="~/EHRDemo/TestForms/app/app.js"></script>
+
+<link href="~/Content/Custom/listView.css" rel="stylesheet" />
+<link href="~/Content/Custom/custom.css" rel="stylesheet" />
+
+<!-- <script src="js/UI-Dropdown/dropdown.min.js"> </script> -->
+
+<script>
+
+    function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+    $(document).ready(function () {
+        $('#diagnos-kod-span').text(getParameterByName('diagnos'));
+    });
+
+    (function () {
+        
+    })
+
+</script>
+
+
+<div ng-app="specifik" ng-controller="SpecifikUnderlagCtrl">
+    <div class="row" style="margin-bottom:10px;" >
+        <div class=" col-xs-6" style="padding:0px;display: inline-block;">
+        <span><b>Diagnoskod:</b></span> <span id="diagnos-kod-span"></span>
+    </div>
+
+        <div class="col-xs-6" style="padding:0px;">
+            @*<div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                     aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                    70%
+                </div>
+            </div>*@
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-xs-6 cell">
+            <div class="box-header">
+                <span class="">
+                    <b>Kliniska undersökningsresultat</></b>
+                </span>
+                <button class="btn btn-outline btn-flat btn-header" ng-click="openForm('@Url.Action("Index", "Utredning/ViewForm" )', 'Kliniska undersökningsresultat prostata' , '1.0.10')"><i>Ange nya värden</i></button>
+            </div>
+            <div class="panel ">
+                <label for="heredity-cell" id="heredity-label">Ärftlighet för Prostatacancer</label>
+                <div class="sub-panel" id="heredity-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="arftlighet_summary"></span><span class="content-label">Sammanfattning:</span> <span id="summary-id" ng-bind="arftlighet_summary"></span><span class="date_for_meet" ng-bind="arftlighet_summary_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="arftlighet_relation_to_patient"></span><span class="content-label">Relation till patienten: </span> <span id="patient-relationship-id" ng-bind="arftlighet_relation_to_patient"></span><span class="date_for_meet" ng-bind="arftlighet_relation_to_patient_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="arftlighet_ageofsickness"></span><span class="content-label">Ålder vid insjuknandet: </span>  <span id="age-of-sickness-id" ng-bind="arftlighet_ageofsickness"></span><span class="date_for_meet" ng-bind="arftlighet_ageofsickness_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="arftlighet_reason_for_death"></span><span class="content-label">Dödsorsak?: </span>  <span id="death-reason-id" ng-bind="arftlighet_reason_for_death"></span><span class="date_for_meet" ng-bind="arftlighet_reason_for_death_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="arftlighet_commentary"></span><span class="content-label">Kommentar: </span>  <span id="heredity-comment-id" ng-bind="arftlighet_commentary"></span><span class="date_for_meet" ng-bind="arftlighet_commentary_time"></span></p>
+                </div>
+                <label for="i-pss-prostate-score-cell" id="i-pss-prostate-score-label">I-PSS Prostate score</label>
+                <div class="sub-panel" id="i-pss-prostate-score-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_incomplete_emptying"></span><span class="content-label">Incomplete emptying: </span>  <span id="prostate-incomplete-emptying-id" ng-bind="i_pss_incomplete_emptying"></span><span class="date_for_meet" ng-bind="i_pss_incomplete_emptying_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_frequency"></span><span class="content-label">Frequency: </span>  <span id="prostate-frequency-id" ng-bind="i_pss_frequency"></span><span class="date_for_meet" ng-bind="i_pss_frequency_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_urgency"></span><span class="content-label">Urgency: </span>  <span id="prostate-urgency-id" ng-bind="i_pss_urgency"></span><span class="date_for_meet" ng-bind="i_pss_urgency_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_intermittency"></span><span class="content-label">Intermittency: </span>  <span id="prostate-intermittency-id" ng-bind="i_pss_intermittency"></span><span class="date_for_meet" ng-bind="i_pss_intermittency_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_stream"></span><span class="content-label">Weak Stream: </span>  <span id="prostate-weak-stream-id" ng-bind="i_pss_stream"></span><span class="date_for_meet" ng-bind="i_pss_stream_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_straining"></span><span class="content-label">Straining: </span>  <span id="prostate-straining-id" ng-bind="i_pss_straining"></span><span class="date_for_meet" ng-bind="i_pss_straining_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_nocturia"></span><span class="content-label">Nocturia: </span>  <span id="prostate-nocturia-id" ng-bind="i_pss_nocturia"></span><span class="date_for_meet" ng-bind="i_pss_nocturia_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_total_score"></span><span class="content-label">Total I-PSS score: </span>  <span id="prostate-totalscore-ipss-id" ng-bind="i_pss_total_score"></span><span class="date_for_meet" ng-bind="i_pss_total_score_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_QoL_Score"></span><span class="content-label">Quality of life Score: </span>  <span id="prostate-quality-of-life-id" ng-bind="i_pss_QoL_Score"></span><span class="date_for_meet" ng-bind="i_pss_QoL_Score_time"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="i_pss_confounding_cactors"></span><span class="content-label">Confounding factors: </span>  <span id="prostate-confounding-factors-id" ng-bind="i_pss_confounding_cactors"></span><span class="date_for_meet" ng-bind="i_pss_confounding_cactors_time"></span></p>
+                </div>
+                <label for="prostate-palpation" id="prostate-palpation-label">Palpation av prostatan</label>
+                <div class="sub-panel" id="prostate-palpation-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="search_results"></span><span class="content-label">Undersökningsresultat: </span><span ng-bind="search_results"></span><span class="date_for_meet" ng-bind=""></span></p>
+                </div>
+                <label for="bilddiagnostik-id" id="bilddiagnostik-label">Bilddiagnostik som visar skelettmetastaser</label>
+                <div class="sub-panel" id="bilddiagnostik-id">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="prostate_bilddiagnostik_typeof"></span><span class="content-label">Typ av bilddiagnostisk undersökning: </span>  <span id="prostate-bilddiagnostik-typeof-id" ng-bind="prostate_bilddiagnostik_typeof"></span><span class="date_for_meet" ng-bind=""></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="prostate_bilddiagnostik_resultstatus"></span><span class="content-label">Status på undersökningsresultat: </span>  <span id="prostate-bilddiagnostik-resultstatus-id" ng-bind="prostate_bilddiagnostik_resultstatus"></span><span class="date_for_meet" ng-bind=""></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="prostate_bilddiagnostik_resultdate"></span><span class="content-label">Datum för undersökningsresultat: </span>  <span id="prostate-bilddiagnostik-resultdate-id" ng-bind="prostate_bilddiagnostik_resultdate"></span><span class="date_for_meet" ng-bind=""></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="prostate_bilddiagnostik_findings"></span><span class="content-label">Fynd: </span>  <span id="prostate-bilddiagnostik-findings-id" ng-bind="prostate_bilddiagnostik_findings"></span><span class="date_for_meet" ng-bind=""></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="prostate_bilddiagnostik_conclusion"></span><span class="content-label">Conclusion: </span>  <span id="prostate-bilddiagnostik-conclusion-id" ng-bind="prostate_bilddiagnostik_conclusion"></span><span class="date_for_meet" ng-bind=""></span></p>
+                </div>
+                <label for="nrs-skelettsmarta-id" id="nrs-skelettsmarta-label">NRS Skelettsmärta</label>
+                <div class="sub-panel" id="nrs-skelettsmarta-id">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide="prostate_numerical"></span><span class="content-label">Numerisk: </span>  <span id="prostate-numerical-id" ng-bind="prostate_numerical +' ' + prostate_numerical_units"></span><span class="date_for_meet" ng-bind=""></span></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xs-6 cell">
+            <div class="box-header">
+                <span class="">
+                    <b>Status</b>
+                </span>
+                <button class="btn btn-outline btn-flat btn-header" ng-click="openForm('@Url.Action("Index", "Utredning/ViewForm")', 'Kliniska undersökningsresultat generisk' , '1.0.0')"><i>Ange nya värden</i></button>
+            </div>
+            <div class="panel">
+                <label for="undersokning-cell" id="bodymeasure-label">Kroppsmått</label>
+                <div class="sub-panel" id="undersokning-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Kroppslängd: </span><span id="kroppslangd-id" ng-bind="kroppslangd"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Kroppsvikt: </span><span id="kroppsvikt-id" ng-bind="kroppsvikt"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">BMI: </span><span id="bmi-id" ng-bind="bmi"></span></p>
+                </div>
+                <label for="heartstatus-cell" id="heartstatus-label">Hjärtstatus</label>
+                <div class="sub-panel" id="heartstatus-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Blodtryck: </span><span id="blodtryck-id" ng-bind="blodtryck"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Puls: </span><span id="puls-id" ng-bind="puls"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">EKG-resultat: </span><span id="ekg-id" ng-bind="ekg"></span></p>
+                </div>
+                <label for="smoking-cell" id="smoking-label">Rökning</label>
+                <div class="sub-panel" id="smoking-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Aktuell röksituation: </span><span id="smoking-situation-id" ng-bind="smokingsituation"></span></p>
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Rökfri sedan: </span><span id="free-from-smoking-id" ng-bind="smokingfreesince"></span></p>
+                </div>
+                <div class="sub-panel" id="performance-status-cell">
+                    <p><span class="fa fa-exclamation-triangle" title="Det finns inget värde att hämta." ng-hide=""></span><span class="content-label">Performance Status enligt ECOG/WHO: </span><span id="performance-status-id" ng-bind="performancestatus"></span></p>
+                </div>
+
+            </div>
+        </div>
+
+        @*</div>*@
+
+        @*<div class="row">*@
+        <div class="col-xs-6 cell">
+            <div class="box-header">
+                <span class="">
+                    <b>Prover</b>
+                </span>
+                <button class="btn btn-outline btn-flat btn-header" ng-click="openForm('@Url.Action("Index", "Utredning/ViewForm")', 'Beställning av labprover prostatacancer', '1.0.7')">Beställ prover</button>
+            </div>
+            <div class="panel" @*id="{{'panel-' + psa}}"*@>
+
+                <p><b>PSA</b></p>
+                <div class="prov-content" ng-repeat="psa in PSAValueList " id="{{'contentdiv-' + psa.typ_av_prov + psa.tid_for_prov}}">
+                    <span>
+                        <input class="markforcitation" type="checkbox"
+                               ng-click="checkedBox(psa.tid_for_prov || 'Inget datum finns',
+                                       psa.Typ_av_test || 'Ingen provtyp',
+                                       psa.test_value || 'Inget värde har angetts',
+                                       $event )" />
+                    </span>
+                    <span ng-bind="psa.tid_for_prov || 'Inget datum finns' "></span> -
+                    @*<span ng-bind="psa.Typ_av_test || 'Ingen provtyp' "></span> -*@
+                    <span ng-bind="'Värde: ' + psa.test_value || 'Inget värde har angetts' "></span>
+
+                </div>
+                <div ng-show="!PSAValueList.length">Inga prover att visa...</div>
+
+
+                <p><b>Blodvärde (Hb)</b></p>
+                <div class="prov-content" ng-repeat="blood_value in BloodValuesList " id="{{'contentdiv-' + blood_value.typ_av_prov + blood_value.tid_for_prov}}">
+                    <span>
+                        <input class="markforcitation" type="checkbox"
+                               ng-click="checkedBox(blood_value.tid_for_prov || 'Inget datum finns',
+                                       blood_value.Typ_av_test || 'Ingen provtyp',
+                                       blood_value.test_value  || 'Inget värde har angetts',
+                                       $event )" />
+                    </span>
+                    <span ng-bind=" blood_value.tid_for_prov"></span> -
+                    @*<span ng-bind="blood_value.Typ_av_test "></span> -*@
+                    <span ng-bind="'Värde: ' + blood_value.test_value "></span>
+
+                </div>
+                <div ng-show="!BloodValuesList.length">Inga prover att visa...</div>
+
+
+                <p><b>Kreatinin</b></p>
+                <div class="prov-content" ng-repeat="kreatinin in KreatininValuesList " id="{{'contentdiv-' + kreatinin.typ_av_prov + kreatinin.tid_for_prov}}">
+                    <span>
+                        <input class="markforcitation" type="checkbox"
+                               ng-click="checkedBox(kreatinin.tid_for_prov,
+                                       kreatinin.Typ_av_test,
+                                       kreatinin.test_value,
+                                       $event )" />
+                    </span>
+                    <span ng-bind=" kreatinin.tid_for_prov"></span> -
+                    @*<span ng-bind="kreatinin.Typ_av_test"></span> -*@
+                    <span ng-bind="'Värde: ' + kreatinin.test_value.magnitude + ' ' + kreatinin.test_value.units"></span>
+
+                </div>
+                <div ng-show="!KreatininValuesList.length">Inga prover att visa...</div>
+
+
+                <p><b>Kalium</b></p>
+                <div class="prov-content" ng-repeat="kalium in KaliumValuesList " id="{{'contentdiv-' + kalium.typ_av_prov + kalium.tid_for_prov}}">
+                    <span>
+                        <input class="markforcitation" type="checkbox"
+                               ng-click="checkedBox(kalium.tid_for_prov || 'Inget datum finns',
+                                kalium.Typ_av_test || 'Ingen provtyp',
+                                kalium.test_value  || 'Inget värde har angetts',
+                                $event )" />
+                    </span>
+                    <span ng-bind=" kalium.tid_for_prov"></span> -
+                    @*<span ng-bind="kalium.Typ_av_test"></span> -*@
+                    <span ng-bind="'Värde: ' + kalium.test_value"></span>
+
+                </div>
+                <div ng-show="!KaliumValuesList.length">Inga prover att visa...</div>
+
+                <p><b>Natrium</b></p>
+                <div class="prov-content" ng-repeat="natrium in NatriumValuesList " id="{{'contentdiv-' + natrium.typ_av_prov + natrium.tid_for_prov}}">
+                    <span>
+                        <input class="markforcitation" type="checkbox"
+                               ng-click="checkedBox(natrium.tid_for_prov || 'Inget datum finns',
+                                natrium.Typ_av_test || 'Ingen provtyp' ,
+                                natrium.test_value || 'Inget värde har angetts' ,
+                                $event )" />
+                    </span>
+                    <span ng-bind=" natrium.tid_for_prov"></span> -
+                    @*<span ng-bind="natrium.Typ_av_test"></span> -*@
+                    <span ng-bind="'Värde: ' + natrium.test_value"></span>
+
+                </div>
+                <div ng-show="!NatriumValuesList.length">Inga prover att visa...</div>
+
+                <p><b>PK-INR</b></p>
+                <div class="prov-content" ng-repeat="pkinr in PKINRValuesList " id="{{'contentdiv-' + pkinr.typ_av_prov + pkinr.tid_for_prov}}">
+                    <span>
+                        <input class="markforcitation" type="checkbox"
+                               ng-click="checkedBox(pkinr.tid_for_prov || 'Inget datum finns',
+                                   pkinr.Typ_av_test || 'Ingen provtyp' ,
+                                   pkinr.test_value || 'Inget värde har angetts' ,
+                                   $event )" />
+                    </span>
+                    <span ng-bind=" pkinr.tid_for_prov"></span> -
+                    @*<span ng-bind="pkinr.Typ_av_test"></span> -*@
+                    <span ng-bind="'Värde: ' + pkinr.test_value"></span>
+
+                </div>
+                <div ng-show="!PKINRValuesList.length">Inga prover att visa...</div>
+
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div>
+        <div class="container">
+            <div>
+                <h3 style="margin-left:15px">Beslut</h3>
+            </div>
+            <div class="contentFormRenderer" data-ng-controller="AppCtrl as appCtrl">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="well">
+                            <div id="form-attach">
+                                <ehr-form model="appCtrl.formModel" ehr-context="appCtrl.EhrContext"
+                                          form-id="{{appCtrl.AppConfig.formName}}_{{appCtrl.AppConfig.formVersion}}"></ehr-form>
+                            </div>
+
+                            <div id="save-controls" data-ng-show="appCtrl.currentForm">
+                                <button id="tempsave-btn" class="btn btn-default" onclick="alert('Den här funktionen är för tillfället inte implementerad.')"@*data-ng-click="appCtrl.tempSaveValues()"*@>Spara</button>
+                                <button id="save-btn" class="btn btn-primary" data-ng-click="appCtrl.saveValues()">Spara och Besluta</button>
+                            </div>
+
+                            <!-- <div id="ehrValues" data-ng-show="appCtrl.showValueModel && appCtrl.currentForm"> -->
+                            <!-- <hr> -->
+                            <!-- <div> -->
+                            <!-- <div class="demographics-label">Model value</div> -->
+                            <!-- <pre>{{appCtrl.valueModel | json}}</pre> -->
+                            <!-- </div> -->
+                            <!-- </div> -->
+
+                            <div id="no-form-text" data-ng-if="!appCtrl.currentForm">
+                                <span>No form to display selected, please choose one from the combo box above.</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+   @* <iframe name="ehrform" id="ehrform" height="800px" width="100%" frameborder="0"></iframe>*@
+</div>

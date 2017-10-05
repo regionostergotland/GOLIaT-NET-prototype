@@ -10,9 +10,9 @@ using Json;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using Akutjournalen.Models;
+using Goliat.Models;
 
-namespace Akutjournalen.Controllers
+namespace Goliat.Controllers
 {
     public class InkommandeController : Controller
     {
@@ -20,20 +20,20 @@ namespace Akutjournalen.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            @ViewBag.PageHeader = "Inkommande";
+            @ViewBag.PageHeader = "Inkommande remisser";
             @ViewBag.SubPageHeader = "Urologkliniken";            
             @ViewBag.PageLevel = "";
             @ViewBag.PageSubLevel = "";
 
-            @ViewBag.PageUserRoll = "";        // Skall vi göra en session av denna eller en global class eller hanteras i bas controll, innehåll skall hantera vid login ?
+            @ViewBag.PageUserRoll = "";        
         }
-        //
-        // GET: /Triage/
+
         public ActionResult Index()
         {
             return View();
         }
 
+        // Get all the underlag posts. Connected to MongoDB.
         [HttpPost]
         public JsonResult GetUnderlag()
         {
@@ -42,11 +42,9 @@ namespace Akutjournalen.Controllers
 
             List<object> underlag_list = new List<object>();
 
-            _client = new MongoClient("mongodb://localhost:27017");
+            _client = new MongoClient("mongodb://s-opbokt1.lio.se:9000");
             var database = _client.GetDatabase("Goliat");
             var collection = database.GetCollection<UnderlagModel>("Underlag").AsQueryable<UnderlagModel>();
-
-            //var result = collection.AsQueryable<UnderlagModel>().Any();
 
             var query =
             from e in collection.AsQueryable<UnderlagModel>()
@@ -54,7 +52,6 @@ namespace Akutjournalen.Controllers
 
             foreach (var underlag in query)
             {
-                //var temp = JsonConvert.SerializeObject(underlag);
                 var temp = jsonSerialiser.Serialize(underlag);
                 underlag_list.Add((object)underlag);
             }
@@ -64,55 +61,21 @@ namespace Akutjournalen.Controllers
             return Json(json);
         }
 
-
+        // Creation of Underlag posts. Connected to MongoDB.
         [HttpPost]
         public JsonResult CreateUnderlag(UnderlagModel model)
         {
             MongoClient _client;
 
-            _client = new MongoClient("mongodb://localhost:27017");
+            _client = new MongoClient("mongodb://s-opbokt1.lio.se:9000");
             var database = _client.GetDatabase("Goliat");
 
             var collection = database.GetCollection<UnderlagModel>("Underlag");
 
             collection.InsertOne(model);
-            //try
-            //{
-
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.ToString());
-            //}
             
-
             return Json(model);
         }
-
-        
-
-        //[HttpPost]
-        //public JsonResult AjaxMethod(string id, string ehrid, string current_state, string firstname,
-        //    string lastname, string gender, string personnummer, string start_date_countdown, string utredning_id,
-        //    string filled_form_status)
-        //{
-
-        //    UnderlagModel underlag = new UnderlagModel
-        //    {
-        //        ID = id,
-        //        ehrid = ehrid,
-        //        current_state = current_state,
-        //        firstname = firstname,
-        //        lastname = lastname,
-        //        gender = gender,
-        //        personnummer = personnummer,
-        //        start_date_countdown = start_date_countdown,
-        //        utredning_id = utredning_id,
-        //        filled_form_status = filled_form_status,
-
-        //    };
-        //    return Json(underlag);
-        //}
 	}
 }
 

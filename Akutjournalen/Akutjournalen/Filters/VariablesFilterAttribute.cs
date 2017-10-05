@@ -24,42 +24,16 @@ namespace RO.Common.Filters
 
             viewBag.PageUserName = filterContext.HttpContext.User.Identity.Name;
             viewBag.PageUserSign = GetWindowsAccountName(filterContext.HttpContext.User);
-            //viewBag.PageUserRole = HttpContext.Current.Request.QueryString["Role"];
 
-            //if (HttpContext.Current.Session["Role"] == null)
-            //{
-            //    HttpContext.Current.Session["Role"] = "Ledning";
-            //}
-            //else
-            //{
-            //    string roleString = HttpContext.Current.Request.QueryString["Role"];
-            //    if (HttpContext.Current.Session["Role"] == roleString)
-            //    {
-            //        viewBag.PageUserRole = HttpContext.Current.Session["Role"];
-
-            //    }
-            //    else
-            //    {
-            //       HttpContext.Current.Session["Role"] = HttpContext.Current.Request.QueryString["Role"];
-            //    }
-            //}
-            
-            
-            //if (viewBag.PageUserRole == null || string.IsNullOrEmpty(viewBag.PageUserRole))
-            //{
-            //    viewBag.PageUserRole = "Ledning";
-            //}
-
-            if(HttpContext.Current.Session["ROLE"] == null )
+            if (HttpContext.Current.Session["ROLE"] == null)
             {
-                HttpContext.Current.Session["ROLE"] = "Ledning";
-               // HttpContext.Current.Request.QueryString["Role"] = "Ledning";
+                HttpContext.Current.Session["ROLE"] = "Kirurg";
             }
             else
             {
                 if (HttpContext.Current.Request.QueryString["Role"] == null)
                 {
-                    //HttpContext.Current.Session["ROLE"] = "";
+
                 }
                 else
                 {
@@ -67,10 +41,7 @@ namespace RO.Common.Filters
                 }
             }
 
-
-
             viewBag.PageMenuHeader = Setting("RO.PageMenuHeader");
-           
             viewBag.PageApplicationName = "GOLIAT"; //Setting("RO.PageApplicationName");
 
             if (HttpContext.Current.Request.QueryString["EHRID"] != null)
@@ -86,12 +57,6 @@ namespace RO.Common.Filters
             
             HandleEHRSession();
 
-            //bool isAllowed = HasApplicationOperation(filterContext.HttpContext.User);
-
-            //if (!isAllowed)
-            //{
-             //   filterContext.Result = new RedirectResult("http://www.google.se");
-            //}
         }
         private void HandleEHRSession()
         {

@@ -2544,7 +2544,6 @@ thinkehr.f4.ComboboxTextModel = thinkehr.f4.NodeModel._extendM({
     },
 
     textValue: function (value) {
-        alert("");
         if (value !== undefined) {
 
             this.value = value;

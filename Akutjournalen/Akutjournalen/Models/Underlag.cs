@@ -9,20 +9,22 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace Akutjournalen.Models
+namespace Goliat.Models
 {
     public class UnderlagModel
     {
         //[BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]
+
         public ObjectId _id { get; private set; }
-        //public string ID { get; set; }
         public string ehrid { get; set; }
         public string current_state { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
         public string gender { get; set; }
         public string personnummer { get; set; }
+        public string SVF { get; set; }
+        public string diagnoskod { get; set; }
         public string ansvarig_enhet { get; set; }
         public string time_created { get; set; }
         public string start_date_countdown { get; set; }

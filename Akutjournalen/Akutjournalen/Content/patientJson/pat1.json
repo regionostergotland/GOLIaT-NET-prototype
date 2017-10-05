@@ -1,0 +1,130 @@
+{
+	"patients": [
+		{
+			"name": {
+				"value":"Bertil Nyström"
+			},
+			"personnummer": {
+				"value":"19471213-5333"
+			},
+			"gender": {
+				"value":"Man"
+			},
+			"age": {
+				"value":70
+			},
+			"date": {
+				"value":"2017-09-04, 13:45"
+			},
+			"room": {
+				"value":1
+			},
+			"medical_action": {
+				"value":"KEB00 Biopsi av prostata"
+			},
+			"medical_emergency_grade ": {
+				"value":"Inom två timmar"
+			},
+			"time_to_treatment": {
+				"value":"50 min 34 sec"
+			},
+			"department_for_patient": {
+				"value":"Urologen"
+			},
+			"status": {
+				"value":"Planerad, Ej startad"
+			},
+			"available_personnel": {
+				"value":"Magnus Persson, Hilda Karlsson, Peter Petersson"
+			},
+			"ums": {
+				"status":"",
+				"value":""
+			}
+		},
+		{
+			"name": {
+				"value":"Hey Sanson"
+			},
+			"personnummer": {
+				"value":"19471213-5333"
+			},
+			"gender": {
+				"value":"Man"
+			},
+			"age": {
+				"value":70
+			},
+			"date": {
+				"value":"2017-09-04, 13:45"
+			},
+			"room": {
+				"value":1
+			},
+			"medical_action": {
+				"value":"KEB00 Biopsi av prostata"
+			},
+			"medical_emergency_grade ": {
+				"value":"Inom två timmar"
+			},
+			"time_to_treatment": {
+				"value":"50 min 34 sec"
+			},
+			"department_for_patient": {
+				"value":"Urologen"
+			},
+			"status": {
+				"value":"Planerad, Ej startad"
+			},
+			"available_personnel": {
+				"value":"Magnus Persson, Hilda Karlsson, Peter Petersson"
+			},
+			"ums": {
+				"status":"",
+				"value":""
+			}
+		},
+		{
+			"name": {
+				"value":"Carlos Test"
+			},
+			"personnummer": {
+				"value":"19471213-5333"
+			},
+			"gender": {
+				"value":"Man"
+			},
+			"age": {
+				"value":70
+			},
+			"date": {
+				"value":"2017-09-04, 13:45"
+			},
+			"room": {
+				"value":1
+			},
+			"medical_action": {
+				"value":"KEB00 Biopsi av prostata"
+			},
+			"medical_emergency_grade ": {
+				"value":"Inom två timmar"
+			},
+			"time_to_treatment": {
+				"value":"50 min 34 sec"
+			},
+			"department_for_patient": {
+				"value":"Urologen"
+			},
+			"status": {
+				"value":"Planerad, Ej startad"
+			},
+			"available_personnel": {
+				"value":"Magnus Persson, Hilda Karlsson, Peter Petersson"
+			},
+			"ums": {
+				"status":"",
+				"value":""
+			}
+		}
+	]
+}

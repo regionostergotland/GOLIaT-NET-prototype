@@ -6,7 +6,7 @@ using System.IdentityModel.Services;
 using System.Linq;
 using System.Web.Helpers;
 
-namespace Akutjournalen
+namespace Goliat
 {
     // For more information on ASP.NET Identity, please visit http://go.microsoft.com/fwlink/?LinkId=301863
     public static class IdentityConfig

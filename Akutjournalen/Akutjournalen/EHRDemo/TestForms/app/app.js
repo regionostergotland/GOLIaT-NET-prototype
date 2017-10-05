@@ -1,6 +1,4 @@
 (function forms4DemoNamespace() {
-
-    console.log("Here we are");
 	
     var app = angular.module("formsApp", ["ngResource", "tmh.dynamicLocale", "thinkehrForms4", "ui.bootstrap", "ui.bootstrap.datetimepicker"])
         .config(['$httpProvider', "tmhDynamicLocaleProvider", function ($httpProvider, tmhDynamicLocaleProvider) {
@@ -178,7 +176,6 @@
                 
 
                 /*this.refreshValues = function () {
-                    console.log("Refresh values");
                     this.valueModel = {};
                     thinkehr.f4.refreshValues(this.formModel, this.valueModel);
 
@@ -472,19 +469,34 @@
 					// EhrContext.territory = "se";
                     // EhrContext.locale = "sv-se";
                     
-                    //var temp_valuemodel = this.valueModel;
+                    var temp_valuemodel = this.valueModel;
+
+                    
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"].status_beslut["0"].ism_transition["0"].current_state["0"] = {}
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"].status_beslut["0"].ism_transition["0"].current_state["0"] = {"|code": "531", "|terminology": "local", "|value": "initial"};
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"].status_beslut["0"].motivering_till_beslut["0"] = "";
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"].status_beslut["0"].motivering_till_beslut["0"] = "Motivering Lorem";
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"]["0"].narrative["0"] = "";
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"]["0"].narrative["0"] = "Narrative Lorem";
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"]["0"].request["0"].timing["0"] = {};
+                    temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["beställning_av_kirurgisk_åtgärd"]["0"].request["0"].timing["0"] = { "|formalism": "text/html", "|value": "Timing Lorem" };
+
+                    console.log("temp_valuemodel 2", temp_valuemodel)
                     //if ($scope.markedForCitationList) {
                     //    console.log("citation", citation)
                     //    temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"][0] = citation;
                     //}
-                    
+
 
                     //console.log("temp_valuemodel", temp_valuemodel);
 
                     //var citatValue = temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0];
                     //temp_valuemodel["beslut_om_kirurgisk_åtgärd"]["underlag_citat_länkar_relevanta_för_beslutet"]["0"]["citat_länk"]["0"].citat[0] = { "|value": citatValue ,"|formalism":"text/html"};
 
-                    var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(this.valueModel));
+
+                    ///////
+
+                    var cr = new CompositionResource(EhrSaveHelper.prepareValueModel(temp_valuemodel));
 
                     cr.$add({ templateId: this.templateId },
                         function (success) {
@@ -594,7 +606,6 @@
                         var id = 0;
                         angular.forEach(success.forms, function (form) {
                             if (!done[form.name]) {
-                                //alert("hi");
                                 form.xid = id++;
                                 var formName = getParameterByName("formName");
                                 var formVersion = getParameterByName("formVersion");
@@ -685,7 +696,6 @@
                     EhrContext.territory = scl.substr(3, 2);
                     EhrContext.locale = scl;
 
-			        //alert("123")
 					
 			        //EhrContext.language = "sv";
 			        //EhrContext.territory = "SE";
@@ -698,7 +708,6 @@
                  
                     var el = $compile('<ehr-form model="appCtrl.formModel" ehr-context="appCtrl.EhrContext" form-id="{{appCtrl.AppConfig.formName}}_{{appCtrl.AppConfig.formVersion}}"></ehr-form>')($scope);
                     formAttach.append(el);
-                    console.log("FORMATTACH" , formattach);
                                                                     
 
                 });
@@ -706,7 +715,6 @@
                 $scope.$watch("currentLocale", function (newVal, oldVal) {
                     if (newVal != oldVal) {
                         console.log("Locale change", newVal, oldVal, newVal.toLowerCase());
-						//alert(newVal.toLowerCase())
                         tmhDynamicLocale.set(newVal.toLowerCase());
                     }
                 });
@@ -798,7 +806,6 @@
 
                         var login = SessionResource.login();
                         login.$promise.then(function (success) {
-                            //console.log("Login", success);
                             AppConfig.sessionId = success.sessionId;
 
                             // Ping the session every 5 minutes
@@ -835,7 +842,6 @@
 
                 $scope.selectParty = function (patient) {
 
-					console.log("selectParty");
                     $scope.patient = patient;
 
                     $scope.patient.name = patient.firstNames + " " + patient.lastNames;

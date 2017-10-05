@@ -1,0 +1,130 @@
+﻿{
+	"patients": [
+		{
+			"name": {
+				"value":"Tolvan Tolvansson"
+			},
+			"personnummer": {
+				"value":"19121212-1212"
+			},
+			"gender": {
+				"value":"Man"
+			},
+			"age": {
+				"value":"105"
+			},
+			"date": {
+				"value":"2017-09-28"
+			},
+			"room": {
+				"value":"10:1"
+			},
+			"medical_action": {
+				"value":"Explorativ laparotomi"
+			},
+			"medical_emergency_grade": {
+				"value":"Inom 6 tim"
+			},
+			"department_for_patient": {
+				"value":"KAVA"
+			},
+			"planned_postop_carearea": {
+				"value":"8"
+			},
+			"status": {
+				"value":"I preop area"
+			},
+			"available_personnel": {
+				"value":"Karin Toresson, Per Persson, Göran Hansson"
+			},
+			"ums": {
+				"status":"",
+				"value":""
+			}
+		},
+		{
+			"name": {
+				"value":"Halvar Halvarsson"
+			},
+			"personnummer": {
+				"value":"20080000-1234"
+			},
+			"gender": {
+				"value":"Man"
+			},
+			"age": {
+				"value":"9"
+			},
+			"date": {
+				"value":"2017-09-28"
+			},
+			"room": {
+				"value":"10:2"
+			},
+			"medical_action": {
+				"value":"Laparoskipisk appendektomi"
+			},
+			"medical_emergency_grade": {
+				"value":"Inom 6 tim"
+			},
+			"department_for_patient": {
+				"value":"KAVA"
+			},
+			"planned_postop_carearea": {
+				"value":"Ej tilldelad"
+			},
+			"status": {
+				"value":"På avdelning"
+			},
+			"available_personnel": {
+				"value":"Magnus Persson, Hilda Karlsson, Peter Petersson"
+			},
+			"ums": {
+				"status":"",
+				"value":""
+			}
+		},
+		{
+			"name": {
+				"value":"Juliet Woods"
+			},
+			"personnummer": {
+				"value":"19131313-1313"
+			},
+			"gender": {
+				"value":"Man"
+			},
+			"age": {
+				"value":39
+			},
+			"date": {
+				"value":"2017-08-18"
+			},
+			"room": {
+				"value":"11:1"
+			},
+			"medical_action": {
+				"value":"Hystrektomi"
+			},
+			"medical_emergency_grade": {
+				"value":"Inom 8 veckor"
+			},
+			"department_for_patient": {
+				"value":"Avd 21"
+			},
+			"planned_postop_carearea": {
+				"value":"IVA"
+			},
+			"status": {
+				"value":"Operation påbörjad"
+			},
+			"available_personnel": {
+				"value":"Bo Lundgren, Hilda Karlsson, Göran Hansson"
+			},
+			"ums": {
+				"status":"",
+				"value":""
+			}
+		}
+	]
+}

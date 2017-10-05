@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Akutjournalen.Controllers
+namespace Goliat.Controllers
 {
     public class HomeController : Controller
     {
@@ -14,7 +14,7 @@ namespace Akutjournalen.Controllers
             @ViewBag.SubPageHeader = "Urologkliniken";            
             @ViewBag.PageLevel = "";
             @ViewBag.PageSubLevel = "";
-            @ViewBag.PageUserRoll = "";        // Skall vi göra en session av denna eller en global class eller hanteras i bas controll, innehåll skall hantera vid login ?
+            @ViewBag.PageUserRoll = ""; 
             
         }
 

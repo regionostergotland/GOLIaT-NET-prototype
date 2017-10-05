@@ -26,17 +26,27 @@ function getSessionId() {
 }
 
 
-var underlag = angular.module("underlag", ['datatables']);
+var underlag = angular.module("underlag", ['datatables', 'timer']);
 
 
 underlag.controller('StartSidaUnderlagCtrl', ['$scope', '$location', function ($scope, $location) {
 
-    $scope.pickUnderlag = function (path, formName, formVersion , ehrid, time) {
+    $scope.pickUnderlag = function (path, formName, formVersion , ehrid, time, role, diagnos) {
         console.log(path);
         console.log(ehrid);
         console.log(time);
-        window.location = path + "?id=" + time + "&EHRID=" + ehrid + "&formName=" + formName + "&formVersion=" + formVersion;
+        if (role == "Kirurg") {
+            window.location = path + "?id=" + time + "&EHRID=" + ehrid + "&formName=" + formName + "&formVersion=" + formVersion + "&diagnos=" + diagnos;
+        }
+        else {
+
+        }
+        
     }
+    var promise = new Promise(function (resolve, reject) {
+        resolve();
+    });
+
     $scope.underlagen = {};
 
     $.ajax({

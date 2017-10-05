@@ -233,8 +233,9 @@
   color: #000;
 }
 .skin-RO .sidebar-menu > li.header {
-  color: #fff;
-  background: #02497F;
+    color: #fff;
+    background: #02497F;
+    flex:auto;
 }
 .skin-RO .sidebar-menu > li > a {
   border-left: 3px solid transparent;

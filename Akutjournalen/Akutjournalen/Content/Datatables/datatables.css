@@ -127,7 +127,6 @@ table.dataTable thead .sorting_asc_disabled:hover,
 table.dataTable thead .sorting_desc_disabled:hover {
   cursor: pointer;
   position: relative;
-  background-color: #02497f;
 }
 
 table.dataTable thead .sorting:after,

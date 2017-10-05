@@ -1,13 +1,11 @@
 ﻿@section scripts{
-
-    @* Beslutsflik *@
     <meta charset="UTF-8">
     <script type="text/javascript">
-    var ehrID = '@Session["EHRID"]';
+        var ehrID = '@Session["EHRID"]';
     </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
-    <script src="~/Scripts/angular.js"></script>
 
+    @*<script src="~/Scripts/angular.js"></script>*@
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
     <script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
 
     <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
@@ -15,137 +13,81 @@
     <script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
 
     <link href="~/Content/Custom/custom.css" rel="stylesheet" />
+    <link href="~/Content/Custom/listView.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
-    @*<script src="~/Scripts/Views/Beslut/beslut.js"></script>*@
-    <script src="~/Scripts/Views/myAngular.js"></script>
+    <link href="~/Content/Datatables/datatables.css" rel="stylesheet" />
+    @*<script src="~/Scripts/FileSaver.js"></script>*@
+    @*<script src="~/Scripts/EHR/FormPicker.js"></script>*@
+    @*<script src="~/Scripts/Views/myAngular.js"></script>*@
 
+    @*<script src="~/Scripts/Views/Inkommande/inkommande.js"></script>*@
+    <script src="~/Scripts/ehrscapelogin.js"></script>
+    <script src="~/Scripts/Views/Planering/planering.js"></script>
 
-    <style>
-            .hoverDiv {
-            }
-
-                .hoverDiv:hover {
-                    background: #b0d8f0;
-                    color: #000000;
-                }
-
-            /*.hoverDiv:active {
-                background: #6794dd;
-                color: #ffffff;
-            }*/
-
-            /*#columnNames {
-            margin-top: 50px;
-        }*/
-
-            #left-top-row-content {
-                float: left;
-                display: inline;
-                width: 49%;
-            }
-
-            #right-top-row-content {
-                float: left;
-                display: inline;
-                width: 49%;
-            }
-
-            #boxelement {
-                float: left;
-                display: inline;
-                width: 33%;
-                text-align: left;
-            }
-
-            .table {
-                margin-bottom: 0px;
-            }
-
-            th {
-                text-align: left;
-                background-color: #0066b3;
-                color: #ffffff;
-            }
-
-            td {
-                text-align: left;
-            }
-
-            .btn-circle {
-                background-color: #0066b3;
-            }
-
-            .box {
-                margin-bottom: auto;
-            }
-
-            .box-body {
-                color: #000000;
-                background-color: #ffffff;
-            }
-
-            #boxHeader {
-                min-height: 0px;
-                text-align: left;
-                background-color: #0066b3;
-                color: #ffffff;
-                font-weight: bold;
-            }
-
-            h2 {
-                margin-top: 50px;
-            }
-    </style>
-
-
-
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.js"></script>
+    <script src="~/Scripts/angular-datatables.min.js"></script>
 }
 
-<div class="">
-
-    @*<div ng-app="myApp" ng-controller="StartSidaBeslutCtrl">
-
-        <div id="prostatacancer">
+<div ng-app="myApp">
+    <div id=" top-row">
+        <div id="left-top-row-content">
             <div>
-                <h4>Diagnos</h4>
-            </div>
-            <div class="box ">
-                <div class="box-body" id="boxHeader">
-                    <div id="boxelement">
-                        Patient
-                    </div>
-                    <div id="boxelement">
-                        Instruction
-                    </div>
-                    <div id="boxelement">
-                        Activities
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="" ng-repeat="instruction in instructions">
-                <div class="box">
-                    <div class="box-body hoverDiv" ng-click="" id="{{ instruction.EHRID }}">
-                        <div id="boxelement">
-                            {{instruction.patientinfo.firstname || "-"}} {{instruction.patientinfo.lastname || "-"}} <br />
-                            {{instruction.patientinfo.personnummer || "Inget personnummer"}}
-                        </div>
-                        <div id="boxelement">
-                            {{ instruction.name.value ||  "-"}}
-                        </div>
-
-                        <div id="boxelement" ng-repeat="activity in instruction.content[0].activities">
-                            {{ activity.name.value ||  "-"}}
-                            <span>*@
-                                @*<a ng-href="@Url.Action("Index", "Forms/editAction")?patientehr={{instruction.patientinfo.EHRID}}&instructionuid={{instruction.uid.value}}">
-                                    <button class="btn btn-circle" id="{{action.uid}}"></button>
-                                </a>*@
-                            @*</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>*@
+        <div id="right-top-row-content">
+            <div><h4></h4></div>
+
+        </div>
+    </div>
+
+    <div ng-controller="PlaneringController">
+        <table datatable="ng" class="table table-hover listview" id="show-remisser">
+            <thead>
+                <tr>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Namn</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Kön</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Ålder</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Personnummer</th>
+                    <th>Diagnos</th>
+                    <th>Planerad huvudåtgärd(er)</th>
+                    <th>Tid till behandling</th>
+                    <th>SVF</th>
+                    <th>Planerad operationstid</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in listItems" ng-click="pickUnderlag('@Url.Action("Index","OplaneradeOp/Planeringsunderlag")', '@HttpContext.Current.Session["ROLE"]', item.patientinfo.EHRID, item.content[0].activities[0].description.items[0].value.value)">
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{item.patientinfo.firstname}} {{item.patientinfo.lastname}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{item.patientinfo.gender || '-'}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{item.patientinfo.age}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{item.patientinfo.personnummer}}</td>
+                    <td>{{'-'}}</td>
+                    <td>{{item.content[0].activities[0].description.items[0].value.value|| '-'}}</td>
+                    <td>{{'-'}}</td>
+                    <td>{{'-'}}</td>
+                    <td>{{'-'}}</td>
+                    <td>{{item.patientinfo.status}}</td>
+                </tr>
+
+                @*<td ng-bind="instruction.Composition.content[0].activities[0].description.items[1].value.value || '-' ">
+                        @*<div ng-show="checkIfClicked(instruction.Composition.patientinfo.EHRID, instruction.Composition.uid.value)">
+                        <input type="button" id="AvvisaButton" class="btn btn-default" ng-click="UpdateState(instruction.Composition, $event); AvvisaRemiss(instruction.Composition)" value="Avvisa Remiss" />
+                        <label id="lblData"></label>
+                    </div>*@
+                @*</td>
+                    <td ng-bind="instruction.time || '-'">*@
+                @*<div ng-show="checkIfClicked(instruction.Composition.patientinfo.EHRID, instruction.Composition.uid.value)">
+                        <input type="button" id="UnderlagButton" class="btn btn-default" ng-click="UpdateState(instruction.Composition, $event); CreateUnderlag(instruction.Composition)" value="Skapa Underlag" />
+                        <label id="lblData"></label>
+                    </div>*@
+                @*</td>*@
+
+
+            </tbody>
+        </table>
+
+    </div>
+
 </div>

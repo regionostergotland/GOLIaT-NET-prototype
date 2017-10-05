@@ -13054,17 +13054,6 @@ angular.module("thinkehr/f4/templates/ehr-validation-msg.html", []).run(["$templ
                             } else {
                                 return;
                             }
-                            //console.log("CHANGED",codeVal, labelVal);
-                            /*$scope.$apply(function () {
-                             if (codeVal) {
-                             var language = $scope.EhrContext ? $scope.EhrContext.language : null;
-                             $scope.codeValue(codeVal, language);
-                             } else {
-                             $scope.codeValue(null);
-                             }
-
-                             $scope.listDSArray = itemsToDSArray($scope.codeInput().getList(), $scope._lastFilterString);
-                             });*/
                             var updateScope = function () {
                                 if (codeVal) {
                                     var language = $scope.EhrContext ? $scope.EhrContext.language : null;

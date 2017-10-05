@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Akutjournalen.Controllers
+namespace Goliat.Controllers
 {
     public class PatienterController : Controller
     {

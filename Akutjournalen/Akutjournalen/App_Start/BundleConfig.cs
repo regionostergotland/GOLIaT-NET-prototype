@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Akutjournalen
+namespace Goliat
 {
     public class BundleConfig
     {

@@ -1,0 +1,90 @@
+﻿
+<script type="text/javascript">
+    var ehrID = '@Session["EHRID"]';
+</script>
+<meta charset="UTF-8">
+<script type="text/javascript">
+    var ehrID = '@Session["EHRID"]';
+</script>
+
+@*<script src="~/Scripts/angular.js"></script>*@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
+<script src="~/Scripts/ClientValidation/jquery.validate.min.js"></script>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/JqueryUI/jquery-ui.min.js"></script>
+
+<link href="~/Content/Custom/custom.css" rel="stylesheet" />
+<link href="~/Content/Custom/listView.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+<link href="~/Content/Datatables/datatables.css" rel="stylesheet" />
+<script src="~/Scripts/ehrscapelogin.js"></script>
+<script src="~/Scripts/Views/PostOp/postop.js"></script>
+
+<link href="~/Content/Custom/custom.css" rel="stylesheet" />
+<link rel="stylesheet" media="screen" href="~/Content/JqueryUI/jquery-ui.min.css">
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.js"></script>
+<script src="~/Scripts/angular-datatables.min.js"></script>
+
+@*<script src="~/Scripts/Views/Utredning/utredning.js"></script>*@
+
+<div ng-app="myApp">
+    <div id=" top-row">
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div>
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+            <div id="right-adjusted-content">
+            </div>
+        </div>
+    </div>
+
+    <div ng-controller="PostOperationsCtrl">
+        <table datatable="ng" class="table table-hover listview">
+            <thead>
+                <tr>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Namn</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Kön</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">Ålder</th>
+                    <th ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">Personnummer</th>
+                    <th>Beslutdatum</th>
+                    <th>Sal:Ordning</th>
+                    <th>Åtgärd</th>
+                    <th>Medicinsk brådskandegrad</th>
+                    <th>Patientavdelning</th>
+                    <th>Planerad postop vårdplats</th>
+                    <th>Status</th>
+                    <th>Personal</th>
+                    <th>UMS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="operation in operationer">
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{operation.name.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{operation.gender.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{operation.age.value}}</td>
+                    <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{operation.personnummer.value}}</td>
+                    <td>{{operation.date.value}}</td>
+                    <td>{{operation.room.value}}</td>
+                    <td>{{operation.medical_action.value}}</td>
+                    <td>{{operation.medical_emergency_grade.value}}</td>
+                    <td>{{operation.department_for_patient.value}}</td>
+                    <td>{{operation.planned_postop_carearea.value}}</td>
+                    <td>{{operation.status.value}}</td>
+                    <td id="{{operation.personnummer.value}}"><i class="fa fa-2x fa-info-circle info-hovering" ng-mouseleave="cleansePersonalbox()" ng-mouseover="showPersonalbox($event, operation.available_personnel.value, operation.personnummer.value)"></i></td>
+                    @*<td><img src="~/Content/Img/infoimg.png" style="width:35px; height:35px;" /></td>*@
+                    <td><img src="~/Content/Img/signal.012346.png" style="width:35px; height:35px;" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="personalbox">
+        </div>
+    </div>
+
+</div>

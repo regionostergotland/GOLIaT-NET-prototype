@@ -28,6 +28,24 @@ margin-top: 50px;
 }*/
 
 
+.fa-bath{
+   visibility: hidden;
+}    
+
+.fa-bath{
+    visibility: hidden;
+}
+
+.instruction-row:before {
+    font-family: FontAwesome;
+    content: "\f095";
+    display:inline;
+}
+
+#right-adjusted-content {
+    float: right;
+}
+
 #boxelement {
     float: left;
     display: inline;
@@ -39,22 +57,32 @@ margin-top: 50px;
     margin-bottom: 0px;
 }
 
-th {
+.listview th {
     text-align: left;
     background-color: #0066b3;
     color: #ffffff;
 }
 
-tbody tr {
+.listview tbody tr {
     background-color: #dce8f1;
     color: #000000;
     cursor:pointer;
 }
-            
 
-table td {
+
+.listview table td {
     text-align: left;
 }
+
+table.dataTable thead  .sorting:hover,
+table.dataTable thead .sorting_asc:hover,
+table.dataTable thead .sorting_desc:hover,
+table.dataTable thead  .sorting_asc_disabled:hover,
+table.dataTable thead .sorting_desc_disabled:hover {
+    background-color: #02497f;
+}
+
+
 
 .btn-circle {
     background-color: #0066b3;
@@ -64,6 +92,7 @@ table td {
     margin-left:10px;
     margin-right:10px;
     float:right;
+
     border-color: #EFEFEF;
 }
 .btn-outline:hover{
@@ -77,8 +106,8 @@ table td {
 }
 
 
-.row.panel.cell {
-    background-color:red;
+.row .panel .cell {
+
 }
 
 
@@ -87,14 +116,6 @@ table td {
     background-color: #ffffff;
 }
 
-/*#box-header {
-    padding: 2px 2px 2px 2px;
-    min-height: 0px;
-    text-align: left;
-    background-color: #0066b3;
-    color: #ffffff;
-    font-weight: bold;
-}*/
 
 
 .panel.cell {
@@ -125,9 +146,7 @@ table td {
 }*/
 
 .fa-exclamation-triangle {
-    background-color:yellow;
-    color:yellow;
-    border: solid #828282 1px;
+    color:red;
     margin-right:5px;
 }
 
@@ -142,9 +161,9 @@ table td {
 }
 
 .panel p {
-    margin-bottom:1%;
-    margin-top: 1%;
-    margin-left: 1%;
+    margin-bottom:2px;
+    margin-top: 2px;
+    margin-left: 2px;
     font-size:13px;
 }
 .panel p b{
@@ -152,21 +171,34 @@ table td {
 }
 
 .box  {
-    padding:  2% 2% 5% 2%;
+    padding:  3px 3px 8px 3px;
 }
 
 /*.sub-panel p {
     padding-left: 3%;
 }*/
 
+
+.prov-content{
+    padding-left: 1em;
+}
+
+.btn-header:hover {
+    background-color:white;
+    color:black;
+    border-color:white;
+}
+
 .sub-panel {
-    padding-left: 3%;
+    margin-top: 1em;
+    padding-left: 1em;
 }
 
 .box-header {
     background-color:  #0066b3;
     color: #ffffff;
     font-weight: bold;
+    justify-content:space-between;
 }
 .box-header.box-header-sub  {
     padding: 0px 0px 0px 0px;

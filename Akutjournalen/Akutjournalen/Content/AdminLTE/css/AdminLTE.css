@@ -466,12 +466,7 @@ a:focus {
 .sidebar-form input:focus {
   border-color: transparent;
 }
-.user-panel {
-  position: relative;
-  width: 100%;
-  padding: 10px;
-  overflow: hidden;
-}
+
 .user-panel:before,
 .user-panel:after {
   content: " ";
@@ -519,7 +514,14 @@ a:focus {
 .sidebar-menu > li > a {
   padding: 12px 5px 12px 15px;
   display: block;
+
 }
+.sidebar-menu > li > a > li {
+  padding: 12px 5px 12px 15px;
+  display: block;
+  background-color:red;
+}
+
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
 .sidebar-menu > li > a > .ion {
@@ -530,6 +532,7 @@ a:focus {
   margin-top: 3px;
   margin-right: 5px;
 }
+
 .sidebar-menu li.header {
   padding: 10px 25px 10px 15px;
   font-size: 12px;
@@ -675,6 +678,7 @@ a:focus {
   position: absolute;
   top: 50%;
   right: 10px;
+  height: 100px;
   margin-top: -7px;
 }
 /*

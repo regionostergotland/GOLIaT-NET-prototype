@@ -3,15 +3,16 @@ var queryUrl = baseUrl + '/query';
 var username = 'Carlos.Ortiz@regionostergotland.se'
 var password = 'Cortiz13112015'
 
-//var temparray = window.location.pathname.split('/SpecificUnderlag/', 2);
-//var getEHRandTime = temparray[1].split('-');
-//var time = getEHRandTime.splice(0, 1);
+function setPatientTitle(name, age, gendericon) {
+    $('.title-gender').attr("class", gendericon);
+    $('.title-name').text(name + ", ");
+    $('.title-age').text(age + " år");
+    $('.uppsignal').attr("src", "../Content/Img/signal.01245.png")
+    
+};
+(function () {
 
-//time = time[0];
-//var ehrid = getEHRandTime.join("-");
-
-//var ehrid;
-
+});
 
 Object.size = function (obj) {
     var size = 0, key;
@@ -24,6 +25,17 @@ Object.size = function (obj) {
 function getParameterByName(name) {
     var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function CurrentAge(EHRdateofBirth) {
+    if (EHRdateofBirth != "" || EHRdateofBirth != null) {
+        var today = new Date();
+        var currentYear = today.getFullYear()
+        return currentYear - EHRdateofBirth;
+    }
+    else {
+        return "";
+    }
 }
 
 function getSessionId() {
@@ -44,12 +56,34 @@ function getSessionId() {
 
 var specifik = angular.module("specifik", ["formsApp", "aql_services_module"]);
 
-specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetProverFact','ProvResultatAQLProvider', function ($scope, $filter, $http, GetProverFact, ProvResultatAQLProvider) {
+specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetProverFact', 'ProvResultatAQLProvider', 'GetDemographics', function ($scope, $filter, $http, GetProverFact, ProvResultatAQLProvider, GetDemographics) {
 
     console.log("time", getParameterByName("id"))
     console.log("ehrid", getParameterByName("EHRID"));
 
     $scope.numberOfValues = 3;
+
+    GetDemographics.promise().then(function (data) {
+        console.log("DATA", data)
+
+        var fullName = "";
+        fullName += data.data.party.firstNames;
+        fullName += " "
+        fullName += data.data.party.lastNames;
+        var age = $filter('date')(data.data.party.dateOfBirth, "yyyy");
+        console.log(age);
+        if (data.data.party.gender) {
+            if (data.data.party.gender == "MALE") {
+                var gendericon = "fa fa-mars";
+            }
+            else {
+                var gendericon = "fa fa-venus";
+            }
+        }
+
+        setPatientTitle(fullName, CurrentAge(age), gendericon)
+
+    });
     
     //ERSÄTT MED GET AQLVALUES
     GetProverFact.getPSAValues().then(function (data) {
@@ -113,7 +147,6 @@ specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetP
                     var data_filtered = $filter('date')(date_to_filter, 'yyyy-MM-dd: HH:mm');
 
                     $scope.KreatininValuesList[counter].tid_for_prov = data_filtered;
-
 
                     counter += 1;
                     
@@ -187,18 +220,6 @@ specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetP
 
                 }
 
-                //if (counter < 3) {
-                
-                //        if (element.composition.data.events[0].data.items.length == 5) {
-
-                //            $scope.NatriumValuesList.push(element);
-                //            var date_to_filter = $scope.NatriumValuesList[counter].composition.data.events["0"].time.value;
-                //            var data_filtered = $filter('date')(date_to_filter, 'yyyy-MM-dd: HH:mm:ss');
-
-                //            $scope.NatriumValuesList[counter].tid_for_prov = data_filtered;
-                //            counter += 1;
-                //        }
-                //}
             });
         }
 
@@ -249,94 +270,123 @@ specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetP
 
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).summary).then(function (data) {
-        console.log("summary", data.data.resultSet["0"]);
-        $scope.arftlighet_summary = data.data.resultSet["0"].Summary;
-        $scope.arftlighet_summary_time = convertTime(data.data.resultSet["0"].comp_time);
+        console.log("data", data);
+        if (data.data.resultSet) {
+            $scope.arftlighet_summary = data.data.resultSet["0"].Summary;
+            $scope.arftlighet_summary_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET RELATION AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).relation_to_patient).then(function (data) {
-        console.log("relation_to_patient", data.data.resultSet["0"]);
-        $scope.arftlighet_relation_to_patient = data.data.resultSet["0"].Relation_till_patienten;
-        $scope.arftlighet_relation_to_patient_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.arftlighet_relation_to_patient = data.data.resultSet["0"].Relation_till_patienten;
+            $scope.arftlighet_relation_to_patient_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).age_of_sickness).then(function (data) {
-        console.log("age_of_sickness", data.data.resultSet["0"]);
-        var new_age = data.data.resultSet["0"].age_of_sickness.replace(/[^0-9]/g, '')
-        $scope.arftlighet_ageofsickness = new_age;
-        $scope.arftlighet_ageofsickness_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            var new_age = data.data.resultSet["0"].age_of_sickness.replace(/[^0-9]/g, '')
+            $scope.arftlighet_ageofsickness = new_age;
+            $scope.arftlighet_ageofsickness_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).reason_for_death).then(function (data) {
-        console.log("arftlighet_reason_for_death", data.data.resultSet["0"]);
-        $scope.arftlighet_reason_for_death = data.data.resultSet["0"].reason_for_death
-        $scope.arftlighet_reason_for_death_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.arftlighet_reason_for_death = data.data.resultSet["0"].reason_for_death
+            $scope.arftlighet_reason_for_death_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).heredity_commentary).then(function (data) {
-        console.log("arftlighet_reason_for_death", data.data.resultSet["0"]);
-        $scope.arftlighet_commentary = data.data.resultSet["0"].kommentar
-        $scope.arftlighet_commentary_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.arftlighet_commentary = data.data.resultSet["0"].kommentar
+            $scope.arftlighet_commentary_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_incomplete_emptying).then(function (data) {
-        console.log("i_pss_incomplete_emptying", data.data.resultSet["0"]);
-        $scope.i_pss_incomplete_emptying = data.data.resultSet["0"].i_pss_incomplete_emptying
-        $scope.i_pss_incomplete_emptying_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_incomplete_emptying = data.data.resultSet["0"].i_pss_incomplete_emptying
+            $scope.i_pss_incomplete_emptying_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_frequency).then(function (data) {
-        console.log("i_pss_frequency", data.data.resultSet["0"]);
-        $scope.i_pss_frequency = data.data.resultSet["0"].i_pss_frequency
-        $scope.i_pss_frequency_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_frequency = data.data.resultSet["0"].i_pss_frequency
+            $scope.i_pss_frequency_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+       
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_urgency).then(function (data) {
-        console.log("i_pss_urgency", data.data.resultSet["0"]);
-        $scope.i_pss_urgency = data.data.resultSet["0"].i_pss_urgency;
-        $scope.i_pss_urgency_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_urgency = data.data.resultSet["0"].i_pss_urgency;
+            $scope.i_pss_urgency_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+       
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_intermittency).then(function (data) {
-        console.log("i_pss_intermittency", data.data.resultSet["0"]);
-        $scope.i_pss_intermittency = data.data.resultSet["0"].i_pss_intermittency;
-        $scope.i_pss_intermittency_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_intermittency = data.data.resultSet["0"].i_pss_intermittency;
+            $scope.i_pss_intermittency_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+       
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_stream).then(function (data) {
-        console.log("i_pss_stream", data.data.resultSet["0"]);
-        $scope.i_pss_stream = data.data.resultSet["0"].i_pss_stream;
-        $scope.i_pss_stream_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_stream = data.data.resultSet["0"].i_pss_stream;
+            $scope.i_pss_stream_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+       
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_straining).then(function (data) {
-        console.log("i_pss_straining", data.data.resultSet["0"]);
-        $scope.i_pss_straining = data.data.resultSet["0"].i_pss_straining;
-        $scope.i_pss_straining_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_straining = data.data.resultSet["0"].i_pss_straining;
+            $scope.i_pss_straining_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_nocturia).then(function (data) {
-        console.log("i_pss_nocturia", data.data.resultSet["0"]);
-        $scope.i_pss_nocturia = data.data.resultSet["0"].i_pss_nocturia;
-        $scope.i_pss_nocturia_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_nocturia = data.data.resultSet["0"].i_pss_nocturia;
+            $scope.i_pss_nocturia_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_total_score).then(function (data) {
-        console.log("i_pss_total_score", data.data.resultSet["0"]);
-        $scope.i_pss_total_score = data.data.resultSet["0"].i_pss_total_score;
-        $scope.i_pss_total_score_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_total_score = data.data.resultSet["0"].i_pss_total_score;
+            $scope.i_pss_total_score_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_QoL_Score).then(function (data) {
-        console.log("i_pss_QoL_Score", data.data.resultSet["0"]);
-        $scope.i_pss_QoL_Score = data.data.resultSet["0"].i_pss_QoL_Score;
-        $scope.i_pss_QoL_Score_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_QoL_Score = data.data.resultSet["0"].i_pss_QoL_Score;
+            $scope.i_pss_QoL_Score_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+        
     })
     //GET SUMMARY AQL
     GetProverFact.getAQLResult(ProvResultatAQLProvider.prostateResultAQL(getParameterByName("EHRID")).i_pss_confounding_cactors).then(function (data) {
-        console.log("i_pss_confounding_cactors", data.data.resultSet["0"]);
-        $scope.i_pss_confounding_cactors = data.data.resultSet["0"].i_pss_confounding_cactors;
-        $scope.i_pss_confounding_cactors_time = convertTime(data.data.resultSet["0"].comp_time);
+        if (data.data.resultSet) {
+            $scope.i_pss_confounding_cactors = data.data.resultSet["0"].i_pss_confounding_cactors;
+            $scope.i_pss_confounding_cactors_time = convertTime(data.data.resultSet["0"].comp_time);
+        }
+       
     })
 
 
@@ -354,10 +404,6 @@ specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetP
     //    }
     //});
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //////////////////////////////////////////////////////////////////////////////////////////
 
     $scope.checkedBox = function (date, title, value, event) {
 
@@ -375,31 +421,6 @@ specifik.controller('SpecifikUnderlagCtrl', ['$scope', '$filter', '$http', 'GetP
 
         console.log(date, title, value);
 
-        //var citation_elements = event.currentTarget.parentElement.parentElement.childNodes;
-        //console.log("event", event.toElement.checked);
-        //console.log("citation_elements: ", citation_elements)
-
-        //for (elementNumber in citation_elements) {
-        //    if (citation_elements[elementNumber].attributes) {
-        //        if (citation_elements[elementNumber].attributes[0]) {
-        //            if (citation_elements[elementNumber].attributes[0].name == "ng-bind") {
-        //                if (event.toElement.checked) {
-        //                    console.log("ADD TO LIST")
-        //                    console.log("citation_elements NEXT : ", citation_elements[elementNumber])
-        //                    _addElementToCitationList(citation_elements);
-                            
-        //                }
-        //                else {
-        //                    console.log("citation_elements NEXT 2 : ", citation_elements[elementNumber])
-        //                    console.log("REMOVE FROM LIST")
-                            
-        //                }
-        //            }
-        //        }
-                
-        //    }
-            
-        //}
     }
 
 
@@ -640,11 +661,6 @@ specifik.factory('GetProverFact', ['$http', 'ProvResultatAQLProvider', function 
             return promise;
         },
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         getAQLResult: function(aql) {
             var promise = $http({
@@ -687,9 +703,29 @@ specifik.factory('GetProverFact', ['$http', 'ProvResultatAQLProvider', function 
 
 }]);
 
-specifik.factory('GetICDtenFact', ['$http', function ($http) {
+specifik.factory('GetDemographics', ['$http', function ($http) {
 
-}]);
+    var myService = {
+        promise: function () {
+            var promise = $http({
+                url: baseUrl + "/demographics/ehr/"+ getParameterByName("EHRID") +"/party?",
+                method: "GET",
+                headers: {
+                    "Ehr-Session": getSessionId()
+                }
+            }).error(function (data, status, header, config) {
+                alert("Request failed: " + status);
+
+            }).success(function (res) {
+                console.log("Party", res)
+            });
+            return promise;
+        }
+
+    };
+
+    return myService;
+}])
 
 specifik.factory('GetObservationresultsFact', ['$scope', function ($scope) {
 
