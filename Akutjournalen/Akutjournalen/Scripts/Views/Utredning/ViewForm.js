@@ -1,7 +1,7 @@
 ﻿var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 var queryUrl = baseUrl + '/query';
-var username = 'Carlos.Ortiz@regionostergotland.se'
-var password = 'Cortiz13112015'
+var username = getUsername();
+var password = getPassword();
 
 Object.size = function (obj) {
     var size = 0, key;

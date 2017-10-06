@@ -477,6 +477,7 @@ app.controller('InkommandeRemissCtrl', ['$scope', '$filter', "GetInstructions", 
                 console.log("ok");
                 alertify.logPosition("top right");
                 alertify.success("Avvisade remiss");
+                //$scope.AvvisaRemiss(instruction);
                 $scope.UpdateState(instruction, event);
                 
 
@@ -494,7 +495,8 @@ app.controller('InkommandeRemissCtrl', ['$scope', '$filter', "GetInstructions", 
                 console.log("ok");
                 alertify.logPosition("top right");
                 alertify.success("");
-                $scope.AvvisaRemiss(instruction);
+                //$scope.AvvisaRemiss(instruction);
+                $scope.UpdateState(instruction, event);
 
             }, function () {
 
@@ -711,7 +713,7 @@ app.controller('InkommandeRemissCtrl', ['$scope', '$filter', "GetInstructions", 
                 SendComposition("active", "245", instruction.uid.value, instruction.archetype_details.template_id.value, instruction.patientinfo.EHRID, "Beslutsunderlag har skapats");
 
             }
-            else if (event.currentTarget.innerText == "Vidarebefodra remiss") {
+            else if (event.currentTarget.innerText == "Vidarebefordra remiss") {
                 console.log("Vidarebefodra remiss")
                 SendComposition("cancelled", "528", instruction.uid.value, instruction.archetype_details.template_id.value, instruction.patientinfo.EHRID, "Remissen vidarebefodrades, remittent och ny enhet notifierades");
             }

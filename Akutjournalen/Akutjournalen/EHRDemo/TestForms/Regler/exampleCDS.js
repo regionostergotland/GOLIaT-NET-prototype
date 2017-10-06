@@ -2,8 +2,8 @@
 var cdsUrl = 'https://rest.ehrscape.com/thinkcds/rest/v1'; 
 
 
-var username = "Carlos.Ortiz@regionostergotland.se";
-var password = "Cortiz13112015";
+var username = getUsername();  //ehrscapelogin.js, see readme
+var password = getPassword();  //ehrscapelogin.js, see readme
 
 var authorization = "Basic " + btoa(username + ":" + password);
 //alert(authorization)

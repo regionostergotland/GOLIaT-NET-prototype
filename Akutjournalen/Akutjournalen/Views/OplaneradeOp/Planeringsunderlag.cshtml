@@ -19,9 +19,9 @@
     <script src="~/Scripts/Views/Planering/planeringunderlag.js"></script>
     <script type="text/javascript" src="~/Monthly/js/monthly.js"></script>
     <script type="text/javascript">
-        $(window).load(function () {
-            $('#mycalendar').monthly({ weekStart: 'Mon', stylePast: 'true', locale: 'se' });
-        });
+        //$(window).load(function () {
+        //    $('#mycalendar').monthly({ weekStart: 'Mon', stylePast: 'true', locale: 'se' });
+        //});
     </script>
 }
 
@@ -43,11 +43,10 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div>
-                            <h4 style="margin-top:10px;">Huvudåtgärd:</h4> <p class="main-objective-span"></p>
-                            <br />
+                            <p class="main-objective-span" </p>
+                            
                         </div>
                         <div>
-                            <p><h4 style="margin-top:10px; margin-right:0px;">Övriga åtgärder:</h4></p>
                             <p class="sub-objective">JAF10 Öppen operation av navelbråck med suturplastik, </p>
                             <p class="sub-objective">KBV05 Cystoskopisk reposition av uretärstent</p>
                         </div>
@@ -73,7 +72,7 @@
                             <br />
                             <br />
                             <br />
-                            <button class="btn btn-primary" style="margin-right:4px; " onclick="openWindow('http', 'goliatdemoutvtest.lio.se/Utredning/SpecificUnderlag?id=1505915617&EHRID=d6438b34-a1d8-4ea9-9191-8ee0161c7bf1&formName=Beslut%20v2%20om%20kirurgi%20m%20citations%203&formVersion=1.0.3&diagnos=ICD10%20C61%20%20%20%20Malign%20tum%C3%B6r%20i%20prostata')">Visa Beslutsunderlaget</button><button class="btn btn-primary" >Visa Läkemedel</button><br />
+                            <button class="btn btn-primary" style="margin-right:4px; " onclick="openWindow('http', 'goliatdemoutvtest.lio.se/Utredning/SpecificUnderlag?id=1505915617&EHRID=d6438b34-a1d8-4ea9-9191-8ee0161c7bf1&formName=Beslut%20v2%20om%20kirurgi%20m%20citations%203&formVersion=1.0.3&diagnos=ICD10%20C61%20%20%20%20Malign%20tum%C3%B6r%20i%20prostata')">Visa Beslut</button><button class="btn btn-primary" >Visa Läkemedel</button><br />
 
                         </div>
                     </div>
@@ -146,11 +145,9 @@
                 <div class="row">
                     <div class="sub-panel">
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="schema-tidsbokning" onclick="showGant()">
-                            <h4>Välj dag att boka:</h4>
                             <img src="~/Content/Img/Schema planeringsvy2.png" alt="Mountain View" style="width:100%;height:100%;">
                         </div>
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="gant-schema-tidsbokning" hidden>
-                            <h4>Välj tid:</h4>
                             <img src="~/Content/Img/Gantt planering.png" alt="Mountain View" style="width:100%;height:100%; ">
                         </div>
 
@@ -315,8 +312,8 @@
                 </div>
             </div>
             <div class="panel" id="material-panel">
-                <div class="row">
-                    <iframe src="http://opguideqa.lio.se/Klinik/1/Operationsforberedelse/Details/13284" width="100%" height="800px" frameborder="0"></iframe>
+                <div class="row" >
+                    <iframe id="iframe-div" src="http://opguideqa.lio.se/Klinik/1/Operationsforberedelse/Details/13284" style="width:100%" frameborder="0"></iframe>
                     @**@
                     @*<button class="btn btn-primary" style="float:right; width:100px;" onclick="openWindow('https','opguideqa.lio.se:890/Klinik/1/Operationsforberedelse/Details/2553')"*@ @*ng-click="openWindow('opguideqa.lio.se:890/Klinik/1/Operationsforberedelse/Details/2553')">*@@*OpGuide</button>*@
                 </div>

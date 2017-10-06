@@ -13,8 +13,8 @@
         .factory("AppConfig", function () {            
             return {
                 url: "https://rest.ehrscape.com/rest/v1",
-                username: "Carlos.Ortiz@regionostergotland.se",
-                password: "Cortiz13112015",
+                username: getUsername(),  //ehrscapelogin.js, see readme
+                password: getPassword(),  //ehrscapelogin.js, see readme
                 ehrId: "28ac8bbc-eb14-4f01-a30d-bcff446e0bd4",
                 locales: ["sv-SE"]
             };

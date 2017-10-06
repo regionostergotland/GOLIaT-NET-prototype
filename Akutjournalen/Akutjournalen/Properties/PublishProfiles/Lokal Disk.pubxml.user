@@ -15,16 +15,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/29/2017 10:19:23</publishTime>
+      <publishTime>10/05/2017 16:09:58</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/29/2017 10:19:23</publishTime>
+      <publishTime>10/05/2017 16:09:58</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/06/2017 14:10:10</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>04/06/2017 14:10:09</publishTime>
+    </File>
+    <File Include="bin/Goliat.dll">
+      <publishTime>10/05/2017 16:08:54</publishTime>
     </File>
     <File Include="bin/Json.dll">
       <publishTime>07/04/2017 11:10:10</publishTime>
@@ -138,10 +141,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:09:44</publishTime>
     </File>
     <File Include="Content/Custom/custom.css">
-      <publishTime>09/27/2017 13:43:50</publishTime>
+      <publishTime>10/04/2017 16:15:26</publishTime>
     </File>
     <File Include="Content/Custom/listView.css">
-      <publishTime>09/22/2017 11:06:24</publishTime>
+      <publishTime>10/04/2017 12:53:42</publishTime>
     </File>
     <File Include="Content/Datatables/datatables.css">
       <publishTime>09/18/2017 08:25:07</publishTime>
@@ -8247,7 +8250,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:09:45</publishTime>
     </File>
     <File Include="EHRDemo/Forms/app/app - Copy.js">
-      <publishTime>04/06/2017 14:09:55</publishTime>
+      <publishTime>10/05/2017 12:51:00</publishTime>
     </File>
     <File Include="EHRDemo/Forms/app/app.js">
       <publishTime>08/02/2017 10:41:02</publishTime>
@@ -30099,7 +30102,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/04/2017 11:10:13</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/29/2017 10:19:13</publishTime>
+      <publishTime>10/05/2017 16:09:50</publishTime>
     </File>
     <File Include="Scripts/AdminLTE/app.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -30165,7 +30168,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/07/2017 11:36:38</publishTime>
     </File>
     <File Include="Scripts/alertify/src/js/alertify.js">
-      <publishTime>09/07/2017 11:36:38</publishTime>
+      <publishTime>10/03/2017 11:06:47</publishTime>
     </File>
     <File Include="Scripts/alertify/src/js/ngAlertify.js">
       <publishTime>09/07/2017 11:36:38</publishTime>
@@ -30390,7 +30393,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/29/2017 14:09:31</publishTime>
     </File>
     <File Include="Scripts/EHR/FormPicker.js">
-      <publishTime>07/20/2017 12:46:40</publishTime>
+      <publishTime>10/05/2017 10:24:30</publishTime>
     </File>
     <File Include="Scripts/EHR/Global.js">
       <publishTime>07/20/2017 12:46:33</publishTime>
@@ -30403,6 +30406,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/EHR/Triage.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
+    </File>
+    <File Include="Scripts/ehrscapelogin.js">
+      <publishTime>10/05/2017 13:58:52</publishTime>
     </File>
     <File Include="Scripts/FullScreen/screenfull_min.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -30445,6 +30451,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/modernizr-2.6.2.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
+    </File>
+    <File Include="Scripts/passwordscripts/ehrscapeUserFunctions.js">
+      <publishTime>10/05/2017 10:24:25</publishTime>
     </File>
     <File Include="Scripts/respond.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -30765,7 +30774,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/12/2017 07:56:35</publishTime>
     </File>
     <File Include="Scripts/thinkehr/form-renderer/thinkehr-forms4-dist-1.0.59.js">
-      <publishTime>08/09/2017 11:20:33</publishTime>
+      <publishTime>09/29/2017 12:18:06</publishTime>
     </File>
     <File Include="Scripts/thinkehr/form-renderer/thinkehr-forms4-dist-1.0.59.min.js">
       <publishTime>05/12/2017 07:56:35</publishTime>
@@ -37851,13 +37860,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:08</publishTime>
     </File>
     <File Include="Scripts/Views/Inkommande/inkommande.js">
-      <publishTime>09/29/2017 09:29:51</publishTime>
+      <publishTime>10/05/2017 13:15:45</publishTime>
     </File>
     <File Include="Scripts/Views/myAngular.js">
       <publishTime>09/12/2017 15:51:33</publishTime>
     </File>
     <File Include="Scripts/Views/Operation/operation.js">
-      <publishTime>09/27/2017 17:00:08</publishTime>
+      <publishTime>10/03/2017 15:11:57</publishTime>
     </File>
     <File Include="Scripts/Views/Patienter/createpatienter.js">
       <publishTime>05/11/2017 11:09:24</publishTime>
@@ -37872,13 +37881,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2017 11:12:32</publishTime>
     </File>
     <File Include="Scripts/Views/Planering/planering.js">
-      <publishTime>09/29/2017 09:16:01</publishTime>
+      <publishTime>10/05/2017 13:58:26</publishTime>
     </File>
     <File Include="Scripts/Views/Planering/planeringunderlag.js">
       <publishTime>09/25/2017 14:39:04</publishTime>
     </File>
     <File Include="Scripts/Views/PostOp/postop.js">
-      <publishTime>09/27/2017 16:34:32</publishTime>
+      <publishTime>10/02/2017 10:39:00</publishTime>
     </File>
     <File Include="Scripts/Views/sharedScript.js">
       <publishTime>09/05/2017 12:21:55</publishTime>
@@ -37887,16 +37896,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2017 14:04:03</publishTime>
     </File>
     <File Include="Scripts/Views/Utredning/specifikutredning.js">
-      <publishTime>09/20/2017 15:37:34</publishTime>
+      <publishTime>10/04/2017 12:57:09</publishTime>
     </File>
     <File Include="Scripts/Views/Utredning/utredning.js">
       <publishTime>09/27/2017 08:33:32</publishTime>
     </File>
     <File Include="Scripts/Views/Utredning/ViewForm.js">
-      <publishTime>08/22/2017 12:49:37</publishTime>
+      <publishTime>10/04/2017 12:43:24</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>09/25/2017 15:22:55</publishTime>
+      <publishTime>10/05/2017 16:08:08</publishTime>
     </File>
     <File Include="Views/Anamnes/Index.cshtml">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -37917,10 +37926,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="Views/Inkommande/Index.cshtml">
-      <publishTime>09/26/2017 16:24:27</publishTime>
+      <publishTime>10/05/2017 12:47:30</publishTime>
     </File>
     <File Include="Views/Inkommande/NyUtredning.cshtml">
-      <publishTime>08/24/2017 12:38:19</publishTime>
+      <publishTime>10/05/2017 12:47:39</publishTime>
     </File>
     <File Include="Views/Inkommande/RedigeraUtredning.cshtml">
       <publishTime>06/22/2017 11:46:13</publishTime>
@@ -37932,13 +37941,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="Views/Operation/Index.cshtml">
-      <publishTime>09/27/2017 13:42:21</publishTime>
+      <publishTime>10/05/2017 12:47:57</publishTime>
     </File>
     <File Include="Views/OplaneradeOp/Index.cshtml">
-      <publishTime>09/29/2017 09:13:09</publishTime>
+      <publishTime>10/05/2017 12:48:06</publishTime>
     </File>
     <File Include="Views/OplaneradeOp/Planeringsunderlag.cshtml">
-      <publishTime>09/29/2017 09:31:13</publishTime>
+      <publishTime>10/05/2017 12:48:15</publishTime>
     </File>
     <File Include="Views/OrdinationAvd/Index.cshtml">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -37950,16 +37959,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="Views/Patienter/CreatePatient.cshtml">
-      <publishTime>09/19/2017 10:32:26</publishTime>
+      <publishTime>10/05/2017 12:48:24</publishTime>
     </File>
     <File Include="Views/Patienter/Index.cshtml">
-      <publishTime>09/04/2017 16:22:48</publishTime>
+      <publishTime>10/05/2017 12:48:28</publishTime>
     </File>
     <File Include="Views/Planering/Index.cshtml">
       <publishTime>07/04/2017 12:53:01</publishTime>
     </File>
     <File Include="Views/PostOp/Index.cshtml">
-      <publishTime>09/27/2017 13:42:35</publishTime>
+      <publishTime>10/05/2017 12:48:35</publishTime>
     </File>
     <File Include="Views/Prototyp/HtmlPage1.html">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -37983,13 +37992,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/19/2017 08:13:43</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>09/20/2017 11:17:52</publishTime>
+      <publishTime>10/05/2017 13:14:04</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="Views/SlutAnteckning/Index.cshtml">
-      <publishTime>09/04/2017 16:23:02</publishTime>
+      <publishTime>10/05/2017 12:48:54</publishTime>
     </File>
     <File Include="Views/Timeline/Index.cshtml">
       <publishTime>04/13/2017 14:27:04</publishTime>
@@ -38010,22 +38019,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/24/2017 12:36:36</publishTime>
     </File>
     <File Include="Views/Utredning/Index.cshtml">
-      <publishTime>09/27/2017 09:00:47</publishTime>
+      <publishTime>10/05/2017 16:06:03</publishTime>
     </File>
     <File Include="Views/Utredning/SpecificUnderlag.cshtml">
-      <publishTime>09/20/2017 15:39:12</publishTime>
+      <publishTime>10/05/2017 12:49:09</publishTime>
     </File>
     <File Include="Views/Utredning/ViewForm.cshtml">
-      <publishTime>09/27/2017 09:00:03</publishTime>
+      <publishTime>10/05/2017 12:49:31</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>04/06/2017 14:10:09</publishTime>
+      <publishTime>09/29/2017 16:36:24</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>06/28/2017 07:42:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/05/2017 07:43:14</publishTime>
+      <publishTime>10/05/2017 16:09:05</publishTime>
     </File>
   </ItemGroup>
 </Project>

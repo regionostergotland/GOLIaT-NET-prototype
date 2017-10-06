@@ -78,7 +78,7 @@
 
             @*'Beslut, kirurgisk åtgärd med citat 4', '1.0.4'*@
             <tbody>
-                <tr ng-repeat="underlag in underlagen" id="underlag.ehrid" ng-click="pickUnderlag('@Url.Action("Index","Utredning/SpecificUnderlag")', 'Beslut v2 om kirurgi m citations 3', '1.0.3' ,underlag.ehrid, underlag._id.Timestamp, '@HttpContext.Current.Session["ROLE"]', underlag.diagnoskod)">
+                <tr ng-repeat="underlag in underlagen" id="underlag.ehrid" ng-click="pickUnderlag('@Url.Action("Index","Utredning/SpecificUnderlag")', 'Beslut v2 om kirurgi m citations 3', '1.0.8' ,underlag.ehrid, underlag._id.Timestamp, '@HttpContext.Current.Session["ROLE"]', underlag.diagnoskod)">
                     <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{underlag.gender || "-"}}</td>
                     <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Ledning' ">{{underlag.personnummer || "-"}}</td>
                     <td ng-if="'@HttpContext.Current.Session["ROLE"]' == 'Kirurg' ">{{underlag.firstname || "-"}} {{underlag.lastname || "-"}}</td>

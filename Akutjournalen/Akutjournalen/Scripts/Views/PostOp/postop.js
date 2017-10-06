@@ -2,8 +2,8 @@
 var queryUrl = baseUrl + '/query';
 //var username = 'lio.se1'
 //var password = 'lio.se123'
-var username = 'Carlos.Ortiz@regionostergotland.se';
-var password = 'Cortiz13112015';
+var username = getUsername();
+var password = getPassword();
 
 (function () {
     var growlContent = "";

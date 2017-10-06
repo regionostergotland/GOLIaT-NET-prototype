@@ -36,13 +36,13 @@
             </div>
         </div>
         <div align="right" class="col-xs-6 col-md-6 col-lg-6 col-sm-6">
-            <div id="new-remisser-div" class="animated swing" ng-click="shownewRemisser($event)" onactive="">
+            <div id="new-remisser-div" class="animated swing" @*ng-click="shownewRemisser($event)"*@ onactive="">
                 <i class=" fa fa-2x fa-exclamation-circle" style=""></i>
                 <sup><b>Det finns nya remisser!</b></sup>
 
             </div>
         </div>
-        <div id="newinformationBox" ng-click="removeInfobox()">
+        <div style="z-index: 100" id="newinformationBox" ng-click="removeInfobox()">
         </div>
     </div>
 
@@ -115,6 +115,7 @@
                             <button class="btn btn-primary" ng-click="generatePromptBox(instruction.Composition, $event)">Vidarebefordra remiss</button> <button class="btn btn-primary" ng-click="generatePromptBox(instruction.Composition, $event)"> Avvisa remiss </button> <button class="btn btn-primary" ng-click="generatePromptBox(instruction.Composition, $event)">Acceptera remiss</button>
                         </div>
                     </td>
+                    
 
                 </tr>
                 @*<tr style="position:absolute; background-color: none; border:none;">

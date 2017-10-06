@@ -2,8 +2,8 @@
 var cdsUrl = 'https://rest.ehrscape.com/thinkcds/rest/v1'; 
 
 
-var username = "Carlos.Ortiz@regionostergotland.se";
-var password = "Cortiz13112015";
+var username = getUsername(); //ehrscapelogin.js, see readme
+var password = getPassword(); //ehrscapelogin.js, see readme
 
 var authorization = "Basic " + btoa(username + ":" + password);
 //alert(authorization)
@@ -39,10 +39,10 @@ function queryBMIPlain() {
 }
 
 
-Key	Value
-Request	POST /thinkcds/rest/v1/guide/BMI.Calculation.v.1_V2/execute/28ac8bbc-eb14-4f01-a30d-bcff446e0bd4/query
+//Key	Value
+//Request	POST /thinkcds/rest/v1/guide/BMI.Calculation.v.1_V2/execute/28ac8bbc-eb14-4f01-a30d-bcff446e0bd4/query
 
-?templateId=Vital+Signs&format=composition&persist=false&trace=false 
+//?templateId=Vital+Signs&format=composition&persist=false&trace=false 
 
 //query EHR for BMI and get results in json composition format
 queryBMIComposition();
