@@ -2016,8 +2016,10 @@ thinkehr.f4.NodeModel = thinkehr.f4.FormRepeatableElementModel._extendM({
     },
 
     getInputFor: function (suffix) {
+        
         for (var i = 0; i < this.inputs.length; i++) {
             var input = this.inputs[i];
+            console.log("input", input);
             if (input.getSuffix() === suffix) {
                 return input;
             }

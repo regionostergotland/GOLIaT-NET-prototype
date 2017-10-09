@@ -9096,6 +9096,7 @@
     <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-recursive-element.html" />
     <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-text-area.html" />
     <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-text-field.html" />
+    <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-text-values-radio.html" />
     <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-text.html" />
     <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-time.html" />
     <Content Include="EHRDemo\TestForms\thinkehr\f4\templates\ehr-unknown.html" />

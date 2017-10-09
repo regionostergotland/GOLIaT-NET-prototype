@@ -68,10 +68,11 @@ function tooglePanel(clickedpanelId, clickedbutton) {
 };
 
 
-var openWindow = function (prefix, path) {
+var openWindow = function (prefix, path1, path2) {
     console.log("prefix:" + prefix);
-    console.log("path:" + path);
-    window.open(prefix + '://' + path, "popupWindow", "scrollbars=yes,resizable=yes, width=900,height=800");
+
+    //getParameterByName("EHRID")
+    window.open(prefix + '://' + path1 + getParameterByName("EHRID") + path2, "popupWindow", "scrollbars=yes,resizable=yes, width=900,height=800");
 };
 
 

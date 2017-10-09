@@ -229,9 +229,11 @@ if (!thinkehr.f4.ng) {
                 },
 
                 distributeColumns: function (columns, elements) {
+                    console.log("columns", columns);
+                    console.log("elements", elements);
                     var totalCols = elements < columns ? elements : columns;
                     var cols = [];
-
+                    console.log("totalCols", totalCols);
                     for (var i = 0; i < totalCols; i++) {
                         cols.push([]);
                     }
@@ -239,6 +241,7 @@ if (!thinkehr.f4.ng) {
                     for (i = 0; i < elements; i++) {
                         var colIndex = i % totalCols;
                         cols[colIndex].push(i);
+                        console.log("elements", elements)
                     }
 
                     return cols;
@@ -450,6 +453,7 @@ if (!thinkehr.f4.ng) {
                 templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text-combo.html",
                 scope: true,
                 controller: function ($scope) {
+
                     $scope.suppressLabel = false;
                     $scope.codeValue = function (value) {
 
@@ -468,7 +472,7 @@ if (!thinkehr.f4.ng) {
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
-
+                    console.log("wow")
                     $scope.codeValue = function (value) {
                         return $scope.model.codeValue(value, EhrContext.language);
                     };
@@ -477,6 +481,7 @@ if (!thinkehr.f4.ng) {
                     // different instance of an array every time, which CAN cause a $digest cycle loop
                     $scope.columns = function () {
                         var model = $scope.model;
+                        console.log("model", model);
                         var cols = 1;
                         var vc = model.getViewConfig();
                         if (vc.getField()) {
@@ -488,9 +493,9 @@ if (!thinkehr.f4.ng) {
                         }
 
                         if (cols < 1) {
+                            
                             cols = 1;
                         }
-
                         var elements = model.getInputFor("code").getList().length;
                         return EhrLayoutHelper.distributeColumns(cols, elements);
                     }();
@@ -513,6 +518,59 @@ if (!thinkehr.f4.ng) {
             };
         }]);
 
+        module.directive("ehrTextValuesRadio", ["EhrContext", "EhrLayoutHelper", function (EhrContext, EhrLayoutHelper) {
+            return {
+                restrict: "EA",
+                templateUrl: "../../EHRDemo/TestForms/thinkehr/f4/templates/ehr-text-values-radio.html",
+                scope: true,
+                controller: function ($scope) {
+                    $scope.suppressLabel = false;
+                    console.log("aDASDSd");
+                    $scope.textValue = function (value) {
+                        return $scope.model.textValue(value, EhrContext.language);
+                    };
+
+                    // This is an immediately executed function that assigns to an integer property because the distributeColumns() function returns a
+                    // different instance of an array every time, which CAN cause a $digest cycle loop
+                    $scope.columns = function () {
+                        var model = $scope.model;
+                        console.log("model", model);
+                        var cols = 1;
+                        var vc = model.getViewConfig();
+                        if (vc.getField()) {
+                            if (vc.getField().getPresentation() === thinkehr.f4.FieldPresentation.RADIOS) {
+                                if (vc.getField().getColumns()) {
+                                    cols = vc.getField().getColumns();
+                                }
+                            }
+                        }
+
+                        if (cols < 1) {
+
+                            cols = 1;
+                        }
+                        var elements = model.inputs[0].list.length;
+                        return EhrLayoutHelper.distributeColumns(cols, elements);
+                    }();
+
+                    $scope.columnWidthPercentage = function () {
+
+                        return EhrLayoutHelper.columnWidthPercentage($scope.model.getViewConfig(), $scope.columns.length);
+                    };
+
+                    $scope.elementStyle = function () {
+                        var colWidthPer = $scope.columnWidthPercentage();
+                        if (colWidthPer != "auto") {
+                            return {
+                                width: colWidthPer
+                            };
+                        }
+                        return {};
+                    };
+                }
+            };
+
+        }]);
         module.directive("ehrQuantity", ["$timeout", "EhrContext", function ($timeout, EhrContext) {
             return {
                 restrict: "EA",

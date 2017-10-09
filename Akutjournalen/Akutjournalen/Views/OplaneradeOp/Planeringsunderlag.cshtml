@@ -70,7 +70,9 @@
                             <br />
                             <br />
                             <br />
-                            <button class="btn btn-primary" style="margin-right:4px; " onclick="openWindow('http', 'goliatdemoutvtest.lio.se/Utredning/SpecificUnderlag?id=1505915617&EHRID=d6438b34-a1d8-4ea9-9191-8ee0161c7bf1&formName=Beslut%20v2%20om%20kirurgi%20m%20citations%203&formVersion=1.0.3&diagnos=ICD10%20C61%20%20%20%20Malign%20tum%C3%B6r%20i%20prostata')">Visa Beslut</button><button class="btn btn-primary" >Visa Läkemedel</button><br />
+                            @*d6438b34-a1d8-4ea9-9191-8ee0161c7bf1*@
+                            
+                            <button class="btn btn-primary" style="margin-right:4px; " onclick="openWindow('http', 'goliatdemoutvtest.lio.se/Utredning/SpecificUnderlag?id=1505915617&EHRID=', '&formName=Beslut%20v2%20om%20kirurgi%20m%20citations%203&formVersion=1.0.3&diagnos=ICD10%20C61%20%20%20%20Malign%20tum%C3%B6r%20i%20prostata')">Visa Beslut</button><button class="btn btn-primary" >Visa Läkemedel</button><br />
 
                         </div>
                     </div>
@@ -99,8 +101,10 @@
                             <p> <input type="radio" name="radio-samoperation" value="ja" id="planning-yes-radio"> Ja <input type="radio" name="radio-samoperation" value="nej" id="planning-no-radio" checked> Nej </p>
                         </form>
                         <div class="form-group" id="add-more-operations">
-                            <input type="checkbox" />JAF10 Öppen operation av navelbråck med suturplastik
-                            <input type="checkbox" />KBV05 Cystoskopisk reposition av uretärstent
+                            <ul style="list-style-type: none;">
+                                <li><input type="checkbox" />JAF10 Öppen operation av navelbråck med suturplastik</li>
+                                <li><input type="checkbox" />KBV05 Cystoskopisk reposition av uretärstent</li>
+                            </ul>
 
                             @*<label for="sel1">Välj:</label>
                             <select multiple class="form-control" id="sel1">
@@ -217,8 +221,8 @@
                                 <div class="form-group booking-content">
                                     <b>Vårdplats:</b>
                                     <div class="booking-select" style="border:hidden;">
-                                        Ja <input type="radio" value="ja" name="radio-healtcarepos" id="radio-healtcarepos-yes">
-                                        Nej <input type="radio" value="nej" name="radio-healtcarepos" id="radio-healtcarepos-no">
+                                        Ja <input type="radio" value="ja" name="radio-healthcarepos" id="radio-healthcarepos-yes">
+                                        Nej <input type="radio" value="nej" name="radio-healthcarepos" id="radio-healthcarepos-no">
                                     </div>
 
                                 </div>
