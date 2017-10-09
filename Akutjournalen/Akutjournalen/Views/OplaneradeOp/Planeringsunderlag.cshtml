@@ -25,8 +25,6 @@
     </script>
 }
 
-
-
 <div ng-app="specificPlaneringApp">
     <div class="row">
         <div class="cell cell-planning">
@@ -101,7 +99,14 @@
                             <p> <input type="radio" name="radio-samoperation" value="ja" id="planning-yes-radio"> Ja <input type="radio" name="radio-samoperation" value="nej" id="planning-no-radio" checked> Nej </p>
                         </form>
                         <div class="form-group" id="add-more-operations">
-                            <label for="sel1">Välj:</label>
+                            <input type="checkbox"/>Operation 1
+                            <input type="checkbox" />Operation 1
+                            <input type="checkbox" />Operation 1
+                            <input type="checkbox" />Operation 1
+                            <input type="checkbox" />Operation 1
+                            <input type="checkbox" />Operation 1
+                            <input type="checkbox" />Operation 1
+                            @*<label for="sel1">Välj:</label>
                             <select multiple class="form-control" id="sel1">
                                 <option>1</option>
                                 <option>2</option>
@@ -111,7 +116,7 @@
                                 <option>6</option>
                                 <option>7</option>
                                 <option>8</option>
-                            </select>
+                            </select>*@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -311,7 +316,7 @@
                     <button class="btn btn-outline btn-flat btn-header hide-panel-button" onclick="tooglePanel('material-panel', this)">Dölj </button>
                 </div>
             </div>
-            <div class="panel" id="material-panel">
+            <div class="panel " id="material-panel">
                 <div class="row" >
                     <iframe id="iframe-div" src="http://opguideqa.lio.se/Klinik/1/Operationsforberedelse/Details/13284" style="width:100%" frameborder="0"></iframe>
                     @**@
