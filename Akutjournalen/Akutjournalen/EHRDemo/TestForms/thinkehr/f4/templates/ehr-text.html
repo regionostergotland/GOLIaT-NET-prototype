@@ -12,8 +12,8 @@
 	
     <div class="ehr-field-content">
 	
-		<!--<ehr-combobox-text ng-if='::model.inputs["0"].list.length > 1'></ehr-combobox-text>-->
-        <ehr-text-values-radio ng-if='::model.inputs["0"].list.length > 1'> </ehr-text-values-radio>
+        <ehr-combobox-text ng-if="::model.inputs[0].list.length > 1 && model.getViewConfig().field.input.presentation != 'radios'"></ehr-combobox-text>
+        <ehr-text-values-radio ng-if="::model.inputs[0].list.length > 1 && model.getViewConfig().field.input.presentation == 'radios'"> </ehr-text-values-radio>
 		
         <ehr-text-field ng-if='::model.getViewConfig().getField().getPresentation() !== thinkehr.f4.FieldPresentation.TEXTAREA && model.inputs["0"].list.length < 1'></ehr-text-field>
 		

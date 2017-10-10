@@ -30,7 +30,7 @@ ehr-form form .ehr-container-controls {
 }
 
 ehr-form form .ehr-radio-button-column {
-    float: left;
+    float: none;
 }
 
 ehr-form form ehr-quantity .ehr-radio-button-group {
@@ -39,4 +39,9 @@ ehr-form form ehr-quantity .ehr-radio-button-group {
 
 ehr-form form ehr-quantity .ehr-radio-button-column {
     float: none;
+}
+
+/*Styled text for radio-buttons, making it less bold*/
+label.ehr-radio-label.ng-scope span{
+    font-weight:500!important;
 }

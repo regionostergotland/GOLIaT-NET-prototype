@@ -525,10 +525,15 @@ if (!thinkehr.f4.ng) {
                 scope: true,
                 controller: function ($scope) {
                     $scope.suppressLabel = false;
-                    console.log("aDASDSd");
+
                     $scope.textValue = function (value) {
+                        console.log(value);
                         return $scope.model.textValue(value, EhrContext.language);
                     };
+
+                    $scope.list = function () {
+                        return $scope.model.inputs[0].list;
+                    }
 
                     // This is an immediately executed function that assigns to an integer property because the distributeColumns() function returns a
                     // different instance of an array every time, which CAN cause a $digest cycle loop

@@ -1967,7 +1967,9 @@ thinkehr.f4.RmContainerModel = thinkehr.f4.FormRepeatableElementModel._extendM({
 });
 
 thinkehr.f4.NodeModel = thinkehr.f4.FormRepeatableElementModel._extendM({
+    
     init: function (properties) {
+
         this._super(properties);
 
         if (this.nodeId === undefined) {
@@ -2019,7 +2021,6 @@ thinkehr.f4.NodeModel = thinkehr.f4.FormRepeatableElementModel._extendM({
         
         for (var i = 0; i < this.inputs.length; i++) {
             var input = this.inputs[i];
-            console.log("input", input);
             if (input.getSuffix() === suffix) {
                 return input;
             }
@@ -2063,7 +2064,6 @@ thinkehr.f4.NodeModel = thinkehr.f4.FormRepeatableElementModel._extendM({
                 return null;
             }
         }
-        console.log("value", this.value);
 
         return this.value;
     },
@@ -2472,8 +2472,8 @@ thinkehr.f4.TextFieldModel = thinkehr.f4.NodeModel._extendM({
     },
 
     textValue: function (value) {
+        //console.log("this.getDefaultValue()", this.getDefaultValue())
         if (value !== undefined) {
-
             this.value = value;
             var parentRef = this.getValueNodeParentRef();
             if (parentRef.length > 0) {
@@ -2486,13 +2486,14 @@ thinkehr.f4.TextFieldModel = thinkehr.f4.NodeModel._extendM({
                 parentRef.push(this.value);
             }
         }
-        else if (this.value == null && this.getDefaultValue()) {
-            var dv = this.getDefaultValue();
-            if (thinkehr.f4.util.isString(dv.value) && dv.value.length > 0) {
-                return this.textValue(dv.value);
+        else if (this.value == null && this.inputs["0"].defaultValue) { //this.getDefaultValue()) {
+            var dv = this.inputs["0"].defaultValue; //this.getDefaultValue();
+            if (thinkehr.f4.util.isString(dv) && dv.length > 0) {
+            //if (thinkehr.f4.util.isString(dv.value) && dv.value.length > 0) {
+
+                return this.textValue(dv);
             }
         }
-
         return this.value;
     },
     /*
