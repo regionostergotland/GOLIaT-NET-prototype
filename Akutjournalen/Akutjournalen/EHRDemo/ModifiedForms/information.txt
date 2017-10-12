@@ -1,0 +1,8 @@
+Filbeskrivningar:
+
+./TestForms/thinkehr/f4/thinkehr-f4-model.js - 
+	Skapar modeller baserat på rm-typer. 
+	
+
+./TestForms/thinkehr/f4/thinkehr-f4-view-angular.js -
+	Hantera alla templates och vyer via rm-type.

@@ -158,7 +158,15 @@ app.factory('GetInstructions', function ($http) {
                                                     object.instructions[t].patientinfo.age = age;
                                                 }
 
-                                                object.instructions[t].patientinfo.gender = translateGender(res.parties[p].gender.toLowerCase());
+                                                try {
+                                                    object.instructions[t].patientinfo.gender = translateGender(res.parties[p].gender.toLowerCase());
+                                                }
+                                                catch (err) {
+                                                    console.warn(err);
+                                                }
+                                                
+                                                
+                                                
                                             }
 
                                             //Set personnummer.
@@ -555,66 +563,17 @@ app.controller('InkommandeRemissCtrl', ['$scope', '$filter', "GetInstructions", 
 
         if ($("#" + compid).is(":visible")) {
             $scope.cleanseInformationbox(compid);
-            //event.currentTarget.style.backgroundColor = "#dce8f1";
-            //event.currentTarget.style.color = "black";
         }
         else {
             $("#" + compid).show();
             console.log(event);
-            //event.currentTarget.style.backgroundColor = "#b2cee2";
-            //event.currentTarget.style.color = "black";
             
         }
-        //var compositionid = compid.substring(0, 36);
-        
-        //console.log("Event",event)
-        //console.log("Ehrid", ehrid);
-        //console.log("compid", compid);
-        //console.log(remiss)
-
-        //$('#informationbox').css('border', 'none');
-        //$('#informationbox').css('padding', '0px');
-        //$('#informationbox').html('');
-
-        //$('#informationbox').append(
-        //    '<button class="btn" onclick="cleanseInformationbox()">X</button><div> <hr><h4>Remissinformation -</h4>' + remiss.patientinfo.firstname + ' ' + remiss.patientinfo.lastname + ', Personnummer: ' + remiss.patientinfo.personnummer + '</div> <hr>' +
-        //    '<div>' +
-        //        '<p>' + remiss.content["0"].activities["0"].description.items["0"].name.value +': <b>'+  remiss.content["0"].activities["0"].description.items["0"].value.value + '</b></p>' +
-        //        '<p>' + remiss.content["0"].activities["0"].description.items["0"].name.value + ': ' + '</p>' +
-        //        '<p>' + remiss.content["0"].activities["0"].description.items["0"].name.value + ': ' + '</p>' +
-        //    '</div>'
-        //    );
-
-        //$('#informationbox').css('position', 'absolute');
-        //$('#informationbox').css('top', (event.clientY + 20));
-        //$('#informationbox').css('left', ((event.view.innerWidth) - (event.view.innerWidth/1.5)));
-        //$('#informationbox').css('height', '60%');
-        //$('#informationbox').css('width', ((event.view.innerWidth / 2)));
-        //$('#informationbox').css('padding', '10px');
-        //$('#informationbox').css('background-color', '#dce8f1');
 
     };
 
     $scope.cleanseInformationbox = function (compid) {
         $("#" + compid).hide();
-
-        //$("#" + compid).css('border', 'none');
-        //$("#" + compid).css('padding', '0px');
-        //$("#" + compid).css('background-color', '0px');
-        //$("#" + compid).css('height', '0%');
-        //$("#" + compid).css('width', '0%');
-        //$("#" + compid).html('')
-
-
-        //$('#informationbox').css('border', 'none');
-        //$('#informationbox').css('padding', '0px');
-        //$('#informationbox').css('background-color', '0px');
-        //$('#informationbox').css('height', '0%');
-        //$('#informationbox').css('width', '0%');
-        //$('#informationbox').html('')
-        //$('#personalbox').css('border', 'none');
-        //$('#personalbox').css('padding', '0px');
-        //$('#personalbox').html('')
     };
 
 
@@ -624,7 +583,6 @@ app.controller('InkommandeRemissCtrl', ['$scope', '$filter', "GetInstructions", 
         "ACTION.service.v0]) where a/name/value='Remiss' order by a_b/time/value desc offset 0 limit 100";
 
     //// Use this in case there's a need for showing the "done"-list.
-
     //DoneRemissFact.doneRemisser(aql).then(function (data) {
     //    var instructions = data.data.resultSet;
     //    console.log('instructions', instructions)

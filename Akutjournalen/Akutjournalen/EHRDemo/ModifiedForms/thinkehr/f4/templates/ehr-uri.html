@@ -1,0 +1,14 @@
+<div class="ehr-line">
+	<ehr-label ng-if="!suppressLabel" class="ehr-label-content" ng-class="::EhrLayoutHelper.computeEhrLabelContentClass(model)">
+			{{::model.labelFor(EhrContext.language)}}:
+		</ehr-label>
+		<div class="ehr-field-content">
+			<input class="ehr-uri ehr-text-input field form-control"
+				ng-readonly="model.getViewConfig().isReadOnly()"
+				ng-hide="model.getViewConfig().isHidden()"
+				ng-model="uriValue" ng-model-options="{ getterSetter: true }"
+				ng-class="::EhrLayoutHelper.computeFieldClass(model)"
+				/>
+		</div>
+	
+</div>

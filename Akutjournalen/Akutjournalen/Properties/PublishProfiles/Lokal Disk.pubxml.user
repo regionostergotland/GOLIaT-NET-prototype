@@ -15,10 +15,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/09/2017 09:58:39</publishTime>
+      <publishTime>10/12/2017 11:34:29</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/09/2017 09:58:39</publishTime>
+      <publishTime>10/12/2017 11:34:29</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/06/2017 14:10:10</publishTime>
@@ -27,7 +27,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:09</publishTime>
     </File>
     <File Include="bin/Goliat.dll">
-      <publishTime>10/09/2017 09:58:14</publishTime>
+      <publishTime>10/10/2017 12:39:51</publishTime>
     </File>
     <File Include="bin/Json.dll">
       <publishTime>07/04/2017 11:10:10</publishTime>
@@ -29952,7 +29952,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2017 09:03:51</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/css/ehr-form.css">
-      <publishTime>08/11/2017 13:48:17</publishTime>
+      <publishTime>10/10/2017 08:20:51</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-boolean.html">
       <publishTime>04/06/2017 14:10:08</publishTime>
@@ -29961,13 +29961,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2017 14:01:12</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text-radio.html">
-      <publishTime>04/06/2017 14:10:08</publishTime>
+      <publishTime>10/09/2017 14:01:49</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-coded-text.html">
       <publishTime>08/25/2017 09:01:16</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-combobox-text.html">
-      <publishTime>08/14/2017 12:59:34</publishTime>
+      <publishTime>10/09/2017 13:59:00</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-container.html">
       <publishTime>04/06/2017 14:10:08</publishTime>
@@ -30005,8 +30005,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-text-field.html">
       <publishTime>08/03/2017 12:46:50</publishTime>
     </File>
+    <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-text-values-radio.html">
+      <publishTime>10/10/2017 08:38:34</publishTime>
+    </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-text.html">
-      <publishTime>08/07/2017 16:27:48</publishTime>
+      <publishTime>10/10/2017 07:45:12</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/templates/ehr-time.html">
       <publishTime>04/06/2017 14:10:08</publishTime>
@@ -30018,10 +30021,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/16/2017 10:45:00</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/thinkehr-f4-model.js">
-      <publishTime>09/27/2017 08:16:31</publishTime>
+      <publishTime>10/10/2017 11:19:51</publishTime>
     </File>
     <File Include="EHRDemo/TestForms/thinkehr/f4/thinkehr-f4-view-angular.js">
-      <publishTime>09/19/2017 10:00:33</publishTime>
+      <publishTime>10/10/2017 11:14:21</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>04/06/2017 14:09:44</publishTime>
@@ -30102,7 +30105,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/04/2017 11:10:13</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/09/2017 09:58:32</publishTime>
+      <publishTime>10/12/2017 11:34:19</publishTime>
     </File>
     <File Include="Scripts/AdminLTE/app.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -30408,7 +30411,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/06/2017 10:29:57</publishTime>
     </File>
     <File Include="Scripts/ehrscapelogin.js">
-      <publishTime>10/06/2017 08:18:49</publishTime>
+      <publishTime>10/12/2017 11:32:58</publishTime>
     </File>
     <File Include="Scripts/FullScreen/screenfull_min.js">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -30837,7 +30840,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/14/2017 13:30:14</publishTime>
     </File>
     <File Include="Scripts/Views/AQL_Service.js">
-      <publishTime>09/05/2017 13:26:07</publishTime>
+      <publishTime>10/12/2017 10:27:29</publishTime>
     </File>
     <File Include="Scripts/Views/backup/myAngular.js">
       <publishTime>05/10/2017 09:11:36</publishTime>
@@ -37860,7 +37863,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/06/2017 14:10:08</publishTime>
     </File>
     <File Include="Scripts/Views/Inkommande/inkommande.js">
-      <publishTime>10/06/2017 13:22:12</publishTime>
+      <publishTime>10/12/2017 08:10:52</publishTime>
     </File>
     <File Include="Scripts/Views/myAngular.js">
       <publishTime>10/06/2017 10:30:37</publishTime>
@@ -37881,10 +37884,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/06/2017 10:31:36</publishTime>
     </File>
     <File Include="Scripts/Views/Planering/planering.js">
-      <publishTime>10/05/2017 13:58:26</publishTime>
+      <publishTime>10/10/2017 14:43:06</publishTime>
     </File>
     <File Include="Scripts/Views/Planering/planeringunderlag.js">
-      <publishTime>10/06/2017 12:44:08</publishTime>
+      <publishTime>10/09/2017 12:37:40</publishTime>
     </File>
     <File Include="Scripts/Views/PostOp/postop.js">
       <publishTime>10/06/2017 10:32:00</publishTime>
@@ -37896,7 +37899,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2017 14:04:03</publishTime>
     </File>
     <File Include="Scripts/Views/Utredning/specifikutredning.js">
-      <publishTime>10/06/2017 10:32:10</publishTime>
+      <publishTime>10/12/2017 10:33:46</publishTime>
     </File>
     <File Include="Scripts/Views/Utredning/utredning.js">
       <publishTime>10/06/2017 10:32:25</publishTime>
@@ -37947,7 +37950,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2017 12:48:06</publishTime>
     </File>
     <File Include="Views/OplaneradeOp/Planeringsunderlag.cshtml">
-      <publishTime>10/09/2017 09:19:33</publishTime>
+      <publishTime>10/12/2017 08:18:11</publishTime>
     </File>
     <File Include="Views/OrdinationAvd/Index.cshtml">
       <publishTime>04/06/2017 14:10:09</publishTime>
@@ -38022,10 +38025,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2017 16:06:03</publishTime>
     </File>
     <File Include="Views/Utredning/SpecificUnderlag.cshtml">
-      <publishTime>10/06/2017 11:18:00</publishTime>
+      <publishTime>10/12/2017 10:23:43</publishTime>
     </File>
     <File Include="Views/Utredning/ViewForm.cshtml">
-      <publishTime>10/05/2017 12:49:31</publishTime>
+      <publishTime>10/11/2017 14:39:24</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>09/29/2017 16:36:24</publishTime>
